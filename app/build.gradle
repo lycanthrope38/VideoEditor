@@ -1,0 +1,103 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+    compileOptions.encoding = 'UTF-8' // write your encoding here
+
+    defaultConfig {
+        applicationId "com.freelancer.videoeditor"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+
+        versionName versions.name
+        versionCode 1
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+
+        resConfigs "en", "zh-rCN", "ja", "fr", "de", "ko", "it", "ru", "nl", "tr", "pl", "ro", "hu", "uk", "bg-rBG", "en-rGB", "vi", "pt-rBR", "es", "en-rNZ", "zh-rTW", "es-rES", "ca", "hr", "en-rAU", "eu-rES"
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
+        buildConfigField "boolean", "MULTIDEX_ENABLED", "false"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled false
+//            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        debug {
+            java.srcDirs = ['src/debug/java'];
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'
+        //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+        ignore 'ExtraTranslation', 'MissingTranslation'
+    }
+
+    retrolambda {
+        jvmArgs '-noverify'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile libs.cardView
+    compile libs.design
+    compile libs.recyclerView
+
+    compile libs.glide
+    compile libs.rxAndroid
+    compile libs.rxBinding
+    compile libs.rxBindingAppCompat
+    compile libs.rxJava
+
+    compile libs.timber
+    compile libs.materialDialogs
+    compile libs.materialDialogCommons
+    compile libs.butterknife
+    annotationProcessor libs.butterknifeAnnotationProcessor
+    compile libs.dagger
+    annotationProcessor libs.daggerAnnotationProcessor
+}

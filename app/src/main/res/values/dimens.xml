@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_space">6dp</dimen>
+    <dimen name="super_gigantic_space">60dp</dimen>
+    <dimen name="text_size_gigantic">48sp</dimen>
+    <dimen name="text_size_huge">36sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_tiny">12sp</dimen>
+    <dimen name="text_size_very_huge">44sp</dimen>
+    <dimen name="text_size_very_tiny">10sp</dimen>
+    <dimen name="text_size_xgigantic">52sp</dimen>
+    <dimen name="text_size_xhuge">40sp</dimen>
+    <dimen name="text_size_xlarge">22sp</dimen>
+    <dimen name="text_size_xnormal">18sp</dimen>
+    <dimen name="text_size_xtiny">14sp</dimen>
+    <dimen name="text_size_xxgigantic">56sp</dimen>
+    <dimen name="text_size_xxlarge">24sp</dimen>
+    <dimen name="text_size_xxxlarge">32sp</dimen>
+    <dimen name="tiny_space">4dp</dimen>
+    <dimen name="very_tiny_space">2dp</dimen>
+    <dimen name="xhuge_space">40dp</dimen>
+    <dimen name="xlarge_space">16dp</dimen>
+    <dimen name="xxhuge_space">44dp</dimen>
+    <dimen name="xxlarge_space">24dp</dimen>
+    <dimen name="xxxhuge_space">48dp</dimen>
+    <dimen name="xxxlarge_space">32dp</dimen>
+</resources>

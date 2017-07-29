@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2e323e</color>
+    <color name="primary_dark">#242833</color>
+    <color name="accent">#ffffffff</color>
+
+    <color name="piclist_bg_title">#262626</color>
+    <color name="piclist_txt_title">#ffffff</color>
+    <color name="button_material_dark">#ff5a595b</color>
+    <color name="button_material_light">#ffd6d7d7</color>
+    <color name="cardview_dark_background">#ff424242</color>
+    <color name="cardview_light_background">#ffffffff</color>
+    <color name="cardview_shadow_end_color">#03000000</color>
+    <color name="cardview_shadow_start_color">#37000000</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="colorBgMoreFrame">#60000000</color>
+    <color name="colorMenuTextColor">#ffffff</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="color_audio_name">#ff4081</color>
+    <color name="color_bg_exit_dialog">#201f1f</color>
+    <color name="color_bkg_audio_bottom">#262626</color>
+    <color name="color_bkg_lock_screen">#eb6b56</color>
+    <color name="color_bkg_notification">#fafafa</color>
+    <color name="color_bkg_saved_video">#262626</color>
+    <color name="color_bkg_tab_color">#fc3c89</color>
+    <color name="color_bottom_bar">#ebeaea</color>
+    <color name="color_button_apply">#fa9100</color>
+    <color name="color_button_done_extends_normal">#262626</color>
+    <color name="color_button_done_extends_select">#444444</color>
+    <color name="color_divide_list_audio">#cecece</color>
+    <color name="color_divide_toolbox">#dcdada</color>
+    <color name="color_item_pressed">#286381</color>
+    <color name="color_item_row_menu_left">#1c2228</color>
+    <color name="color_item_text_audio">#000000</color>
+    <color name="color_navigation">#262626</color>
+    <color name="color_press_item_row_menu_left">#465666</color>
+    <color name="color_text_L_message">#fafafa</color>
+    <color name="color_text_L_title">#ffffff</color>
+    <color name="color_text_apply">#ffffff</color>
+    <color name="color_text_audio_duration">#ffffff</color>
+    <color name="color_text_dialog_button">#44506c</color>
+    <color name="color_text_dialog_button_press">#ff5400</color>
+    <color name="color_text_exit_dialog">#00ff1e</color>
+    <color name="color_text_file_path">#ffffff</color>
+    <color name="color_text_message">#7a7a7a</color>
+    <color name="color_text_title">#000000</color>
+    <color name="color_title_toolbox">#8a8686</color>
+    <color name="color_title_toolbox_press">#fc3c89</color>
+    <color name="color_top_bar">#ffffff</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_txt_menuactivity">#848689</color>
+
+    <color name="background_color">#E0E0E0</color>
+
+    <color name="card_normal">#e6ffffff</color>
+    <color name="lock_background_color">#222222</color>
+    <color name="dark_gray">#828587</color>
+    <color name="yellow_semi">#80c2b65d</color>
+
+    <color name="dark_gray_click">#1f000000</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="text_primary">@color/black</color>
+
+
+    <color name="accent_light">#ffffffff</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#9E9E9E</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="hint_color_text">#bdbdbd</color>
+    <color name="disable_color">#bdbdbd</color>
+    <item name="gray_drawable" type="drawable">#FF2c5aa9</item>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="red">#FFC93437</color>
+    <color name="blue">#039be6</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
+
+    <color name="black_87">#212121</color> <!-- Text -->
+    <color name="black_54">#545454</color> <!-- Secondary Text -->
+    <color name="black_38">#9B9B9B</color> <!-- Hint Text -->
+    <color name="black_12">#DBDBDB</color> <!-- Dividers-->
+    <color name="black_10">#C5c5c5</color>
+    <color name="colorSelectableItemWhite">#20ffffff</color>
+    <color name="color_tab">#232228</color>
+
+    <color name="black_back">#509B9B9B</color>
+    <color name="tabbarNormal">#d1fff9</color>
+    <color name="fab_color_shadow">#44000000</color>
+    <color name="btn_send_normal">#02c754</color>
+    <color name="btn_send_pressed">#006633</color>
+    <color name="separator_light">#207a7a7a</color>
+    <color name="separator">#507a7a7a</color> <!-- Hint Text -->
+
+    <color name="md_light_green_a700">#64dd17</color>
+
+    <array name="demo_colors">
+        <item>#f44336</item>
+        <item>#e91e63</item>
+        <item>#9c27b0</item>
+        <item>#673ab7</item>
+        <item>#3f51b5</item>
+        <item>#2196f3</item>
+        <item>#03a9f4</item>
+        <item>#00bcd4</item>
+        <item>#009688</item>
+        <item>#4caf50</item>
+        <item>#8bc34a</item>
+        <item>#cddc39</item>
+        <item>#ffeb3b</item>
+        <item>#ffc107</item>
+        <item>#ff9800</item>
+        <item>#ff5722</item>
+        <item>#795548</item>
+        <item>#9e9e9e</item>
+        <item>#607d8b</item>
+        <item>#ffffff</item>
+    </array>
+
+
+    <color name="bg_dark">#303030</color>
+    <color name="bg_light">#FAFAFA</color>
+    <color name="bg_black">#000000</color>
+    <color name="bg_card_dark">#424242</color>
+    <color name="bg_card_light">#FFFFFF</color>
+    <color name="bg_card_black">#151515</color>
+    <color name="bg_drawer_light">#F5F5F5</color>
+    <color name="bg_drawer_dark">#212121</color>
+    <color name="bg_drawer_black">#151515</color>
+
+
+    <color name="primary_text_dark">#ffffff</color>
+    <color name="primary_text_light">#000000</color>
+
+
+    <!-- RED -->
+    <color name="red_300">#f36c60</color>
+    <color name="red_400">#e84e40</color>
+    <color name="red_500">#e51c23</color>
+    <color name="red_600">#dd191d</color>
+
+    <!-- PINK -->
+    <color name="pink_300">#f06292</color>
+    <color name="pink_400">#ec407a</color>
+    <color name="pink_500">#e91e63</color>
+    <color name="pink_600">#d81b60</color>
+    <color name="pink_a200">#ff4081</color>
+    <color name="pink_a400">#f50057</color>
+
+    <!-- PURPLE -->
+    <color name="purple_300">#ba68c8</color>
+    <color name="purple_400">#ab47bc</color>
+    <color name="purple_500">#9c27b0</color>
+    <color name="purple_600">#8e24aa</color>
+    <color name="purple_a200">#e040fb</color>
+
+    <!-- DEEP PURPLE -->
+    <color name="deep_purple_300">#9575cd</color>
+    <color name="deep_purple_900">#311b92</color>
+    <color name="deep_purple_a200">#7c4dff</color>
+
+    <!-- INDIGO -->
+    <color name="indigo_300">#7986cb</color>
+    <color name="indigo_400">#5c6bc0</color>
+    <color name="indigo_500">#3f51b5</color>
+    <color name="indigo_600">#3949ab</color>
+    <color name="indigo_900">#1a237e</color>
+
+    <!-- BLUE -->
+    <color name="blue_300">#64B5F6</color>
+    <color name="blue_400">#738ffe</color>
+    <color name="blue_500">#1E88E5</color>
+    <color name="blue_600">#1E88E5</color>
+    <color name="blue_a200">#448AFF</color>
+
+    <!-- LIGHT BLUE -->
+    <color name="light_blue_300">#4fc3f7</color>
+    <color name="light_blue_400">#29b6f6</color>
+    <color name="light_blue_500">#03a9f4</color>
+    <color name="light_blue_600">#039be5</color>
+    <color name="light_blue_a200">#40c4ff</color>
+    <color name="light_blue_a400">#00b0ff</color>
+
+    <!-- CYAN -->
+    <color name="cyan_300">#4dd0e1</color>
+    <color name="cyan_400">#26c6da</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="cyan_600">#00acc1</color>
+    <color name="cyan_a100">#84ffff</color>
+    <color name="cyan_a700">#00b8d4</color>
+
+    <!-- TEAL -->
+    <color name="teal_300">#4db6ac</color>
+    <color name="teal_400">#26a69a</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_600">#00897b</color>
+    <color name="teal_900">#004d40</color>
+    <color name="teal_a100">#a7ffeb</color>
+
+    <!-- GREEN -->
+    <color name="green_200">#72d572</color>
+    <color name="green_400">#2baf2b</color>
+    <color name="green_500">#259b24</color>
+    <color name="green_600">#0a8f08</color>
+    <color name="green_a100">#a2f78d</color>
+
+    <!-- LIGHT GREEN -->
+    <color name="light_green_300">#aed581</color>
+    <color name="light_green_a100">#ccff90</color>
+    <color name="light_green_a200">#b2ff59</color>
+    <color name="light_green_a400">#76ff03</color>
+
+    <!-- LIME -->
+    <color name="lime_300">#dce775</color>
+    <color name="lime_a100">#f4ff81</color>
+    <color name="lime_a200">#eeff41</color>
+    <color name="lime_a400">#c6ff00</color>
+
+    <!-- YELLOW -->
+    <color name="yellow_a100">#ffff8d</color>
+    <color name="yellow_a200">#ffff00</color>
+    <color name="yellow_a400">#ffea00</color>
+
+    <!-- AMBER -->
+    <color name="amber_300">#ffd54f</color>
+
+    <!-- ORANGE -->
+    <color name="orange_300">#ffb74d</color>
+    <color name="orange_400">#ffa726</color>
+    <color name="orange_500">#ff9800</color>
+    <color name="orange_600">#fb8c00</color>
+    <color name="orange_a100">#ffd180</color>
+    <color name="orange_a200">#ffab40</color>
+
+    <!-- DEEP ORANGE -->
+    <color name="deep_orange_300">#ff8a65</color>
+
+    <!-- BROWN -->
+    <color name="brown_900">#3e2723</color>
+
+    <!-- GREY -->
+    <!-- Grey 1000 (White) -->
+    <color name="grey_250">#e6e6e6</color>
+    <color name="grey_400">#bdbdbd</color>
+    <color name="grey_500">#9e9e9e</color>
+    <color name="grey_600">#757575</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_900">#212121</color>
+    <color name="grey_1000">#000000</color>
+    <!-- Grey 1000 (Black) -->
+
+    <!-- BLUE GREY -->
+    <color name="blue_grey_800">#37474f</color>
+    <color name="blue_grey_900">#263238</color>
+
+
+</resources>
