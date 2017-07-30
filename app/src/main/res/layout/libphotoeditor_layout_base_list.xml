@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/layoutSeekBar"
+            android:background="@color/colorBgMoreFrame"
+            android:padding="1dp"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layoutRoot">
+
+        <SeekBar
+                android:id="@+id/seekBarAlpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="20dp"
+                android:max="100"
+                android:minHeight="20dp"
+                android:layout_toLeftOf="@+id/txtAlpha"
+                android:layout_centerVertical="true"/>
+
+        <TextView
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:id="@+id/txtAlpha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:text="40%"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/layoutRoot"
+            android:background="#474747"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="UNKNOWN_DATA_0x6401"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true">
+
+        <HorizontalScrollView
+                android:id="@+id/layoutHorizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="UNKNOWN_DATA_0x6401"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                    android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                    android:orientation="horizontal"
+                    android:id="@+id/layoutList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+        </HorizontalScrollView>
+
+        <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="UNKNOWN_DATA_0x2801"
+                android:layout_height="UNKNOWN_DATA_0x2801"
+                android:indeterminate="false"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -24,16 +24,16 @@
         <ImageView
                 android:id="@+id/btnSortAudio"
                 android:background="@drawable/piclist_icon_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"/>
 
         <ImageView
                 android:id="@+id/btnAudioBack"
                 android:background="@drawable/piclist_selector_button_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"/>
     </RelativeLayout>
@@ -52,10 +52,10 @@
                 android:dividerHeight="1dp"/>
 
         <ImageView
-                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:layout_gravity="bottom|end"
                 android:id="@+id/pick_audio_from_file"
-                android:layout_width="UNKNOWN_DATA_0x3201"
-                android:layout_height="UNKNOWN_DATA_0x3201"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="@dimen/xlarge_space"
                 android:src="@drawable/btn_pick_audio_selector"/>
     </FrameLayout>
@@ -65,7 +65,7 @@
             android:id="@+id/root_bottom_audio"
             android:background="@color/color_bkg_audio_bottom"
             android:layout_width="match_parent"
-            android:layout_height="UNKNOWN_DATA_0x3201"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/tiny_space"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
@@ -73,15 +73,14 @@
         <ImageView
                 android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill"
                 android:id="@+id/image_play_audio"
-                android:layout_width="UNKNOWN_DATA_0x2a01"
-                android:layout_height="UNKNOWN_DATA_0x2a01"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="@dimen/tiny_space"
-                android:layout_marginRight="@dimen/normal_space"
                 android:src="@drawable/icon_play"/>
 
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="UNKNOWN_DATA_0x1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0">
 
@@ -93,7 +92,7 @@
                     android:paddingBottom="@dimen/very_tiny_space"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/text_choose_a_audio"
+                    android:text="Choose an audio"
                     android:singleLine="true"
                     android:layout_weight="1.0"/>
 
@@ -111,7 +110,7 @@
 
         <View
                 android:background="#fff"
-                android:layout_width="UNKNOWN_DATA_0x101"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
         <Button

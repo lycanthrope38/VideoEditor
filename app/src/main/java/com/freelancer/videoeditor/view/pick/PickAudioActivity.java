@@ -1,26 +1,29 @@
 package com.freelancer.videoeditor.view.pick;
 
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore.Audio.Media;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.provider.MediaStore.Audio.Media;
+import android.widget.Toast;
 
 import com.freelancer.videoeditor.BuildConfig;
 import com.freelancer.videoeditor.R;
+import com.freelancer.videoeditor.config.ShareConstants;
+import com.freelancer.videoeditor.util.ExtraUtils;
+import com.freelancer.videoeditor.util.FileUtils;
+import com.freelancer.videoeditor.util.Util;
 import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.freelancer.videoeditor.view.base.BasePresenter;
 import com.freelancer.videoeditor.vo.Audio;
@@ -36,12 +39,7 @@ import java.util.Comparator;
 
 public class PickAudioActivity extends BaseActivity implements View.OnClickListener, OnAudioClickListener{
     public static final String KEY_AUDIO_RESULT = "KEY_AUDIO_RESULT";
-    private static final int REQUEST_AUDIO = 2323;
-    private static final String TAG = "PickAudioActivity";
-    private String ADMOB_APP_ID;
-    private String ID_ADMOB_BANNER;
-    private String ID_ADMOB_FULL_BANNER;
-    private Animation animPick;
+    private static final int REQUEST_AUDIO = 2323;;
     private ListAudioAdapter mAdapter;
     private ImageView mBtnPickAudio;
     private Button mButtonApply;
@@ -72,13 +70,8 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
             Uri uri = Media.EXTERNAL_CONTENT_URI;
             Cursor cursor = PickAudioActivity.this.getContentResolver().query(uri, projection, "is_music != 0", null, null);
             if (cursor == null || cursor.getCount() == 0) {
-                PickAudioActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-//                        T.show(R.string.message_no_audio_found);
-                    }
-                });
+                PickAudioActivity.this.runOnUiThread(() -> Toast.makeText(PickAudioActivity.this, "No audio found", Toast.LENGTH_SHORT).show());
             } else {
-//                L.d(PickAudioActivity.TAG, "CURSOR SIZE: " + cursor.getCount());
                 int column_index_path = cursor.getColumnIndexOrThrow("_data");
                 int columnIndexTitle = cursor.getColumnIndexOrThrow(ShareConstants.WEB_DIALOG_PARAM_TITLE);
                 int columnIndexName = cursor.getColumnIndexOrThrow("_display_name");
@@ -96,8 +89,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
                         }
                         PickAudioActivity.this.pathList.add(pathFile);
                         StringBuilder append = new StringBuilder().append(BuildConfig.FLAVOR);
-                        UtilLib.getInstance();
-                        Audio audio = new Audio(name, pathFile, file.getPath(), append.append(UtilLib.formatDuration((long) duration)).toString(), artist);
+                        Audio audio = new Audio(name, pathFile, file.getPath(), append.append(Util.formatDuration((long) duration)).toString(), artist);
                         audio.setSeconds(duration / 1000);
                         PickAudioActivity.this.mListDataAudio.add(audio);
                     }
@@ -109,12 +101,10 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
 
         protected void onPostExecute(String result) {
             if (PickAudioActivity.this.mListDataAudio != null && PickAudioActivity.this.mListDataAudio.size() > 0) {
-//                L.d(PickAudioActivity.TAG, "LIST AUDIO SIZE: " + PickAudioActivity.this.mListDataAudio.size());
                 PickAudioActivity.this.mAdapter = new ListAudioAdapter(PickAudioActivity.this, PickAudioActivity.this.mListDataAudio);
                 PickAudioActivity.this.mListAudio.setAdapter(PickAudioActivity.this.mAdapter);
             }
             PickAudioActivity.this.mBtnPickAudio.setVisibility(View.VISIBLE);
-            PickAudioActivity.this.mBtnPickAudio.startAnimation(PickAudioActivity.this.animPick);
         }
     }
 
@@ -128,18 +118,13 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         getWindow().setFlags(1024, 1024);
-        setContentView(R.layout.piclist_activity_audio);
-//        T.init(this);
+        setContentView(R.layout.activity_pick_audio);
         init();
-        UtilLib instance = UtilLib.getInstance();
-        UtilLib.getInstance().getClass();
-        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
-            showListAudio();
-        }
-        Bundle bundle = getIntent().getExtras();
+//        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
+//            showListAudio();
+//        }
 
         this.mBtnPickAudio.setVisibility(View.GONE);
-        this.animPick = AnimationUtils.loadAnimation(this, R.anim.down_to_up);
         setSquareSize(this.mBtnPickAudio, ExtraUtils.getDisplayInfo(this).widthPixels / 6);
     }
 
@@ -176,7 +161,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
             applyAudio();
         } else if (i == R.id.image_play_audio) {
             if (TextUtils.isEmpty(this.mCurrentAudioPath)) {
-                T.show("Please select audio");
+                Toast.makeText(this, "Please select an audio", Toast.LENGTH_SHORT).show();
             } else {
                 togglePlayAudioSelected(BuildConfig.FLAVOR, true);
             }
@@ -189,60 +174,46 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         CharSequence[] items = new CharSequence[]{" Name ", " Size ", " Date "};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort albums by");
-//        Log.e("TAG", "showDialogSortAlbum");
-        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                switch (item) {
-                    case BuildConfig.VERSION_CODE /*0*/:
-                        Collections.sort(PickAudioActivity.this.mListDataAudio, new Comparator<Audio>() {
-                            public int compare(Audio lhs, Audio rhs) {
-                                return lhs.getName().compareToIgnoreCase(rhs.getName());
-                            }
-                        });
-                        PickAudioActivity.this.mListAudio.setAdapter(PickAudioActivity.this.mAdapter);
-//                        L.e(PickAudioActivity.TAG, "showDialogSortAlbum by NAME");
-                        break;
-                    case UtilLib.FLIP_VERTICAL /*1*/:
-                        Collections.sort(PickAudioActivity.this.mListDataAudio, new Comparator<Audio>() {
-                            public int compare(Audio lhs, Audio rhs) {
-                                File fileI = new File(lhs.getPathFolder());
-                                File fileJ = new File(rhs.getPathFolder());
-                                long totalSizeFileI = fileI.length();
-                                long totalSizeFileJ = fileJ.length();
-                                if (totalSizeFileI > totalSizeFileJ) {
-                                    return -1;
-                                }
-                                if (totalSizeFileI < totalSizeFileJ) {
-                                    return 1;
-                                }
-                                return 0;
-                            }
-                        });
-                        PickAudioActivity.this.mListAudio.setAdapter(PickAudioActivity.this.mAdapter);
-                        L.e(PickAudioActivity.TAG, "showDialogSortAlbum by Size");
-                        break;
-                    case UtilLib.FLIP_HORIZONTAL /*2*/:
-                        for (int i = 0; i < PickAudioActivity.this.mListDataAudio.size(); i++) {
-                            Collections.sort(PickAudioActivity.this.mListDataAudio, new Comparator<Audio>() {
-                                public int compare(Audio lhs, Audio rhs) {
-                                    File fileI = new File(lhs.getPathFolder());
-                                    File fileJ = new File(rhs.getPathFolder());
-                                    if (fileI.lastModified() > fileJ.lastModified()) {
-                                        return -1;
-                                    }
-                                    if (fileI.lastModified() < fileJ.lastModified()) {
-                                        return 1;
-                                    }
-                                    return 0;
-                                }
-                            });
+        builder.setSingleChoiceItems(items, -1, (dialog, item) -> {
+            switch (item) {
+                case 0 :
+                    Collections.sort(PickAudioActivity.this.mListDataAudio, (lhs, rhs) -> lhs.getName().compareToIgnoreCase(rhs.getName()));
+                    PickAudioActivity.this.mListAudio.setAdapter(mAdapter);
+                    break;
+                case 1:
+                    Collections.sort(PickAudioActivity.this.mListDataAudio, (lhs, rhs) -> {
+                        File fileI = new File(lhs.getPathFolder());
+                        File fileJ = new File(rhs.getPathFolder());
+                        long totalSizeFileI = fileI.length();
+                        long totalSizeFileJ = fileJ.length();
+                        if (totalSizeFileI > totalSizeFileJ) {
+                            return -1;
                         }
-                        PickAudioActivity.this.mListAudio.setAdapter(PickAudioActivity.this.mAdapter);
-                        Log.e("TAG", "showDialogSortAlbum by Date");
-                        break;
-                }
-                PickAudioActivity.this.mSortDialog.dismiss();
+                        if (totalSizeFileI < totalSizeFileJ) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    PickAudioActivity.this.mListAudio.setAdapter(mAdapter);
+                    break;
+                case 2:
+                    for (int i = 0; i < PickAudioActivity.this.mListDataAudio.size(); i++) {
+                        Collections.sort(PickAudioActivity.this.mListDataAudio, (lhs, rhs) -> {
+                            File fileI = new File(lhs.getPathFolder());
+                            File fileJ = new File(rhs.getPathFolder());
+                            if (fileI.lastModified() > fileJ.lastModified()) {
+                                return -1;
+                            }
+                            if (fileI.lastModified() < fileJ.lastModified()) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                    }
+                    PickAudioActivity.this.mListAudio.setAdapter(mAdapter);
+                    break;
             }
+            PickAudioActivity.this.mSortDialog.dismiss();
         });
         this.mSortDialog = builder.create();
         this.mSortDialog.show();
@@ -275,22 +246,15 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
             this.mMediaPlayer.setDataSource(this.mCurrentAudioPath);
             this.mMediaPlayer.prepare();
             this.mMediaPlayer.start();
-            this.mMediaPlayer.setOnPreparedListener(new OnPreparedListener() {
-                public void onPrepared(MediaPlayer mp) {
-                    int duration = mp.getDuration();
-                    if (duration != -1) {
-                        PickAudioActivity.this.mCurrentAudio.setSeconds(duration / 1000);
-                        StringBuilder append = new StringBuilder().append(BuildConfig.FLAVOR);
-                        UtilLib.getInstance();
-                        PickAudioActivity.this.mTextAudioDuration.setText(append.append(UtilLib.formatDuration((long) duration)).toString());
-                    }
+            this.mMediaPlayer.setOnPreparedListener(mp -> {
+                int duration = mp.getDuration();
+                if (duration != -1) {
+                    PickAudioActivity.this.mCurrentAudio.setSeconds(duration / 1000);
+                    StringBuilder append = new StringBuilder().append(BuildConfig.FLAVOR);
+                    PickAudioActivity.this.mTextAudioDuration.setText(append.append(Util.formatDuration((long) duration)).toString());
                 }
             });
-            this.mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    PickAudioActivity.this.togglePlayAudioSelected(PickAudioActivity.this.mCurrentAudioPath, false);
-                }
-            });
+            this.mMediaPlayer.setOnCompletionListener(mp -> PickAudioActivity.this.togglePlayAudioSelected(PickAudioActivity.this.mCurrentAudioPath, false));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -383,7 +347,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
                     playMusic(uri);
                 }
             } else {
-//                T.show(R.string.can_not_pick_audio_file);
+                Toast.makeText(this, "Can't pick the audio file", Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -395,7 +359,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         try {
             startActivityForResult(intent, REQUEST_AUDIO);
         } catch (ActivityNotFoundException e) {
-//            T.show(R.string.no_file_explorer_found);
+            Toast.makeText(this, "The file of this explorer did not find", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -416,8 +380,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
                         name = file.getName();
                     }
                     StringBuilder append = new StringBuilder().append(BuildConfig.FLAVOR);
-                    UtilLib.getInstance();
-                    Audio audio = new Audio(name, pathFile, file.getPath(), append.append(UtilLib.formatDuration((long) duration)).toString(), artist);
+                    Audio audio = new Audio(name, pathFile, file.getPath(), append.append(Util.formatDuration((long) duration)).toString(), artist);
                     audio.setSeconds(duration / 1000);
                     return audio;
                 }
@@ -436,6 +399,6 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
             onPlayAudio(audio);
             return;
         }
-//        T.show(R.string.can_not_pick_audio_file);
+        Toast.makeText(this, "Can't pick the audio", Toast.LENGTH_SHORT).show();
     }
 }

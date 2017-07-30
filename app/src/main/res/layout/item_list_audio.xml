@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:paddingTop="@dimen/normal_space"
+              android:paddingBottom="@dimen/normal_space"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RadioButton
+            android:id="@+id/radio_choose_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tiny_space"
+            android:layout_marginRight="@dimen/tiny_space"
+            android:text=""/>
+
+    <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/color_item_text_audio"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:id="@+id/text_item_audio_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Audio Name "
+            android:maxLines="1"
+            android:layout_weight="1.0"/>
+</LinearLayout>
