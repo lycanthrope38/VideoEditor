@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/color_button_done_extends_select" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@color/bg_bar_top_extends" />
+        </shape>
+    </item>
+</selector>

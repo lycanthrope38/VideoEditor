@@ -27,14 +27,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.freelancer.videoeditor.BuildConfig;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
+import com.freelancer.videoeditor.util.HandlerTools;
 import com.freelancer.videoeditor.util.IDoBackGround;
+import com.freelancer.videoeditor.util.IHandler;
+import com.freelancer.videoeditor.util.OnCustomTouchListener;
 import com.freelancer.videoeditor.util.UtilLib;
+import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.freelancer.videoeditor.vo.Item;
 
 import java.io.File;
@@ -107,7 +113,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                 }
                 cursor.close();
             }
-            return BuildConfig.FLAVOR;
+            return "";
         }
 
         protected void onPostExecute(String result) {
@@ -179,7 +185,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(ACTION_PICK_IMAGE);
         getWindow().setFlags(1024, 1024);
-        setContentView(com.piclistphotofromgallery.R.layout.piclist_activity_album_extends);
+        setContentView(R.layout.piclist_activity_album_extends);
         this.CAPTURE_IMAGE_FILE_PROVIDER = getPackageName() + ".fileprovider";
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -197,27 +203,27 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         }
         this.pWHItemSelected = (int) ((((float) ((int) ((((float) ExtraUtils.getDisplayInfo(this).heightPixels) / 100.0f) * 14.0f))) / 100.0f) * 98.0f);
         this.pWHBtnDelete = (int) ((((float) this.pWHItemSelected) / 100.0f) * 25.0f);
-        this.txtTitle = findViewById(com.piclistphotofromgallery.R.id.txtTitle);
-        this.txtMessageSelectImage = findViewById(com.piclistphotofromgallery.R.id.txtMessageSelectImage);
+        this.txtTitle = findViewById(R.id.txtTitle);
+        this.txtMessageSelectImage = findViewById(R.id.txtMessageSelectImage);
         this.txtMessageSelectImage.setOnClickListener(this);
         if (this.actionPick == 0) {
-            String string = getResources().getString(com.piclistphotofromgallery.R.string.text_message_select_image);
+            String string = "Select image";
             Object[] objArr = new Object[ACTION_PIC_VIDEO];
             objArr[ACTION_PIC_COLLAGE] = this.limitImageMin;
             objArr[ACTION_PICK_IMAGE] = this.limitImageMax;
             this.txtMessageSelectImage.setText(String.format(string, objArr));
         } else if (this.actionPick == ACTION_PIC_VIDEO) {
-            this.txtMessageSelectImage.setText(getResources().getString(com.piclistphotofromgallery.R.string.text_message_select_image_for_video));
+            this.txtMessageSelectImage.setText(getResources().getString(R.string.text_message_select_image_for_video));
         }
-        this.gridViewListAlbum = findViewById(com.piclistphotofromgallery.R.id.gridViewDetailAlbum);
-        this.txtTotalImage = findViewById(com.piclistphotofromgallery.R.id.txtTotalImage);
-        this.btnBack = findViewById(com.piclistphotofromgallery.R.id.btnBack);
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(this.btnBack, this);
-        this.layoutListImage = findViewById(com.piclistphotofromgallery.R.id.layoutListImage);
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther((ImageView) findViewById(com.piclistphotofromgallery.R.id.btnSort), this);
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther((LinearLayout) findViewById(com.piclistphotofromgallery.R.id.btnDone), this);
-        final ImageView icon_camera = findViewById(com.piclistphotofromgallery.R.id.icon_camera);
-        this.btnPicCamera = findViewById(com.piclistphotofromgallery.R.id.btnPicCamera);
+        this.gridViewListAlbum = findViewById(R.id.gridViewDetailAlbum);
+        this.txtTotalImage = findViewById(R.id.txtTotalImage);
+        this.btnBack = findViewById(R.id.btnBack);
+        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(btnBack, this);
+        this.layoutListImage = findViewById(R.id.layoutListImage);
+        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther((ImageView) findViewById(R.id.btnSort), this);
+        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther((LinearLayout) findViewById(R.id.btnDone), this);
+        final ImageView icon_camera = findViewById(R.id.icon_camera);
+        this.btnPicCamera = findViewById(R.id.btnPicCamera);
         UtilLib.getInstance().setOnCustomTouchView(this.btnPicCamera, new OnCustomTouchListener() {
             private void setScale(float scale) {
                 icon_camera.setScaleX(scale);
@@ -241,10 +247,10 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                 setScale(HandlerTools.ROTATE_R);
             }
         });
-        this.layoutListItemSelect = findViewById(com.piclistphotofromgallery.R.id.layoutListItemSelect);
-        this.layoutDetailAlbum = findViewById(com.piclistphotofromgallery.R.id.layoutDetailAlbum);
-        this.horizontalScrollView = findViewById(com.piclistphotofromgallery.R.id.horizontalScrollView);
-        this.gridViewAlbum = findViewById(com.piclistphotofromgallery.R.id.gridViewAlbum);
+        this.layoutListItemSelect = findViewById(R.id.layoutListItemSelect);
+        this.layoutDetailAlbum = findViewById(R.id.layoutDetailAlbum);
+        this.horizontalScrollView = findViewById(R.id.horizontalScrollView);
+        this.gridViewAlbum = findViewById(R.id.gridViewAlbum);
         try {
             Collections.sort(this.dataAlbum, (lhs, rhs) -> {
                 File fileI = new File(lhs.getPathFolder());
@@ -259,13 +265,13 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             });
         } catch (Exception e) {
         }
-        this.adapterExtends = new AlbumAdapterExtends(this, com.piclistphotofromgallery.R.layout.piclist_row_album_extends, this.dataAlbum, this.indexRowAdsNative);
+        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.piclist_row_album_extends, this.dataAlbum);
         this.adapterExtends.setOnItem(this);
 //        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
-//            new GetItemAlbum().execute();
+            new GetItemAlbum().execute();
 //        }
         updateTxtTotalImage();
-        this.layoutBottom = findViewById(com.piclistphotofromgallery.R.id.layoutBottom);
+        this.layoutBottom = findViewById(R.id.layoutBottom);
         this.layoutBottom.getLayoutParams().height = this.pWHItemSelected;
         if (this.actionPick == 0 || this.actionPick == ACTION_PIC_VIDEO) {
             this.btnPicCamera.getLayoutParams().height = ACTION_PIC_COLLAGE;
@@ -279,9 +285,9 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void showDialogSortAlbum() {
-        CharSequence[] items = getResources().getStringArray(com.piclistphotofromgallery.R.array.array_sort_value);
+        CharSequence[] items = getResources().getStringArray(R.array.array_sort_value);
         Builder builder = new Builder(this);
-        builder.setTitle(getResources().getString(com.piclistphotofromgallery.R.string.text_title_dialog_sort_by_album));
+        builder.setTitle(getResources().getString(R.string.text_title_dialog_sort_by_album));
         Log.e("TAG", "showDialogSortAlbum");
         builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
@@ -350,8 +356,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void refreshGridViewAlbum() {
-        addRowNativeAds();
-        this.adapterExtends = new AlbumAdapterExtends(this, com.piclistphotofromgallery.R.layout.piclist_row_album_extends, this.dataAlbum, this.indexRowAdsNative);
+        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.piclist_row_album_extends, this.dataAlbum);
         this.adapterExtends.setOnItem(this);
         this.gridViewAlbum.setAdapter(adapterExtends);
         this.gridViewAlbum.setVisibility(View.GONE);
@@ -359,9 +364,9 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void showDialogSortListAlbum() {
-        CharSequence[] items = getResources().getStringArray(com.piclistphotofromgallery.R.array.array_sort_value);
+        CharSequence[] items = getResources().getStringArray(R.array.array_sort_value);
         Builder builder = new Builder(this);
-        builder.setTitle(getResources().getString(com.piclistphotofromgallery.R.string.text_title_dialog_sort_by_photo));
+        builder.setTitle(getResources().getString(R.string.text_title_dialog_sort_by_photo));
         builder.setSingleChoiceItems(items, -1, (dialog, item) -> {
             switch (item) {
                 case 0:
@@ -480,7 +485,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         } else if (this.listItemSelect.size() < this.limitImageMax) {
             addItemSelect(item);
         } else {
-            String string = getResources().getString(com.piclistphotofromgallery.R.string.text_message_limit_pick_image);
+            String string = getResources().getString(R.string.text_message_limit_pick_image);
             Object[] objArr = new Object[ACTION_PICK_IMAGE];
             objArr[ACTION_PIC_COLLAGE] = this.limitImageMax;
 //            T.show(String.format(string, objArr));
@@ -495,10 +500,10 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         item.setId(this.listItemSelect.size());
         this.listItemSelect.add(item);
         updateTxtTotalImage();
-        final View viewItemSelected = View.inflate(this, com.piclistphotofromgallery.R.layout.piclist_item_selected_extends, null);
-        ImageView imageItem = viewItemSelected.findViewById(com.piclistphotofromgallery.R.id.imageItem);
-        ImageView btnDelete = viewItemSelected.findViewById(com.piclistphotofromgallery.R.id.btnDelete);
-        viewItemSelected.findViewById(com.piclistphotofromgallery.R.id.layoutRoot).getLayoutParams().height = this.pWHItemSelected;
+        final View viewItemSelected = View.inflate(this, R.layout.piclist_item_selected_extends, null);
+        ImageView imageItem = viewItemSelected.findViewById(R.id.imageItem);
+        ImageView btnDelete = viewItemSelected.findViewById(R.id.btnDelete);
+        viewItemSelected.findViewById(R.id.layoutRoot).getLayoutParams().height = this.pWHItemSelected;
         imageItem.getLayoutParams().width = this.pWHItemSelected;
         imageItem.getLayoutParams().height = this.pWHItemSelected;
         btnDelete.getLayoutParams().width = this.pWHBtnDelete;
@@ -514,17 +519,17 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         UtilLib.getInstance().handlerDoWork(new IHandler() {
             public void doWork() {
                 PickImageExtendsActivity.this.layoutListItemSelect.addView(viewItemSelected);
-                viewItemSelected.startAnimation(AnimationUtils.loadAnimation(PickImageExtendsActivity.this, com.piclistphotofromgallery.R.anim.abc_fade_in));
+                viewItemSelected.startAnimation(AnimationUtils.loadAnimation(PickImageExtendsActivity.this,R.anim.abc_fade_in));
                 PickImageExtendsActivity.this.sendScroll();
             }
         });
     }
 
     void updateTxtTotalImage() {
-        String string = getResources().getString(com.piclistphotofromgallery.R.string.text_images_extends);
+        String string = getResources().getString(R.string.text_images_extends);
         Object[] objArr = new Object[ACTION_PIC_VIDEO];
-        objArr[ACTION_PIC_COLLAGE] = Integer.valueOf(this.listItemSelect.size());
-        objArr[ACTION_PICK_IMAGE] = Integer.valueOf(this.limitImageMax);
+        objArr[ACTION_PIC_COLLAGE] = this.listItemSelect.size();
+        objArr[ACTION_PICK_IMAGE] = this.limitImageMax;
         this.txtTotalImage.setText(String.format(string, objArr));
         if (this.txtMessageSelectImage.getVisibility() == View.GONE && this.listItemSelect.size() == 0) {
             this.txtMessageSelectImage.setVisibility(View.VISIBLE);
@@ -549,7 +554,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         File file = new File(pathAlbum);
         if (file != null && file.exists()) {
             this.txtTitle.setText(file.getName());
-            this.listAlbumAdapter = new DetailAlbumAdapter(this, com.piclistphotofromgallery.R.layout.piclist_row_list_album, this.dataListPhoto);
+            this.listAlbumAdapter = new DetailAlbumAdapter(this, R.layout.item_pick_album, this.dataListPhoto);
             this.listAlbumAdapter.setOnListAlbum(this);
             this.gridViewListAlbum.setAdapter(this.listAlbumAdapter);
             this.layoutDetailAlbum.setVisibility(View.VISIBLE);
@@ -573,20 +578,20 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void OnCustomClick(View v, MotionEvent event) {
-        if (v.getId() == com.piclistphotofromgallery.R.id.btnSort) {
+        if (v.getId() ==R.id.btnSort) {
             if (this.layoutDetailAlbum.getVisibility() == View.GONE) {
                 showDialogSortAlbum();
             } else {
                 showDialogSortListAlbum();
             }
-        } else if (v.getId() == com.piclistphotofromgallery.R.id.btnBack) {
+        } else if (v.getId() == R.id.btnBack) {
             onBackPressed();
-        } else if (v.getId() == com.piclistphotofromgallery.R.id.btnDone) {
+        } else if (v.getId() == R.id.btnDone) {
             ArrayList<String> listString = getListString(this.listItemSelect);
             if (listString.size() >= this.limitImageMin) {
                 done(listString);
             } else {
-                T.show(getResources().getString(com.piclistphotofromgallery.R.string.message_click_button_done_not_image));
+                Toast.makeText(this, getResources().getString(R.string.message_click_button_done_not_image), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -607,8 +612,8 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             return false;
         }
         boolean isCheck = false;
-        for (int k = ACTION_PIC_COLLAGE; k < Constants.FORMAT_IMAGE.size(); k += ACTION_PICK_IMAGE) {
-            if (name.endsWith((String) Constants.FORMAT_IMAGE.get(k))) {
+        for (int k = ACTION_PIC_COLLAGE; k < AppConst.FORMAT_IMAGE.size(); k += ACTION_PICK_IMAGE) {
+            if (name.endsWith((String) AppConst.FORMAT_IMAGE.get(k))) {
                 isCheck = true;
                 break;
             }
@@ -618,26 +623,26 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
 
     @TargetApi(23)
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        UtilLib.getInstance().getClass();
-        if (requestCode == PhotoEditorActivity.REQUEST_CODE_CROP) {
-            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.READ_EXTERNAL_STORAGE")) {
-                new GetItemAlbum().execute();
-            } else if (shouldShowRequestPermissionRationale("android.permission.READ_EXTERNAL_STORAGE")) {
-                UtilLib.getInstance().getClass();
-                UtilLib.getInstance().showDenyDialog(this, "android.permission.READ_EXTERNAL_STORAGE", PhotoEditorActivity.REQUEST_CODE_CROP, true);
-            } else {
-                UtilLib.getInstance().openAppSettings(this, true);
-            }
-        } else if (requestCode != R.styleable.AppCompatTheme_autoCompleteTextViewStyle) {
-        } else {
-            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.CAMERA")) {
-                pickCamera(R.styleable.AppCompatTheme_autoCompleteTextViewStyle);
-            } else if (shouldShowRequestPermissionRationale("android.permission.CAMERA")) {
-                UtilLib.getInstance().showDenyDialog(this, "android.permission.CAMERA", R.styleable.AppCompatTheme_autoCompleteTextViewStyle, false);
-            } else {
-                UtilLib.getInstance().openAppSettings(this, true);
-            }
-        }
+//        UtilLib.getInstance().getClass();
+//        if (requestCode == PhotoEditorActivity.REQUEST_CODE_CROP) {
+//            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.READ_EXTERNAL_STORAGE")) {
+//                new GetItemAlbum().execute();
+//            } else if (shouldShowRequestPermissionRationale("android.permission.READ_EXTERNAL_STORAGE")) {
+//                UtilLib.getInstance().getClass();
+//                UtilLib.getInstance().showDenyDialog(this, "android.permission.READ_EXTERNAL_STORAGE", PhotoEditorActivity.REQUEST_CODE_CROP, true);
+//            } else {
+//                UtilLib.getInstance().openAppSettings(this, true);
+//            }
+//        } else if (requestCode != R.styleable.AppCompatTheme_autoCompleteTextViewStyle) {
+//        } else {
+//            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.CAMERA")) {
+//                pickCamera(R.styleable.AppCompatTheme_autoCompleteTextViewStyle);
+//            } else if (shouldShowRequestPermissionRationale("android.permission.CAMERA")) {
+//                UtilLib.getInstance().showDenyDialog(this, "android.permission.CAMERA", R.styleable.AppCompatTheme_autoCompleteTextViewStyle, false);
+//            } else {
+//                UtilLib.getInstance().openAppSettings(this, true);
+//            }
+//        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -678,12 +683,13 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         startActivityForResult(intent, requestCode);
     }
 
+    @Override
     public void onBackPressed() {
         if (this.layoutDetailAlbum.getVisibility() == View.VISIBLE) {
             this.dataListPhoto.clear();
             this.listAlbumAdapter.notifyDataSetChanged();
             this.layoutDetailAlbum.setVisibility(View.GONE);
-            this.txtTitle.setText(getResources().getString(com.piclistphotofromgallery.R.string.text_title_activity_album_extends));
+            this.txtTitle.setText(getResources().getString(R.string.text_title_activity_album_extends));
             return;
         }
         super.onBackPressed();

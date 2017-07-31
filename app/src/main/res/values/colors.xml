@@ -4,6 +4,13 @@
     <color name="primary_dark">#242833</color>
     <color name="accent">#ffffffff</color>
 
+    <color name="lib_sticker_bg_sticker_common">#dedede</color>
+    <color name="lib_sticker_bg_color_title_sticker">#ffffff</color>
+    <color name="lib_sticker_bg_sticker_common_1">#ffffff</color>
+    <color name="lib_sticker_color_divide_sticker_footer">#f0f0f0</color>
+    <color name="lib_sticker_divide_list_sticker">#fd3b92</color>
+    <color name="lib_sticker_divide_list_sticker_focus">#00ffffff</color>
+    <color name="lib_sticker_text_title_sticker">#4d4d4f</color>
     <color name="piclist_bg_title">#262626</color>
     <color name="piclist_txt_title">#ffffff</color>
     <color name="button_material_dark">#ff5a595b</color>
@@ -12,6 +19,8 @@
     <color name="cardview_light_background">#ffffffff</color>
     <color name="cardview_shadow_end_color">#03000000</color>
     <color name="cardview_shadow_start_color">#37000000</color>
+    <color name="bg_bar_top_extends">#efefef</color>
+    <color name="title_extends">#30344d</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorBgMoreFrame">#60000000</color>
     <color name="colorMenuTextColor">#ffffff</color>

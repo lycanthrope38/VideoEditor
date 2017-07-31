@@ -5,6 +5,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
+import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
@@ -78,9 +79,9 @@ public class ManagerViewCenter implements OnClickListener {
                 if (!isAnimation) {
                     return;
                 }
-                if (visible == 0) {
+                if (visible == View.VISIBLE) {
                     ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_in));
-                } else if (visible == 8) {
+                } else if (visible == View.GONE) {
                     ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_out));
                     if (ManagerViewCenter.this.onManagerViewCenter != null) {
                         ManagerViewCenter.this.onManagerViewCenter.onHideViewCenter();
@@ -103,7 +104,7 @@ public class ManagerViewCenter implements OnClickListener {
     }
 
     public boolean isVisible() {
-        if (this.layoutCenter.getVisibility() == 0) {
+        if (this.layoutCenter.getVisibility() == View.VISIBLE) {
             return true;
         }
         return false;

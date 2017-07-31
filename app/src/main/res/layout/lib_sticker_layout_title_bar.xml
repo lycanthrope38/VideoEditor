@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:id="@+id/root_title_bar"
+                android:background="@color/lib_sticker_bg_color_title_sticker"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+    <ImageView
+            android:id="@+id/image_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/lib_sticker_btn_back_bar_top"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"/>
+
+    <TextView
+            android:textSize="@dimen/lib_sticker_size_title_bar"
+            android:textColor="@color/lib_sticker_text_title_sticker"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:id="@+id/text_action_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:text="@string/lib_sticker_text_title_sticker"
+            android:layout_toRightOf="@+id/image_back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:layout_toEndOf="@+id/image_back"/>
+
+    <ImageView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/normal_space"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/normal_space"
+            android:layout_alignParentEnd="true"/>
+</RelativeLayout>

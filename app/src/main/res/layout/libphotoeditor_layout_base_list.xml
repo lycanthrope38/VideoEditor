@@ -40,7 +40,7 @@
             android:background="#474747"
             android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="UNKNOWN_DATA_0x6401"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true">
@@ -48,7 +48,7 @@
         <HorizontalScrollView
                 android:id="@+id/layoutHorizontalScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="UNKNOWN_DATA_0x6401"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true">
@@ -63,8 +63,8 @@
 
         <ProgressBar
                 android:id="@+id/loading"
-                android:layout_width="UNKNOWN_DATA_0x2801"
-                android:layout_height="UNKNOWN_DATA_0x2801"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:indeterminate="false"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"/>

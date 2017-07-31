@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="array_duration">
+        <item>0.5 second</item>
+        <item>1    second</item>
+        <item>1.5 seconds</item>
+        <item>2    seconds</item>
+        <item>2.5 seconds</item>
+        <item>3    seconds</item>
+        <item>3.5 seconds</item>
+        <item>4    seconds</item>
+        <item>4.5 seconds</item>
+        <item>5    seconds</item>
+        <item>5.5 seconds</item>
+        <item>6    seconds</item>
+        <item>6.5 seconds</item>
+        <item>7    seconds</item>
+        <item>7.5 seconds</item>
+        <item>8    seconds</item>
+        <item>8.5 seconds</item>
+        <item>9    seconds</item>
+        <item>9.5 seconds</item>
+        <item>10   seconds</item>
+    </array>
+    <array name="array_message">
+        <item>Let’s make yourself the interesting videos to share your amazing and marvelous moments.</item>
+        <item>Let’s choose the most beautiful pictures and create amazing videos together.</item>
+        <item>It has been a long time since you last shared your marvelous moments with family and friends.</item>
+        <item>Let’s create your video yourself and share many wonderful things today.</item>
+        <item>Let’s give your lover the most sweet and memorable things.</item>
+    </array>
+    <array name="array_sort_value">
+        <item>Name</item>
+        <item>Size</item>
+        <item>Date</item>
+    </array>
+    <array name="array_title">
+        <item>@string/app_name</item>
+        <item>A wonderful day!</item>
+        <item>More willing to share</item>
+        <item>Create video and share it</item>
+        <item>Let’s share your memory</item>
+    </array>
+    <array name="array_duration_value">
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>4.5</item>
+        <item>5</item>
+        <item>5.5</item>
+        <item>6</item>
+        <item>6.5</item>
+        <item>7</item>
+        <item>7.5</item>
+        <item>8</item>
+        <item>8.5</item>
+        <item>9</item>
+        <item>9.5</item>
+        <item>10</item>
+    </array>
+</resources>

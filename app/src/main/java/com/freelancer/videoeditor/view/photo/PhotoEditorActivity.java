@@ -20,16 +20,23 @@ import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
+import com.freelancer.videoeditor.config.AppConstLibSticker;
+import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.config.ShareConstants;
+import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
+import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.IHandler;
+import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
+import com.freelancer.videoeditor.util.ManagerViewCenter;
 import com.freelancer.videoeditor.util.OnCapture;
 import com.freelancer.videoeditor.util.OnClickItemBaseList;
 import com.freelancer.videoeditor.util.OnDialogConfirm;
@@ -37,10 +44,22 @@ import com.freelancer.videoeditor.util.OnManagerViewCenter;
 import com.freelancer.videoeditor.util.OnSetSpriteForTools;
 import com.freelancer.videoeditor.util.OnToolsBlur;
 import com.freelancer.videoeditor.util.OnViewTools;
+import com.freelancer.videoeditor.util.OnViewTop;
+import com.freelancer.videoeditor.util.RectangleBaseClipping;
+import com.freelancer.videoeditor.util.RectangleBorder;
+import com.freelancer.videoeditor.util.RectangleFilter;
+import com.freelancer.videoeditor.util.RectangleTextAndSticker;
 import com.freelancer.videoeditor.util.UtilLib;
-import com.freelancer.videoeditor.util.view.ManagerRectanglePhoto;
-import com.freelancer.videoeditor.util.view.RectangleBaseClipping;
+import com.freelancer.videoeditor.util.ViewBottom;
+import com.freelancer.videoeditor.util.ViewTop;
 import com.freelancer.videoeditor.view.base.BaseGame;
+
+import org.andengine.engine.options.EngineOptions;
+import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.view.RenderSurfaceView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +89,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     OnCapture onCaptureChangePhoto;
     private OnClickItemBaseList onClickItemBaseListBackground = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-            PhotoEditorActivity.this.rectangleBackground.load("http://139.59.241.64/App/Background/background" + index + AppConst.FORMAT_FILLTER, null);
+//            PhotoEditorActivity.this.rectangleBackground.load("http://139.59.241.64/App/Background/background" + index + AppConst.FORMAT_FILLTER, null);
         }
 
         public void OnItemNoneClick() {
@@ -80,7 +99,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     };
     private OnClickItemBaseList onClickItemBaseListBorder = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-            PhotoEditorActivity.this.rectangleBorder.load("http://139.59.241.64/App/Frames/VideoMaker/frame" + index + AppConst.FORMAT_FRAME, null);
+//            PhotoEditorActivity.this.rectangleBorder.load("http://139.59.241.64/App/Frames/VideoMaker/frame" + index + AppConst.FORMAT_FRAME, null);
         }
 
         public void OnItemNoneClick() {
@@ -89,18 +108,18 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     };
     private OnClickItemBaseList onClickItemBaseListFilter = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-            PhotoEditorActivity.this.rectangleFilter.load("http://139.59.241.64/App/Filter/filter" + index + AppConst.FORMAT_FILLTER, new OnLoadImageFromURL() {
-                public void onCompleted(Bitmap mBitmap) {
-                    UtilLib.getInstance().handlerDoWork(new IHandler() {
-                        public void doWork() {
-                            PhotoEditorActivity.this.managerViewCenter.getListFilter().showLayoutSeekbar();
-                        }
-                    });
-                }
-
-                public void onFail() {
-                }
-            });
+//            PhotoEditorActivity.this.rectangleFilter.load("http://139.59.241.64/App/Filter/filter" + index + AppConst.FORMAT_FILLTER, new OnLoadImageFromURL() {
+//                public void onCompleted(Bitmap mBitmap) {
+//                    UtilLib.getInstance().handlerDoWork(new IHandler() {
+//                        public void doWork() {
+//                            PhotoEditorActivity.this.managerViewCenter.getListFilter().showLayoutSeekbar();
+//                        }
+//                    });
+//                }
+//
+//                public void onFail() {
+//                }
+//            });
         }
 
         public void OnItemNoneClick() {
@@ -115,26 +134,26 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     private OnViewBottom onViewBottom = new OnViewBottom() {
         public void OnBorder() {
             PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.BORDER);
-            L.e("OnViewBottom", "BORDER");
+            Timber.e("OnViewBottom", "BORDER");
         }
 
         public void OnBackground() {
             PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.BACKGROUND);
-            L.e("OnViewBottom", "OnBackground");
+            Timber.e("OnViewBottom", "OnBackground");
         }
 
         public void OnSticker() {
             PhotoEditorActivity.this.goStickerScreen(PhotoEditorActivity.this.photoEditorData.getUrlApiSticker(), PhotoEditorActivity.this.photoEditorData.getKeyFullBannerAdmob(), PhotoEditorActivity.this.photoEditorData.getKeyNativeAdmob());
-            L.e("OnViewBottom", "OnSticker");
+            Timber.e("OnViewBottom", "OnSticker");
         }
 
         public void OnFilter() {
             PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.FILTER);
-            L.e("OnViewBottom", "OnFilter");
+            Timber.e("OnViewBottom", "OnFilter");
         }
 
         public void OnText() {
-            L.e("OnViewBottom", "OnText");
+            Timber.e("OnViewBottom", "OnText");
             PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
             if (PhotoEditorActivity.this.dialogInputText == null) {
                 PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
@@ -157,7 +176,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
 
         public void UnCheck() {
             PhotoEditorActivity.this.managerViewCenter.unCheck();
-            L.e("OnViewBottom", "UnCheck");
+            Timber.e("OnViewBottom", "UnCheck");
         }
     };
     private OnViewTop onViewTop = new OnViewTop() {
@@ -184,8 +203,8 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     };
     private String packageNameCrop;
-    String pathFileSave = BuildConfig.FLAVOR;
-    public String pathItemPhotoCurrent = BuildConfig.FLAVOR;
+    String pathFileSave = "";
+    public String pathItemPhotoCurrent = "";
     private PhotoEditorData photoEditorData;
     private String prefixOutImage;
     RectangleBorder rectangleBackground;
@@ -202,7 +221,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         public abstract void handleResult(Bitmap bitmap);
 
         public void onReceive(Context context, Intent intent) {
-            String path = intent.getExtras().getString("PATH", BuildConfig.FLAVOR);
+            String path = intent.getExtras().getString("PATH", "");
             if (path.length() != 0) {
                 handleResult(BitmapFactory.decodeFile(path));
             }
@@ -224,44 +243,38 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         super.onSetContentView();
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
-        View v = View.inflate(this, libs.photoeditor.R.layout.libphotoeditor_activity_main, null);
-        this.mainView = (FrameLayout) v.findViewById(libs.photoeditor.R.id.mainView);
+        View v = View.inflate(this, R.layout.libphotoeditor_activity_main, null);
+        this.mainView = (FrameLayout) v.findViewById(R.id.mainView);
         this.mainView.addView(this.mRenderSurfaceView, 0);
-        this.layoutAdomb = (LinearLayout) v.findViewById(libs.photoeditor.R.id.layoutAdomb);
         setContentView(v);
     }
 
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        overridePendingTransition(libs.photoeditor.R.anim.abc_fade_in, libs.photoeditor.R.anim.abc_fade_out);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
         SharePrefUtils.init(this);
         Bundle mBundle = getIntent().getExtras();
         if (mBundle != null) {
             this.photoEditorData = (PhotoEditorData) mBundle.getSerializable(KEY_PHOTO_EDITOR_DATA);
             if (this.photoEditorData == null) {
                 finish();
-                L.e("PhotoEditorActivity", "photoEditorData = NULL");
+                Timber.e("PhotoEditorActivity", "photoEditorData = NULL");
                 return;
             }
             this.listPathPhoto = this.photoEditorData.getListPathPhoto();
             this.rootPathSavePhoto = this.photoEditorData.getPathFolderSaveTemp();
             this.prefixOutImage = this.photoEditorData.getPrefixOutImage();
             this.packageNameCrop = this.photoEditorData.getPackageNameCrop();
-            String keyBannerAdmob = this.photoEditorData.getKeyBannerAdmob();
-            String keyFullBannerAdmob = this.photoEditorData.getKeyFullBannerAdmob();
 
-            L.e("PhotoEditorActivity", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            L.e("PhotoEditorActivity", "rootPathSavePhoto = " + this.rootPathSavePhoto);
-            L.e("PhotoEditorActivity", "prefixOutImage = " + this.prefixOutImage);
-            L.e("PhotoEditorActivity", "NUMBER_START_IMAGE = " + this.photoEditorData.getNumerStartImage());
-            L.e("PhotoEditorActivity", "FORMAT_OUT_IMAGE = " + this.photoEditorData.getFormatOutImage());
-            L.e("PhotoEditorActivity", "WIDTH_IMAGE = " + this.photoEditorData.getWidthImage());
-            L.e("PhotoEditorActivity", "HEIGHT_IMAGE = " + this.photoEditorData.getHeightImage());
-            L.e("PhotoEditorActivity", "ID_ADMOB_BANNER = " + keyBannerAdmob);
-            L.e("PhotoEditorActivity", "ID_ADMOB_FULL_BANNER = " + keyFullBannerAdmob);
-            L.e("PhotoEditorActivity", "ID_ADMOB_NATIVE_ADMOB = " + this.photoEditorData.getKeyNativeAdmob());
-            L.e("PhotoEditorActivity", "URL_API_STICKER = " + this.photoEditorData.getUrlApiSticker());
-            L.e("PhotoEditorActivity", "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Timber.e("PhotoEditorActivity", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            Timber.e("PhotoEditorActivity", "rootPathSavePhoto = " + this.rootPathSavePhoto);
+            Timber.e("PhotoEditorActivity", "prefixOutImage = " + this.prefixOutImage);
+            Timber.e("PhotoEditorActivity", "NUMBER_START_IMAGE = " + this.photoEditorData.getNumerStartImage());
+            Timber.e("PhotoEditorActivity", "FORMAT_OUT_IMAGE = " + this.photoEditorData.getFormatOutImage());
+            Timber.e("PhotoEditorActivity", "WIDTH_IMAGE = " + this.photoEditorData.getWidthImage());
+            Timber.e("PhotoEditorActivity", "HEIGHT_IMAGE = " + this.photoEditorData.getHeightImage());
+            Timber.e("PhotoEditorActivity", "URL_API_STICKER = " + this.photoEditorData.getUrlApiSticker());
+            Timber.e("PhotoEditorActivity", "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             if (this.listPathPhoto == null || this.rootPathSavePhoto.length() == 0 || this.prefixOutImage.length() == 0) {
                 finish();
                 return;
@@ -269,13 +282,13 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
                 finish();
                 return;
             } else {
-                PH_BANNER = (int) ExtraUtils.convertDpToPixel(50.0f, this);
-                if (!UtilLib.getInstance().haveNetworkConnection(this)) {
-                    PH_BANNER = 0;
-                }
-                RelativeLayout layoutCenter = (RelativeLayout) this.mainView.findViewById(libs.photoeditor.R.id.layoutCenter);
+//                PH_BANNER = (int) ExtraUtils.convertDpToPixel(50.0f, this);
+//                if (!UtilLib.getInstance().haveNetworkConnection(this)) {
+//                    PH_BANNER = 0;
+//                }
+                RelativeLayout layoutCenter = (RelativeLayout) this.mainView.findViewById(R.id.layoutCenter);
                 layoutCenter.getLayoutParams().height = ConfigScreen.SCREENWIDTH;
-                RelativeLayout layoutContentCenter = (RelativeLayout) this.mainView.findViewById(libs.photoeditor.R.id.layoutContentCenter);
+                RelativeLayout layoutContentCenter = (RelativeLayout) this.mainView.findViewById(R.id.layoutContentCenter);
                 layoutCenter.getLayoutParams().height = ConfigScreen.SCREENWIDTH;
                 this.viewTop = new ViewTop(this, this.mainView);
                 this.viewTop.setOnViewTop(this.onViewTop);
@@ -292,7 +305,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             }
         }
         finish();
-        L.e("PhotoEditorActivity", "mBundle = NULL");
+        Timber.e("PhotoEditorActivity", "mBundle = NULL");
     }
 
     protected Scene onCreateScene() {
@@ -345,16 +358,16 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        L.e("PhotoEditorActivity", "onActivityResult resultCode = " + resultCode);
+        Timber.e("PhotoEditorActivity", "onActivityResult resultCode = " + resultCode);
         if (resultCode != -1) {
             return;
         }
         if (requestCode == 0 || requestCode == 1) {
             this.managerRectanglePhoto.loadPhotoFromURI(data.getData());
         } else if (requestCode == REQUEST_CODE_CROP) {
-            L.e("PhotoEditorActivity", "REQUEST_CODE_CROP = 10001");
+            Timber.e("PhotoEditorActivity", "REQUEST_CODE_CROP = 10001");
             byte[] byteArray = data.getByteArrayExtra("BITMAP");
-            L.e("PhotoEditorActivity", "byteArray = " + byteArray);
+            Timber.e("PhotoEditorActivity", "byteArray = " + byteArray);
             this.managerRectanglePhoto.getmRectanglePhotoSeleted().reLoad(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
         } else if (requestCode == R.styleable.AppCompatTheme_ratingBarStyleIndicator && data != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(data.getStringExtra(AppConstLibSticker.BUNDLE_KEY_STICKER_PATH));
@@ -368,7 +381,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         float pX = 0.0f;
         float pY = (float) ViewTop.PHEIGHT_TOP;
         float pW = (float) ConfigScreen.SCREENWIDTH;
-        float pHView = (float) (((ConfigScreen.SCREENHEIGHT - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - PH_BANNER);
+        float pHView = (float) (((ConfigScreen.SCREENHEIGHT - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP));
         float pH = (pW * 800.0f) / 800.0f;
         if (pH > pHView) {
             pH = pHView;
@@ -380,7 +393,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     void caculatorRectangleCapture() {
-        int pHeightCapture = (((ConfigScreen.SCREENHEIGHT - PH_BANNER) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((((ConfigScreen.SCREENHEIGHT - PH_BANNER) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((int) this.mRectangleMain.getHeight()));
+        int pHeightCapture = (((ConfigScreen.SCREENHEIGHT) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((((ConfigScreen.SCREENHEIGHT - PH_BANNER) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((int) this.mRectangleMain.getHeight()));
         this.myScreenCapture.set((ConfigScreen.SCREENWIDTH - ((int) this.mRectangleMain.getWidth())) / 2, (ConfigScreen.SCREENHEIGHT - pHeightCapture) - ViewTop.PHEIGHT_TOP, (int) this.mRectangleMain.getWidth(), pHeightCapture);
     }
 
@@ -528,9 +541,9 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             this.viewBottom.listPhoto.item_photo_old = item_photo;
             this.viewBottom.listPhoto.index_change_photo_old = index;
             this.pathItemPhotoCurrent = pathItemClick;
-            L.e("PhotoEditorActivity", "loadPhotoForRectanglePhoto = " + pathItemClick);
+            Timber.e("PhotoEditorActivity", "loadPhotoForRectanglePhoto = " + pathItemClick);
             this.managerRectanglePhoto.loadPhotoFromURI(Uri.fromFile(new File(pathItemClick)));
-            ((ImageView) this.viewBottom.listPhoto.item_photo_old.findViewById(libs.photoeditor.R.id.check)).setVisibility(0);
+            ((ImageView) this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.check)).setVisibility(View.VISIBLE);
             this.managerViewCenter.setVisibleLayoutCenter(8, false);
             this.viewBottom.setUnCheckButtonBottom();
             this.managerViewCenter.removeItemSelected();
@@ -584,7 +597,6 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     private void goStickerScreen(String urlApiSticker, String keyFullBannerAmob, String keyNativeAdmob) {
         Intent intent = new Intent(this, StickerActivityLibSticker.class);
         intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_ADMOB_APP_ID, this.ADMOB_APP_ID);
         intent.putExtra(AppConstLibSticker.BUNDLE_KEY_URL_STICKER, urlApiSticker);
         intent.putExtra(AppConstLibSticker.BUNDLE_KEY_FULL_BANNER_ADMOB, keyFullBannerAmob);
         intent.putExtra(AppConstLibSticker.BUNDLE_KEY_NATIVE_ADMOB, keyNativeAdmob);
@@ -607,14 +619,14 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     private void installPhotoCrop(boolean isShowAlert) {
         if (isShowAlert) {
             Builder builder = new Builder(this);
-            builder.setTitle(libs.photoeditor.R.string.dialog_title_download_crop);
-            builder.setMessage(libs.photoeditor.R.string.dialog_message_download_crop);
-            builder.setPositiveButton(libs.photoeditor.R.string.dialog_confirm_text_btn_yes, new OnClickListener() {
+            builder.setTitle(R.string.dialog_title_download_crop);
+            builder.setMessage(R.string.dialog_message_download_crop);
+            builder.setPositiveButton(R.string.dialog_confirm_text_btn_yes, new OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     UtilLib.getInstance().showDetailApp(PhotoEditorActivity.this, PhotoEditorActivity.this.packageNameCrop);
                 }
             });
-            builder.setNegativeButton(libs.photoeditor.R.string.dialog_confirm_text_btn_no, null);
+            builder.setNegativeButton(R.string.dialog_confirm_text_btn_no, null);
             builder.create().show();
             return;
         }
@@ -624,7 +636,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     private void checkPhotoCropVersion() {
         try {
             if (getPackageManager().getPackageInfo(this.packageNameCrop, 0).versionCode < this.photoEditorData.getCurrentCropVersion()) {
-                T.show(libs.photoeditor.R.string.message_update_photo_crop, 1);
+                Toast.makeText(mContext, R.string.message_update_photo_crop, Toast.LENGTH_SHORT).show();
                 installPhotoCrop(false);
                 return;
             }
@@ -751,12 +763,12 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     public void OnBorderClick(int type) {
-        L.e("BLUR", "OnBorderClick");
+        Timber.e("BLUR", "OnBorderClick");
         this.managerRectanglePhoto.getmRectanglePhotoSeleted().OnBorderClick(type);
     }
 
     public void OnSeekBarChange(int progress) {
-        L.e("BLUR", "OnBorderClick");
+        Timber.e("BLUR", "OnBorderClick");
         this.managerRectanglePhoto.getmRectanglePhotoSeleted().resizeBorder(progress);
     }
 }

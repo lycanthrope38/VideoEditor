@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.freelancer.videoeditor.BuildConfig;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
+import com.freelancer.videoeditor.view.pick.PickImageExtendsActivity;
 import com.wang.avi.indicators.BallSpinFadeLoaderIndicator;
 
 import java.io.File;
@@ -681,4 +682,6 @@ public class UtilLib {
     public static boolean isLocaleVn() {
         return Locale.getDefault().getLanguage().equalsIgnoreCase("vi");
     }
+
+
 }

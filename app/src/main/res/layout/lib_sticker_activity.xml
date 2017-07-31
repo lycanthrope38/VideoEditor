@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/lib_sticker_bg_sticker_common"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/lib_sticker_layout_title_bar"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
+
+            <android.support.v4.view.ViewPager
+                    android:id="@+id/pager_sticker"
+                    android:padding="@dimen/no_space"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <include layout="@layout/lib_sticker_layout_top_shadow"/>
+        </FrameLayout>
+
+        <View
+                android:background="@color/lib_sticker_color_divide_sticker_footer"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+        <com.freelancer.videoeditor.util.TabIconIndicatorLibSticker
+                android:id="@+id/indicator_sticker"
+                android:background="0x106000b"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:orientation="vertical"
+            android:id="@+id/layoutAds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

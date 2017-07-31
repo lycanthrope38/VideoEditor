@@ -45,6 +45,7 @@ public class AppConst {
     public static final float ZOOM_MAX = 5.0f;
     public static final float ZOOM_MIN = 0.1f;
     public static final int WIDTH_VIDEO = 720;
+    public static final String OUT_VIDEO_NAME_FORMAT = "yyyy_MM_dd_hh_mm_ss_a";
 
     static {
         String[] strArr = new String[TYPE_STICKER];

@@ -18,13 +18,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
-import com.freelancer.videoeditor.util.view.RectangleFilter;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.freelancer.videoeditor.util.ManagerViewCenter.LIST_ITEM;
 
 import java.io.IOException;
-
-import timber.log.Timber;
 
 public class BaseList implements OnSeekBarChangeListener {
     final int PERCENT_HorizontalScrollView = 15;

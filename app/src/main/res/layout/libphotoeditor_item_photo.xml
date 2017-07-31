@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/root"
+            android:background="#474747"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp">
+
+        <ImageView
+                android:id="@+id/image_selected"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="2dp"
+                android:layout_centerInParent="true"/>
+
+        <ImageView
+                android:id="@+id/photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="2dp"
+                android:src="@drawable/libphotoeditor_icon_default"
+                android:layout_centerInParent="true"/>
+
+        <TextView
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/txtOrder"
+                android:background="@drawable/libphotoeditor_bg_number"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="10"
+                android:layout_centerInParent="true"/>
+
+        <ImageView
+                android:id="@+id/check"
+                android:background="@drawable/libphotoeditor_icon_check"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"/>
+    </RelativeLayout>
+</LinearLayout>
