@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.ConfigScreen;
 
 import java.io.IOException;

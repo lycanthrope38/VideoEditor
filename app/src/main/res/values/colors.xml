@@ -4,6 +4,8 @@
     <color name="primary_dark">#242833</color>
     <color name="accent">#ffffffff</color>
 
+    <color name="bg_tran">#00000000</color>
+    <color name="bg_button_bottom_selected">#373737</color>
     <color name="lib_sticker_bg_sticker_common">#dedede</color>
     <color name="lib_sticker_bg_color_title_sticker">#ffffff</color>
     <color name="lib_sticker_bg_sticker_common_1">#ffffff</color>

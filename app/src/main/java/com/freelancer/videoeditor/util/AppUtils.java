@@ -1,8 +1,11 @@
 package com.freelancer.videoeditor.util;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -28,7 +31,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -177,99 +182,99 @@ public class AppUtils {
         }
     }
 
-    public static void copyAssets(Context context, String outDirFolder) {
-        IOException e;
-        OutputStream out;
-        Throwable th;
-        AssetManager assetManager = context.getAssets();
-        String[] files = null;
-        try {
-            files = assetManager.list("");
-        } catch (IOException e2) {
-            Log.e("tag", "Failed to get asset file list.", e2);
-        }
-        InputStream inputStream;
-        if (files != null) {
-            for (String filename : files) {
-                inputStream = null;
-                out = null;
-                try {
-                    inputStream = assetManager.open(filename);
-                    OutputStream out2 = new FileOutputStream(new File(outDirFolder, filename));
-                    try {
-                        copyFile(inputStream, out2);
-                        if (inputStream != null) {
-                            try {
-                                inputStream.close();
-                            } catch (IOException e3) {
-                            }
-                        }
-                        if (out2 != null) {
-                            try {
-                                out2.close();
-                                out = out2;
-                            } catch (IOException e4) {
-                                out = out2;
-                            }
-                        }
-                    } catch (IOException e5) {
-                        out = out2;
-                        try {
-                            if (inputStream != null) {
-                                try {
-                                    inputStream.close();
-                                } catch (IOException e6) {
-                                }
-                            }
-                            if (out != null) {
-                                try {
-                                    out.close();
-                                } catch (IOException e7) {
-                                }
-                            }
-                        } catch (Throwable th2) {
-                            th = th2;
-                        }
-                    } catch (Throwable th3) {
-                        th = th3;
-                        out = out2;
-                    }
-                } catch (IOException e8) {
-                    if (inputStream != null) {
-                        try {
-                            inputStream.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    if (out != null) {
-                        try {
-                            out.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
-            }
-            return;
-        }
-        if (out != null) {
-            out.close();
-        }
-        if (inputStream != null) {
-            try {
-                inputStream.close();
-            } catch (IOException e10) {
-            }
-        }
-        if (out != null) {
-            try {
-                out.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
+//    public static void copyAssets(Context context, String outDirFolder) {
+//        IOException e;
+//        OutputStream out;
+//        Throwable th;
+//        AssetManager assetManager = context.getAssets();
+//        String[] files = null;
+//        try {
+//            files = assetManager.list("");
+//        } catch (IOException e2) {
+//            Log.e("tag", "Failed to get asset file list.", e2);
+//        }
+//        InputStream inputStream;
+//        if (files != null) {
+//            for (String filename : files) {
+//                inputStream = null;
+//                out = null;
+//                try {
+//                    inputStream = assetManager.open(filename);
+//                    OutputStream out2 = new FileOutputStream(new File(outDirFolder, filename));
+//                    try {
+//                        copyFile(inputStream, out2);
+//                        if (inputStream != null) {
+//                            try {
+//                                inputStream.close();
+//                            } catch (IOException e3) {
+//                            }
+//                        }
+//                        if (out2 != null) {
+//                            try {
+//                                out2.close();
+//                                out = out2;
+//                            } catch (IOException e4) {
+//                                out = out2;
+//                            }
+//                        }
+//                    } catch (IOException e5) {
+//                        out = out2;
+//                        try {
+//                            if (inputStream != null) {
+//                                try {
+//                                    inputStream.close();
+//                                } catch (IOException e6) {
+//                                }
+//                            }
+//                            if (out != null) {
+//                                try {
+//                                    out.close();
+//                                } catch (IOException e7) {
+//                                }
+//                            }
+//                        } catch (Throwable th2) {
+//                            th = th2;
+//                        }
+//                    } catch (Throwable th3) {
+//                        th = th3;
+//                        out = out2;
+//                    }
+//                } catch (IOException e8) {
+//                    if (inputStream != null) {
+//                        try {
+//                            inputStream.close();
+//                        } catch (IOException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                    if (out != null) {
+//                        try {
+//                            out.close();
+//                        } catch (IOException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//            return;
+//        }
+//        if (out != null) {
+//            out.close();
+//        }
+//        if (inputStream != null) {
+//            try {
+//                inputStream.close();
+//            } catch (IOException e10) {
+//            }
+//        }
+//        if (out != null) {
+//            try {
+//                out.close();
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            }
+//        }
+//    }
 
     public static void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
@@ -342,8 +347,70 @@ public class AppUtils {
         return 2;
     }
 
-
-    public static void startTaskService(Context context, long intervalMillis) {
-        ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setInexactRepeating(0, System.currentTimeMillis(), intervalMillis, PendingIntent.getBroadcast(context, 0, new Intent(context, CheckUseAppReceiver.class), 0));
+    @TargetApi(23)
+    public static boolean addPermission(Activity activity, List<String> permissionsList, String permission) {
+        if (activity.checkSelfPermission(permission) != 0) {
+            permissionsList.add(permission);
+            if (!activity.shouldShowRequestPermissionRationale(permission)) {
+                return false;
+            }
+        }
+        return true;
     }
+
+    @TargetApi(23)
+    public static void requestPermission(Activity mActivity, String permission, int REQUEST_CODE) {
+        if (ExtraUtils.getCurrentSdkVersion() >= 23) {
+            List<String> permissionsNeeded = new ArrayList();
+            permissionsNeeded.add(permission);
+            mActivity.requestPermissions((String[]) permissionsNeeded.toArray(new String[permissionsNeeded.size()]), REQUEST_CODE);
+        }
+    }
+
+    @TargetApi(23)
+    public static boolean isPermissionAllow(Activity activity, String permission) {
+        if (ExtraUtils.getCurrentSdkVersion() >= 23 && activity.checkSelfPermission(permission) != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void showDenyDialog(final Activity activity, DialogInterface.OnClickListener onYes) {
+//        showDenyDialog(activity, onYes, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                activity.finish();
+//            }
+//        });
+    }
+
+    public static void showRememberDialog(final Activity activity) {
+//        showRememberDialog(activity, new OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                ExtraUtils.openAppSettings(activity, activity.getPackageName());
+//            }
+//        }, new OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                activity.finish();
+//            }
+//        });
+    }
+
+    public static void showDenyDialog(Activity activity, DialogInterface.OnClickListener onRetry, DialogInterface.OnClickListener onCancel) {
+//        CommonDialog.showDialogConfirm(activity, R.string.message_permission_denied, "Retry", "Cancel", onRetry, onCancel);
+    }
+
+    public static void showRememberDialog(Activity activity, DialogInterface.OnClickListener onSettings, DialogInterface.OnClickListener onCancel) {
+//        CommonDialog.showDialogConfirm(activity, R.string.message_permission_denied_remember, "Settings", "Cancel", onSettings, onCancel);
+    }
+
+//    public static int getVersionCode() {
+//        return -1;
+//    }
+
+    public static void saveBitmapJPEG(Bitmap mBitmap, String path) throws Exception {
+        FileOutputStream out = new FileOutputStream(path);
+        mBitmap.compress(CompressFormat.JPEG, 100, out);
+        out.close();
+    }
+
 }

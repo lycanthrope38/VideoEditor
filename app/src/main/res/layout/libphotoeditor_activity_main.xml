@@ -77,7 +77,6 @@
                         android:layout_centerVertical="true">
 
                     <LinearLayout
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                             android:orientation="vertical"
                             android:id="@+id/btnBorder"
                             android:layout_width="0dp"
@@ -85,17 +84,15 @@
                             android:layout_weight="1.0">
 
                         <ImageView
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/iconBorder"
                                 android:background="@drawable/libphotoeditor_icon_border"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_centerInParent="true"/>
 
                         <TextView
                                 android:textSize="10sp"
                                 android:textColor="#fff"
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/txtBorder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -103,7 +100,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                             android:orientation="vertical"
                             android:id="@+id/btnBackground"
                             android:layout_width="0dp"
@@ -111,16 +107,14 @@
                             android:layout_weight="1.0">
 
                         <ImageView
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/iconBackground"
                                 android:background="@drawable/libphotoeditor_icon_background"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"/>
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
 
                         <TextView
                                 android:textSize="10sp"
                                 android:textColor="#fff"
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/txtBackground"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -128,7 +122,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                             android:orientation="vertical"
                             android:id="@+id/btnSticker"
                             android:layout_width="0dp"
@@ -138,8 +131,8 @@
                         <ImageView
                                 android:id="@+id/iconSticker"
                                 android:background="@drawable/libphotoeditor_icon_sticker"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"/>
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
 
                         <TextView
                                 android:textSize="10sp"
@@ -151,7 +144,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                             android:orientation="vertical"
                             android:id="@+id/btnFilter"
                             android:layout_width="0dp"
@@ -159,16 +151,14 @@
                             android:layout_weight="1.0">
 
                         <ImageView
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/iconFilter"
                                 android:background="@drawable/libphotoeditor_icon_filter"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"/>
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
 
                         <TextView
                                 android:textSize="10sp"
                                 android:textColor="#fff"
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/txtFilter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -176,7 +166,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                             android:orientation="vertical"
                             android:id="@+id/btnText"
                             android:layout_width="0dp"
@@ -184,16 +173,14 @@
                             android:layout_weight="1.0">
 
                         <ImageView
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/iconText"
                                 android:background="@drawable/libphotoeditor_icon_text"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"/>
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
 
                         <TextView
                                 android:textSize="10sp"
                                 android:textColor="#fff"
-                                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/txtText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -254,7 +241,7 @@
         <RelativeLayout
                 android:id="@+id/layoutCenter"
                 android:layout_width="match_parent"
-                android:layout_height="UNKNOWN_DATA_0x15e01"
+                android:layout_height="400dp"
                 android:layout_below="@+id/layoutTop"
                 android:layout_centerHorizontal="true">
 
@@ -265,23 +252,20 @@
                     android:layout_centerHorizontal="true">
 
                 <RelativeLayout
-                        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                         android:id="@+id/layoutParentSticker"
                         android:background="#474747"
                         android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="UNKNOWN_DATA_0xc801"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"/>
 
                 <RelativeLayout
-                        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                         android:orientation="horizontal"
                         android:id="@+id/layoutParentBlur"
                         android:background="#313548"
                         android:padding="1dp"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
@@ -302,48 +286,48 @@
                         <ImageView
                                 android:id="@+id/btnColor"
                                 android:background="@drawable/libphotoeditor_color"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
 
                         <ImageView
                                 android:id="@+id/btnBorder_none"
                                 android:background="@drawable/libphotoeditor_border_none"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
 
                         <ImageView
                                 android:id="@+id/btnBorder_1"
                                 android:background="@drawable/libphotoeditor_border_1"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
 
                         <ImageView
                                 android:id="@+id/btnBorder_2"
                                 android:background="@drawable/libphotoeditor_border_2"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
 
                         <ImageView
                                 android:id="@+id/btnBorder_3"
                                 android:background="@drawable/libphotoeditor_border_3"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
 
                         <ImageView
                                 android:id="@+id/btnBorder_4"
                                 android:background="@drawable/libphotoeditor_border_4"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
-                                android:layout_height="UNKNOWN_DATA_0x3201"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1.0"/>
                     </LinearLayout>
@@ -362,15 +346,14 @@
                             android:layout_height="wrap_content">
 
                         <LinearLayout
-                                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/left"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
                             <View
                                     android:background="#ddd"
-                                    android:layout_width="UNKNOWN_DATA_0x501"
-                                    android:layout_height="UNKNOWN_DATA_0x1e01"/>
+                                    android:layout_width="10dp"
+                                    android:layout_height="30dp"/>
                         </LinearLayout>
 
                         <SeekBar
@@ -386,16 +369,15 @@
                                 android:layout_centerVertical="true"/>
 
                         <LinearLayout
-                                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                                 android:id="@+id/right"
-                                android:layout_width="UNKNOWN_DATA_0x3201"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true">
 
                             <View
                                     android:background="#ddd"
-                                    android:layout_width="UNKNOWN_DATA_0x1401"
-                                    android:layout_height="UNKNOWN_DATA_0x1e01"/>
+                                    android:layout_width="15dp"
+                                    android:layout_height="25dp"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
@@ -403,9 +385,7 @@
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
-        </RelativeLayout>
 <LinearLayout
-android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
 android:orientation="vertical"
 android:id="@+id/loading"
 android:background="#000"
@@ -415,7 +395,6 @@ android:layout_height="match_parent">
 <ProgressBar
         android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?unknown_attr_ref: 101007a"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>
         </FrameLayout>

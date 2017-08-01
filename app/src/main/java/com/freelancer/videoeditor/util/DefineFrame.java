@@ -129,21 +129,21 @@ public class DefineFrame {
                 mListItemFrames.add(new ItemFrame(1, 0.0f + tmpPW, tmpPH1, tmpPW, tmpPH));
                 mListItemFrames.add(new ItemFrame(2, 0.0f + (2.0f * tmpPW), tmpPH1 * 2.0f, tmpPW, tmpPH));
                 break;
-            case R.styleable.Toolbar_titleMargins /*19*/:
-                tmpPW = pW / 3.0f;
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, tmpPW, pH));
-                f = pH / 10.0f;
-                arrayList = mListItemFrames;
-                arrayList.add(new ItemFrame(1, 0.0f + tmpPW, f, tmpPW, pH - f));
-                f = (pH / 10.0f) * 2.0f;
-                arrayList = mListItemFrames;
-                arrayList.add(new ItemFrame(2, 0.0f + (2.0f * tmpPW), f, tmpPW, pH - f));
-                break;
-            case HttpEngine.MAX_FOLLOW_UPS /*20*/:
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 2.0f, pH / 2.0f));
-                mListItemFrames.add(new ItemFrame(1, 0.0f, pH / 2.0f, pW / 2.0f, pH / 2.0f));
-                mListItemFrames.add(new ItemFrame(2, pW / 2.0f, 0.0f, pW / 2.0f, pH));
-                break;
+//            case R.styleable.Toolbar_titleMargins /*19*/:
+//                tmpPW = pW / 3.0f;
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, tmpPW, pH));
+//                f = pH / 10.0f;
+//                arrayList = mListItemFrames;
+//                arrayList.add(new ItemFrame(1, 0.0f + tmpPW, f, tmpPW, pH - f));
+//                f = (pH / 10.0f) * 2.0f;
+//                arrayList = mListItemFrames;
+//                arrayList.add(new ItemFrame(2, 0.0f + (2.0f * tmpPW), f, tmpPW, pH - f));
+//                break;
+//            case HttpEngine.MAX_FOLLOW_UPS /*20*/:
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 2.0f, pH / 2.0f));
+//                mListItemFrames.add(new ItemFrame(1, 0.0f, pH / 2.0f, pW / 2.0f, pH / 2.0f));
+//                mListItemFrames.add(new ItemFrame(2, pW / 2.0f, 0.0f, pW / 2.0f, pH));
+//                break;
             case R.styleable.Toolbar_buttonGravity /*21*/:
                 mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 2.0f, pH));
                 mListItemFrames.add(new ItemFrame(1, pW / 2.0f, 0.0f, pW / 2.0f, pH / 2.0f));
@@ -764,89 +764,89 @@ public class DefineFrame {
                 mListItemFrames.add(new ItemFrame(3, 0.0f, pH - (pH / 4.0f), pW / 2.0f, pH / 4.0f));
                 mListItemFrames.add(new ItemFrame(4, pW / 2.0f, pH - (pH / 4.0f), pW / 2.0f, pH / 4.0f));
                 break;
-            case StatusLine.HTTP_CONTINUE /*100*/:
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
-                mListItemFrames.add(new ItemFrame(1, pW / 2.0f, 0.0f, pW / 2.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(2, 0.0f, (pH / 3.0f) * 2.0f, pW / 2.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(3, pW / 2.0f, pH / 3.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
-                break;
-            case R.styleable.AppCompatTheme_autoCompleteTextViewStyle /*101*/:
-                mW = pW / 3.0f;
-                mH = pH / 3.0f;
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(1, 0.0f, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(2, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(3, mH, 0.0f, pW / 3.0f, pH));
-                mListItemFrames.add(new ItemFrame(4, pW - mW, 0.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(5, pW - mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                break;
-            case R.styleable.AppCompatTheme_buttonStyle /*102*/:
-                mW = pW / 3.0f;
-                mH = pH / 3.0f;
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH));
-                mListItemFrames.add(new ItemFrame(1, mW, 0.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(2, pW - mW, 0.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(3, mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(4, pW - mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(5, mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                break;
-            case R.styleable.AppCompatTheme_buttonStyleSmall /*103*/:
-                mW = pW / 3.0f;
-                mH = pH / 3.0f;
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(1, 0.0f, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(2, mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(3, pW - mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(4, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(5, mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                break;
-            case R.styleable.AppCompatTheme_checkboxStyle /*104*/:
-                mW = pW / 3.0f;
-                mH = pH / 3.0f;
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, mW, mH));
-                mListItemFrames.add(new ItemFrame(1, mW, 0.0f, mW, mH));
-                mListItemFrames.add(new ItemFrame(2, pW - mW, 0.0f, pW / 3.0f, pH));
-                mListItemFrames.add(new ItemFrame(3, 0.0f, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(4, mW, mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(5, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(6, mW, pH - mH, pW / 3.0f, pH / 3.0f));
-                break;
-            case R.styleable.AppCompatTheme_checkedTextViewStyle /*105*/:
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(1, pW / 4.0f, 0.0f, pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(2, pW / 2.0f, 0.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
-                mListItemFrames.add(new ItemFrame(3, 0.0f, pH / 3.0f, pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(4, pW / 4.0f, pH / 3.0f, pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(5, 0.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(6, pW / 4.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(7, pW / 2.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(8, pW - (pW / 4.0f), pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
-                break;
-            case R.styleable.AppCompatTheme_editTextStyle /*106*/:
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(1, pW / 3.0f, 0.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(2, pW - (pW / 3.0f), 0.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(3, 0.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(4, pW / 3.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(5, pW - (pW / 3.0f), pH / 4.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(6, 0.0f, pH / 2.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(7, pW / 3.0f, pH / 2.0f, (pW / 3.0f) * 2.0f, pH / 2.0f));
-                mListItemFrames.add(new ItemFrame(8, 0.0f, pH - (pH / 4.0f), pW / 3.0f, pH / 4.0f));
-                break;
-            case R.styleable.AppCompatTheme_radioButtonStyle /*107*/:
-                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(1, 0.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(2, 0.0f, pH / 2.0f, pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(3, 0.0f, pH - (pH / 4.0f), pW / 3.0f, pH / 4.0f));
-                mListItemFrames.add(new ItemFrame(4, pW / 3.0f, 0.0f, pW / 3.0f, pH / 2.0f));
-                mListItemFrames.add(new ItemFrame(5, pW / 3.0f, pH / 2.0f, pW / 3.0f, pH / 2.0f));
-                mListItemFrames.add(new ItemFrame(6, pW - (pW / 3.0f), 0.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(7, pW - (pW / 3.0f), pH / 3.0f, pW / 3.0f, pH / 3.0f));
-                mListItemFrames.add(new ItemFrame(8, pW - (pW / 3.0f), pH - (pH / 3.0f), pW / 3.0f, pH / 3.0f));
-                break;
+//            case StatusLine.HTTP_CONTINUE /*100*/:
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
+//                mListItemFrames.add(new ItemFrame(1, pW / 2.0f, 0.0f, pW / 2.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(2, 0.0f, (pH / 3.0f) * 2.0f, pW / 2.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(3, pW / 2.0f, pH / 3.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_autoCompleteTextViewStyle /*101*/:
+//                mW = pW / 3.0f;
+//                mH = pH / 3.0f;
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(1, 0.0f, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(2, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(3, mH, 0.0f, pW / 3.0f, pH));
+//                mListItemFrames.add(new ItemFrame(4, pW - mW, 0.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(5, pW - mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_buttonStyle /*102*/:
+//                mW = pW / 3.0f;
+//                mH = pH / 3.0f;
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH));
+//                mListItemFrames.add(new ItemFrame(1, mW, 0.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(2, pW - mW, 0.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(3, mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(4, pW - mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(5, mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_buttonStyleSmall /*103*/:
+//                mW = pW / 3.0f;
+//                mH = pH / 3.0f;
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(1, 0.0f, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(2, mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(3, pW - mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(4, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(5, mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(6, pW - mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_checkboxStyle /*104*/:
+//                mW = pW / 3.0f;
+//                mH = pH / 3.0f;
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, mW, mH));
+//                mListItemFrames.add(new ItemFrame(1, mW, 0.0f, mW, mH));
+//                mListItemFrames.add(new ItemFrame(2, pW - mW, 0.0f, pW / 3.0f, pH));
+//                mListItemFrames.add(new ItemFrame(3, 0.0f, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(4, mW, mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(5, 0.0f, pH - mH, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(6, mW, pH - mH, pW / 3.0f, pH / 3.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_checkedTextViewStyle /*105*/:
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(1, pW / 4.0f, 0.0f, pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(2, pW / 2.0f, 0.0f, pW / 2.0f, (pH / 3.0f) * 2.0f));
+//                mListItemFrames.add(new ItemFrame(3, 0.0f, pH / 3.0f, pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(4, pW / 4.0f, pH / 3.0f, pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(5, 0.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(6, pW / 4.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(7, pW / 2.0f, pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(8, pW - (pW / 4.0f), pH - (pH / 3.0f), pW / 4.0f, pH / 3.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_editTextStyle /*106*/:
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(1, pW / 3.0f, 0.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(2, pW - (pW / 3.0f), 0.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(3, 0.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(4, pW / 3.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(5, pW - (pW / 3.0f), pH / 4.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(6, 0.0f, pH / 2.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(7, pW / 3.0f, pH / 2.0f, (pW / 3.0f) * 2.0f, pH / 2.0f));
+//                mListItemFrames.add(new ItemFrame(8, 0.0f, pH - (pH / 4.0f), pW / 3.0f, pH / 4.0f));
+//                break;
+//            case R.styleable.AppCompatTheme_radioButtonStyle /*107*/:
+//                mListItemFrames.add(new ItemFrame(0, 0.0f, 0.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(1, 0.0f, pH / 4.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(2, 0.0f, pH / 2.0f, pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(3, 0.0f, pH - (pH / 4.0f), pW / 3.0f, pH / 4.0f));
+//                mListItemFrames.add(new ItemFrame(4, pW / 3.0f, 0.0f, pW / 3.0f, pH / 2.0f));
+//                mListItemFrames.add(new ItemFrame(5, pW / 3.0f, pH / 2.0f, pW / 3.0f, pH / 2.0f));
+//                mListItemFrames.add(new ItemFrame(6, pW - (pW / 3.0f), 0.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(7, pW - (pW / 3.0f), pH / 3.0f, pW / 3.0f, pH / 3.0f));
+//                mListItemFrames.add(new ItemFrame(8, pW - (pW / 3.0f), pH - (pH / 3.0f), pW / 3.0f, pH / 3.0f));
+//                break;
         }
         return mListItemFrames;
     }

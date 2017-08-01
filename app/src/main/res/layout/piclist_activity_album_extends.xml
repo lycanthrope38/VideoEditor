@@ -48,21 +48,21 @@
             android:layout_height="1dp"
             android:layout_below="@+id/relativeLayout"/>
 
-    <!--<LinearLayout-->
-    <!--android:orientation="horizontal"-->
-    <!--android:id="@+id/btnPicCamera"-->
-    <!--android:background="@color/bg_bar_top_extends"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="UNKNOWN_DATA_0x2801"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:layout_below="@+id/shadow_bg_bar_top">-->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/btnPicCamera"
+            android:background="@color/bg_bar_top_extends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/shadow_bg_bar_top">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/icon_camera"-->
-    <!--android:background="@drawable/btn_camera_extends"-->
-    <!--android:layout_width="UNKNOWN_DATA_0x1e01"-->
-    <!--android:layout_height="UNKNOWN_DATA_0x1e01"/>-->
-    <!--</LinearLayout>-->
+        <ImageView
+                android:id="@+id/icon_camera"
+                android:background="@drawable/btn_camera_extends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <GridView
             android:id="@+id/gridViewAlbum"

@@ -50,7 +50,7 @@ public class UtilLib {
     public final int REQUEST_CODE_ASK_ALL_PERMISSIONS = PhotoEditorActivity.REQUEST_CODE_CROP;
     final Handler mHandler = new Handler(new Callback() {
         public boolean handleMessage(Message msg) {
-            msg.obj.doWork();
+//            msg.obj.doWork();
             return true;
         }
     });

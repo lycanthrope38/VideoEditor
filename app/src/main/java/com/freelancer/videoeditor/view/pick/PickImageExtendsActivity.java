@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class PickImageExtendsActivity extends Activity implements OnClickListener, OnAlbum, OnListAlbum, OnCustomClickListener {
+public class PickImageExtendsActivity extends Activity implements OnClickListener, OnAlbum, OnListAlbum, com.freelancer.videoeditor.util.OnCustomClickListener {
     public static final int ACTION_PICK_IMAGE = 1;
     public static final int ACTION_PIC_COLLAGE = 0;
     public static final int ACTION_PIC_VIDEO = 2;
@@ -508,7 +508,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         imageItem.getLayoutParams().height = this.pWHItemSelected;
         btnDelete.getLayoutParams().width = this.pWHBtnDelete;
         btnDelete.getLayoutParams().height = this.pWHBtnDelete;
-        Glide.with(this).load(item.getPathFile()).asBitmap().override(this.pWHItemSelected, this.pWHItemSelected).animate(com.piclistphotofromgallery.R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(com.piclistphotofromgallery.R.drawable.piclist_icon_default).fallback(com.piclistphotofromgallery.R.drawable.piclist_icon_default).placeholder(com.piclistphotofromgallery.R.drawable.piclist_icon_default).into(imageItem);
+        Glide.with(this).load(item.getPathFile()).asBitmap().override(this.pWHItemSelected, this.pWHItemSelected).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.piclist_icon_default).fallback(R.drawable.piclist_icon_default).placeholder(R.drawable.piclist_icon_default).into(imageItem);
         btnDelete.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 PickImageExtendsActivity.this.layoutListItemSelect.removeView(viewItemSelected);
@@ -530,7 +530,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         Object[] objArr = new Object[ACTION_PIC_VIDEO];
         objArr[ACTION_PIC_COLLAGE] = this.listItemSelect.size();
         objArr[ACTION_PICK_IMAGE] = this.limitImageMax;
-        this.txtTotalImage.setText(String.format(string, objArr));
+//        this.txtTotalImage.setText(String.format(string, objArr));
         if (this.txtMessageSelectImage.getVisibility() == View.GONE && this.listItemSelect.size() == 0) {
             this.txtMessageSelectImage.setVisibility(View.VISIBLE);
             this.layoutListImage.setVisibility(View.GONE);
@@ -677,9 +677,9 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         Uri imageUri = FileProvider.getUriForFile(this, this.CAPTURE_IMAGE_FILE_PROVIDER, new File(path, "image.jpg"));
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra("output", imageUri);
-        for (ResolveInfo resolveInfo : getPackageManager().queryIntentActivities(intent, NativeProtocol.MESSAGE_GET_ACCESS_TOKEN_REQUEST)) {
-            grantUriPermission(resolveInfo.activityInfo.packageName, imageUri, 3);
-        }
+//        for (ResolveInfo resolveInfo : getPackageManager().queryIntentActivities(intent, NativeProtocol.MESSAGE_GET_ACCESS_TOKEN_REQUEST)) {
+//            grantUriPermission(resolveInfo.activityInfo.packageName, imageUri, 3);
+//        }
         startActivityForResult(intent, requestCode);
     }
 

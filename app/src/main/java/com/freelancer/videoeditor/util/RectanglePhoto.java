@@ -12,6 +12,9 @@ import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.wang.avi.indicators.BallSpinFadeLoaderIndicator;
+
+import net.margaritov.preference.colorpicker.ColorPickerDialog;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import org.andengine.entity.modifier.AlphaModifier;
@@ -473,7 +476,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
             if (this.listBorder.size() != 0) {
                 UtilLib.getInstance().handlerDoWork(new IHandler() {
                     public void doWork() {
-                        RectanglePhoto.this.showDialogSelectColor(RectanglePhoto.this.mainActivity);
+//                        RectanglePhoto.this.showDialogSelectColor(RectanglePhoto.this.mainActivity);
                     }
                 });
             }

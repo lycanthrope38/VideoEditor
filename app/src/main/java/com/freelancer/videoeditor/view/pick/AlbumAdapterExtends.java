@@ -31,7 +31,6 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
         public ImageView iconNext;
         public ImageView imageItem;
         public RelativeLayout layoutItem;
-        public LinearLayout layoutNativeAds;
         public RelativeLayout layoutRoot;
         public TextView txtPath;
         public TextView txtTitle;
@@ -72,7 +71,6 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
         }
 
         holder.layoutItem.setVisibility(View.VISIBLE);
-        holder.layoutNativeAds.setVisibility(View.GONE);
         Item item = (Item) this.data.get(position);
         holder.txtTitle.setText(item.getName());
         holder.txtPath.setText(item.getPathFolder());

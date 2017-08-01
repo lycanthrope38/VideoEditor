@@ -33,16 +33,19 @@ import com.freelancer.videoeditor.config.ShareConstants;
 import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
+import com.freelancer.videoeditor.util.IBitmap;
 import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
+import com.freelancer.videoeditor.util.MyFile;
 import com.freelancer.videoeditor.util.OnCapture;
 import com.freelancer.videoeditor.util.OnClickItemBaseList;
 import com.freelancer.videoeditor.util.OnDialogConfirm;
 import com.freelancer.videoeditor.util.OnManagerViewCenter;
 import com.freelancer.videoeditor.util.OnSetSpriteForTools;
 import com.freelancer.videoeditor.util.OnToolsBlur;
+import com.freelancer.videoeditor.util.OnViewBottom;
 import com.freelancer.videoeditor.util.OnViewTools;
 import com.freelancer.videoeditor.util.OnViewTop;
 import com.freelancer.videoeditor.util.RectangleBaseClipping;
@@ -73,7 +76,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public static final int REQUEST_CODE_CROP = 10001;
     int REQUEST_CODE_SAVE = R.styleable.AppCompatTheme_seekBarStyle;
     final String TAG = "PhotoEditorActivity";
-    DialogInputText dialogInputText;
+//    DialogInputText dialogInputText;
     HandlerTools handlerTools = new HandlerTools();
     public int indexItemPhotoCurrent = -1;
     boolean isFinishResult = false;
@@ -133,45 +136,45 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     };
     private OnViewBottom onViewBottom = new OnViewBottom() {
         public void OnBorder() {
-            PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.BORDER);
+            PhotoEditorActivity.this.managerViewCenter.showList(ManagerViewCenter.LIST_ITEM.BORDER);
             Timber.e("OnViewBottom", "BORDER");
         }
 
         public void OnBackground() {
-            PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.BACKGROUND);
+            PhotoEditorActivity.this.managerViewCenter.showList(ManagerViewCenter.LIST_ITEM.BACKGROUND);
             Timber.e("OnViewBottom", "OnBackground");
         }
 
         public void OnSticker() {
-            PhotoEditorActivity.this.goStickerScreen(PhotoEditorActivity.this.photoEditorData.getUrlApiSticker(), PhotoEditorActivity.this.photoEditorData.getKeyFullBannerAdmob(), PhotoEditorActivity.this.photoEditorData.getKeyNativeAdmob());
+//            PhotoEditorActivity.this.goStickerScreen(PhotoEditorActivity.this.photoEditorData.getUrlApiSticker(), PhotoEditorActivity.this.photoEditorData.getKeyFullBannerAdmob(), PhotoEditorActivity.this.photoEditorData.getKeyNativeAdmob());
             Timber.e("OnViewBottom", "OnSticker");
         }
 
         public void OnFilter() {
-            PhotoEditorActivity.this.managerViewCenter.showList(LIST_ITEM.FILTER);
+            PhotoEditorActivity.this.managerViewCenter.showList(ManagerViewCenter.LIST_ITEM.FILTER);
             Timber.e("OnViewBottom", "OnFilter");
         }
 
         public void OnText() {
             Timber.e("OnViewBottom", "OnText");
             PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
-            if (PhotoEditorActivity.this.dialogInputText == null) {
-                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
-                    public void onCompleted(Bitmap mBitmap) {
-                        if (mBitmap != null) {
-                            PhotoEditorActivity.this.rectangleTextAndSticker.addItem(mBitmap, 3);
-                            PhotoEditorActivity.this.isSave = false;
-                            PhotoEditorActivity.this.isSaveChange();
-                        }
-                    }
-                });
-                PhotoEditorActivity.this.dialogInputText.setOnDismissListener(new OnDismissListener() {
-                    public void onDismiss(DialogInterface dialog) {
-                        PhotoEditorActivity.this.viewBottom.setUnCheckButtonBottom();
-                    }
-                });
-            }
-            PhotoEditorActivity.this.dialogInputText.show();
+//            if (PhotoEditorActivity.this.dialogInputText == null) {
+//                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
+//                    public void onCompleted(Bitmap mBitmap) {
+//                        if (mBitmap != null) {
+//                            PhotoEditorActivity.this.rectangleTextAndSticker.addItem(mBitmap, 3);
+//                            PhotoEditorActivity.this.isSave = false;
+//                            PhotoEditorActivity.this.isSaveChange();
+//                        }
+//                    }
+//                });
+//                PhotoEditorActivity.this.dialogInputText.setOnDismissListener(new OnDismissListener() {
+//                    public void onDismiss(DialogInterface dialog) {
+//                        PhotoEditorActivity.this.viewBottom.setUnCheckButtonBottom();
+//                    }
+//                });
+//            }
+//            PhotoEditorActivity.this.dialogInputText.show();
         }
 
         public void UnCheck() {
@@ -188,7 +191,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             PhotoEditorActivity.this.onCaptureChangePhoto = null;
             PhotoEditorActivity.this.onCaptureChangePhoto = new OnCapture() {
                 public void onSuccess(String pathItemSave) {
-                    Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(libs.photoeditor.R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(libs.photoeditor.R.drawable.libphotoeditor_icon_default).fallback(libs.photoeditor.R.drawable.libphotoeditor_icon_default).placeholder(libs.photoeditor.R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(libs.photoeditor.R.id.photo));
+                    Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.libphotoeditor_icon_default).fallback(R.drawable.libphotoeditor_icon_default).placeholder(R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.photo));
                     PhotoEditorActivity.this.loadPhotoForRectanglePhoto(PhotoEditorActivity.this.item_photo_ItemPhotoCurrent, PhotoEditorActivity.this.indexItemPhotoCurrent, pathItemSave);
                 }
 
@@ -252,7 +255,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-        SharePrefUtils.init(this);
+//        SharePrefUtils.init(this);
         Bundle mBundle = getIntent().getExtras();
         if (mBundle != null) {
             this.photoEditorData = (PhotoEditorData) mBundle.getSerializable(KEY_PHOTO_EDITOR_DATA);
@@ -393,7 +396,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     void caculatorRectangleCapture() {
-        int pHeightCapture = (((ConfigScreen.SCREENHEIGHT) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((((ConfigScreen.SCREENHEIGHT - PH_BANNER) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((int) this.mRectangleMain.getHeight()));
+        int pHeightCapture = (((ConfigScreen.SCREENHEIGHT) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((((ConfigScreen.SCREENHEIGHT ) - ViewBottom.PHEIGHT_BOTTOM) - ViewTop.PHEIGHT_TOP) - ((int) this.mRectangleMain.getHeight()));
         this.myScreenCapture.set((ConfigScreen.SCREENWIDTH - ((int) this.mRectangleMain.getWidth())) / 2, (ConfigScreen.SCREENHEIGHT - pHeightCapture) - ViewTop.PHEIGHT_TOP, (int) this.mRectangleMain.getWidth(), pHeightCapture);
     }
 
@@ -410,9 +413,9 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         MyFile.ini(this);
         this.rectangleTextAndSticker.hideRectangBorderAndButtonDeleted();
         caculatorRectangleCapture();
-        MyScreenCapture.SC_FORMAT_IMAGE_SAVE = FORMAT_IMAGE_SAVE.JPEG;
-        MyScreenCapture.WIDTH_IMAGE = this.photoEditorData.getWidthImage();
-        MyScreenCapture.HEIGHT_IMAGE = this.photoEditorData.getHeightImage();
+//        MyScreenCapture.SC_FORMAT_IMAGE_SAVE = FORMAT_IMAGE_SAVE.JPEG;
+//        MyScreenCapture.WIDTH_IMAGE = this.photoEditorData.getWidthImage();
+//        MyScreenCapture.HEIGHT_IMAGE = this.photoEditorData.getHeightImage();
         this.myScreenCapture.capture(this, this.pathFileSave, 0, new OnCapture() {
             public void onSuccess(final String pathFile) {
                 PhotoEditorActivity.this.isSave = true;
@@ -507,7 +510,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
         this.onCaptureChangePhoto = new OnCapture() {
             public void onSuccess(String pathItemSave) {
-                Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(libs.photoeditor.R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(libs.photoeditor.R.drawable.libphotoeditor_icon_default).fallback(libs.photoeditor.R.drawable.libphotoeditor_icon_default).placeholder(libs.photoeditor.R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(libs.photoeditor.R.id.photo));
+                Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.libphotoeditor_icon_default).fallback(R.drawable.libphotoeditor_icon_default).placeholder(R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.photo));
                 PhotoEditorActivity.this.loadPhotoForRectanglePhoto(item_photo, index, PhotoEditorActivity.this.pathItemPhotoCurrent);
             }
 
@@ -522,21 +525,21 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         final View view = item_photo;
         final int i = index;
         final String str2 = pathItemClick;
-        new DialogConfirm(this, new OnDialogConfirm() {
-            public void OnYes() {
-                PhotoEditorActivity.this.savePhoto(str);
-            }
-
-            public void OnNo() {
-                PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
-            }
-        }).show();
+//        new DialogConfirm(this, new OnDialogConfirm() {
+//            public void OnYes() {
+//                PhotoEditorActivity.this.savePhoto(str);
+//            }
+//
+//            public void OnNo() {
+//                PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
+//            }
+//        }).show();
     }
 
     void loadPhotoForRectanglePhoto(View item_photo, int index, String pathItemClick) {
         if (item_photo != null) {
             if (this.viewBottom.listPhoto.item_photo_old != null) {
-                ((ImageView) this.viewBottom.listPhoto.item_photo_old.findViewById(libs.photoeditor.R.id.check)).setVisibility(8);
+                ((ImageView) this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.check)).setVisibility(View.GONE);
             }
             this.viewBottom.listPhoto.item_photo_old = item_photo;
             this.viewBottom.listPhoto.index_change_photo_old = index;
@@ -594,15 +597,15 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         finish();
     }
 
-    private void goStickerScreen(String urlApiSticker, String keyFullBannerAmob, String keyNativeAdmob) {
-        Intent intent = new Intent(this, StickerActivityLibSticker.class);
-        intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_URL_STICKER, urlApiSticker);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_FULL_BANNER_ADMOB, keyFullBannerAmob);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_NATIVE_ADMOB, keyNativeAdmob);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
-        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
-    }
+//    private void goStickerScreen(String urlApiSticker, String keyFullBannerAmob, String keyNativeAdmob) {
+//        Intent intent = new Intent(this, StickerActivityLibSticker.class);
+//        intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
+//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_URL_STICKER, urlApiSticker);
+//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_FULL_BANNER_ADMOB, keyFullBannerAmob);
+//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_NATIVE_ADMOB, keyNativeAdmob);
+//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
+//        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
+//    }
 
     public void onCrop() {
         if (this.spriteTools == null) {
