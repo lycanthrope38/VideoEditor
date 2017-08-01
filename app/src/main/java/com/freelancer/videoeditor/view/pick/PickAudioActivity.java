@@ -1,5 +1,6 @@
 package com.freelancer.videoeditor.view.pick;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,7 +38,7 @@ import java.util.Comparator;
  * Created by ThongLe on 7/29/2017.
  */
 
-public class PickAudioActivity extends BaseActivity implements View.OnClickListener, OnAudioClickListener{
+public class PickAudioActivity extends Activity implements View.OnClickListener, OnAudioClickListener{
     public static final String KEY_AUDIO_RESULT = "KEY_AUDIO_RESULT";
     private static final int REQUEST_AUDIO = 2323;;
     private ListAudioAdapter mAdapter;
@@ -121,7 +122,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_pick_audio);
         init();
 //        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
-//            showListAudio();
+            showListAudio();
 //        }
 
         this.mBtnPickAudio.setVisibility(View.GONE);
@@ -290,30 +291,6 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         stopAudioSound();
     }
 
-    @Override
-    protected BasePresenter getPresenter() {
-        return null;
-    }
-
-    @Override
-    protected void initializeInjector() {
-
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return 0;
-    }
 
     protected void onPause() {
         super.onPause();
@@ -338,6 +315,7 @@ public class PickAudioActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == -1 && requestCode == REQUEST_AUDIO) {
             Uri uri = data.getData();

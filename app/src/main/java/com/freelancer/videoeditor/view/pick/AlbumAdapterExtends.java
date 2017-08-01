@@ -54,12 +54,12 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
         if (convertView == null) {
             convertView = this.pickImageExtendsActivity.getLayoutInflater().inflate(this.layoutResourceId, parent, false);
             holder = new RecordHolder();
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.name_album);
-            holder.txtPath = (TextView) convertView.findViewById(R.id.path_album);
-            holder.imageItem = (ImageView) convertView.findViewById(R.id.icon_album);
-            holder.iconNext = (ImageView) convertView.findViewById(R.id.iconNext);
-            holder.layoutRoot = (RelativeLayout) convertView.findViewById(R.id.layoutRoot);
-            holder.layoutItem = (RelativeLayout) convertView.findViewById(R.id.layoutItem);
+            holder.txtTitle = convertView.findViewById(R.id.name_album);
+            holder.txtPath = convertView.findViewById(R.id.path_album);
+            holder.imageItem = convertView.findViewById(R.id.icon_album);
+            holder.iconNext = convertView.findViewById(R.id.iconNext);
+            holder.layoutRoot = convertView.findViewById(R.id.layoutRoot);
+            holder.layoutItem = convertView.findViewById(R.id.layoutItem);
             holder.layoutRoot.getLayoutParams().height = this.pHeightItem;
             holder.imageItem.getLayoutParams().width = this.pHeightItem;
             holder.imageItem.getLayoutParams().height = this.pHeightItem;
@@ -71,15 +71,13 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
         }
 
         holder.layoutItem.setVisibility(View.VISIBLE);
-        Item item = (Item) this.data.get(position);
+        Item item = this.data.get(position);
         holder.txtTitle.setText(item.getName());
         holder.txtPath.setText(item.getPathFolder());
         Glide.with(this.pickImageExtendsActivity).load(item.getPathFile()).asBitmap().override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.piclist_icon_default).fallback(R.drawable.piclist_icon_default).placeholder(R.drawable.piclist_icon_default).into(holder.imageItem);
-        convertView.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (AlbumAdapterExtends.this.onItem != null) {
-                    AlbumAdapterExtends.this.onItem.OnItemAlbumClick(position);
-                }
+        convertView.setOnClickListener(v -> {
+            if (AlbumAdapterExtends.this.onItem != null) {
+                AlbumAdapterExtends.this.onItem.OnItemAlbumClick(position);
             }
         });
 
