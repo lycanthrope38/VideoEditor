@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:orientation="vertical"
+        android:background="@color/color_bkg_saved_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layoutAdmob"
+            android:layout_alignParentTop="true">
+
+        <RelativeLayout
+                android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                android:id="@+id/root_header_video_saved"
+                android:background="@color/piclist_bg_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <ImageView
+                    android:id="@+id/button_back_home"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/btn_home_selector"
+                    android:scaleType="fitCenter"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+            <TextView
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_header_save_success"
+                    android:ellipsize="end"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:id="@+id/text_button_video_saved"
+                    android:paddingLeft="@dimen/normal_space"
+                    android:paddingRight="@dimen/normal_space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_header_saved_video"
+                    android:maxLength="30"
+                    android:layout_toRightOf="@+id/button_back_home"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/button_back_home"
+                    android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <FrameLayout
+                android:id="@+id/video_layout_saved"
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+            <com.universalvideoview.UniversalVideoView
+                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:id="@+id/video_view_saved"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:uvv_fitXY="true"
+                    android:uvv_autoRotation="false"/>
+
+            <com.universalvideoview.UniversalMediaController
+                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:id="@+id/media_controller_saved"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:uvv_scalable="true"/>
+        </FrameLayout>
+
+        <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+            <TextView
+                    android:textColor="@color/color_text_file_path"
+                    android:id="@+id/text_view_path"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal_space"
+                    android:text="@string/text_file_path"
+                    android:layout_alignParentTop="true"/>
+
+            <LinearLayout
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_space"
+                    android:layout_marginBottom="@dimen/large_space"
+                    android:layout_below="@+id/text_view_path">
+
+                <ImageView
+                        android:id="@+id/button_share_video"
+                        android:padding="@dimen/normal_space"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="@dimen/tiny_space"
+                        android:src="@drawable/btn_share_selector"
+                        android:layout_marginEnd="@dimen/tiny_space"/>
+
+                <ImageView
+                        android:id="@+id/button_rate"
+                        android:padding="@dimen/normal_space"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="@dimen/tiny_space"
+                        android:src="@drawable/btn_share_like_selector"
+                        android:layout_marginEnd="@dimen/tiny_space"/>
+
+                <ImageView
+                        android:id="@+id/button_more"
+                        android:padding="@dimen/normal_space"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/btn_share_more_selector"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:orientation="horizontal"
+            android:id="@+id/layoutAdmob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+</RelativeLayout>

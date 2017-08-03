@@ -4,6 +4,9 @@
     <color name="primary_dark">#242833</color>
     <color name="accent">#ffffffff</color>
 
+    <color name="text_header_save">#fc3c89</color>
+    <color name="text_header_save_press">#ff9600</color>
+    <color name="text_header_save_success">#ffffff</color>
     <color name="bg_tran">#00000000</color>
     <color name="bg_button_bottom_selected">#373737</color>
     <color name="lib_sticker_bg_sticker_common">#dedede</color>

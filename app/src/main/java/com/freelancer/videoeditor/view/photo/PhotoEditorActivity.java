@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -33,7 +32,6 @@ import com.freelancer.videoeditor.config.ShareConstants;
 import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IBitmap;
 import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
@@ -41,7 +39,6 @@ import com.freelancer.videoeditor.util.ManagerViewCenter;
 import com.freelancer.videoeditor.util.MyFile;
 import com.freelancer.videoeditor.util.OnCapture;
 import com.freelancer.videoeditor.util.OnClickItemBaseList;
-import com.freelancer.videoeditor.util.OnDialogConfirm;
 import com.freelancer.videoeditor.util.OnManagerViewCenter;
 import com.freelancer.videoeditor.util.OnSetSpriteForTools;
 import com.freelancer.videoeditor.util.OnToolsBlur;
@@ -231,30 +228,34 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void iniConfigScreen() {
         super.iniConfigScreen();
         ConfigScreen.mScreenOrientation = ScreenOrientation.PORTRAIT_FIXED;
     }
 
+    @Override
     public EngineOptions onCreateEngineOptions() {
         setMultiTouch(true);
         super.onCreateEngineOptions();
         return this.mEngineOptions;
     }
 
+    @Override
     protected void onSetContentView() {
         super.onSetContentView();
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
         View v = View.inflate(this, R.layout.libphotoeditor_activity_main, null);
-        this.mainView = (FrameLayout) v.findViewById(R.id.mainView);
+        this.mainView = v.findViewById(R.id.mainView);
         this.mainView.addView(this.mRenderSurfaceView, 0);
         setContentView(v);
     }
 
+    @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+//        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 //        SharePrefUtils.init(this);
         Bundle mBundle = getIntent().getExtras();
         if (mBundle != null) {
@@ -285,13 +286,9 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
                 finish();
                 return;
             } else {
-//                PH_BANNER = (int) ExtraUtils.convertDpToPixel(50.0f, this);
-//                if (!UtilLib.getInstance().haveNetworkConnection(this)) {
-//                    PH_BANNER = 0;
-//                }
-                RelativeLayout layoutCenter = (RelativeLayout) this.mainView.findViewById(R.id.layoutCenter);
+                RelativeLayout layoutCenter = this.mainView.findViewById(R.id.layoutCenter);
                 layoutCenter.getLayoutParams().height = ConfigScreen.SCREENWIDTH;
-                RelativeLayout layoutContentCenter = (RelativeLayout) this.mainView.findViewById(R.id.layoutContentCenter);
+                RelativeLayout layoutContentCenter = this.mainView.findViewById(R.id.layoutContentCenter);
                 layoutCenter.getLayoutParams().height = ConfigScreen.SCREENWIDTH;
                 this.viewTop = new ViewTop(this, this.mainView);
                 this.viewTop.setOnViewTop(this.onViewTop);
@@ -311,6 +308,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         Timber.e("PhotoEditorActivity", "mBundle = NULL");
     }
 
+    @Override
     protected Scene onCreateScene() {
         super.onCreateScene();
         this.mainScene.setTouchAreaBindingOnActionDownEnabled(true);
@@ -360,6 +358,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         });
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Timber.e("PhotoEditorActivity", "onActivityResult resultCode = " + resultCode);
         if (resultCode != -1) {
@@ -564,6 +563,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         this.viewTop.isSaveChange(this.isSave);
     }
 
+    @Override
     public void onBackPressed() {
         if (this.managerViewCenter.isVisible()) {
             this.managerViewCenter.setVisibleLayoutCenter(8, true);
@@ -572,6 +572,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onResume() {
         super.onResume();
     }
@@ -606,7 +607,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
 //        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
 //        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
 //    }
-
+@Override
     public void onCrop() {
         if (this.spriteTools == null) {
             return;
@@ -675,6 +676,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         sendBroadcast(intent);
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (this.myBroadcast != null) {
@@ -682,6 +684,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onFlipV() {
         if (this.spriteTools != null) {
             boolean z;
@@ -697,6 +700,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onFlipH() {
         if (this.spriteTools != null) {
             boolean z;
@@ -712,6 +716,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onZoomIn(int action) {
         if (this.spriteTools != null) {
             this.handlerTools.zoom(this, this.spriteTools, this.typeObject, action, HandlerTools.ZOOM_IN);
@@ -720,6 +725,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onZoomOut(int action) {
         if (this.spriteTools != null) {
             this.handlerTools.zoom(this, this.spriteTools, this.typeObject, action, HandlerTools.ZOOM_OUT);
@@ -728,6 +734,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onRotateL(int action) {
         if (this.spriteTools != null) {
             this.handlerTools.rotate(this, this.spriteTools, this.typeObject, action, HandlerTools.ROTATE_L);
@@ -736,6 +743,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onRotateR(int action) {
         if (this.spriteTools != null) {
             this.handlerTools.rotate(this, this.spriteTools, this.typeObject, action, HandlerTools.ROTATE_R);
@@ -744,6 +752,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onShowHide(int visible) {
         if (visible == 0) {
             this.viewBottom.setVisibleLayoutBottom(8, true);
@@ -752,12 +761,14 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
+    @Override
     public void onSetSpriteForTools(Sprite mSprite, int type) {
         this.spriteTools = mSprite;
         this.typeObject = type;
         this.viewBottom.viewTools.setVisibleLayoutTools(0, true, type);
     }
 
+    @Override
     public void onDeleteSprite() {
         this.viewBottom.viewTools.setVisibleLayoutTools(8, true, 1);
         this.spriteTools = null;
@@ -765,11 +776,13 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         isSaveChange();
     }
 
+    @Override
     public void OnBorderClick(int type) {
         Timber.e("BLUR", "OnBorderClick");
         this.managerRectanglePhoto.getmRectanglePhotoSeleted().OnBorderClick(type);
     }
 
+    @Override
     public void OnSeekBarChange(int progress) {
         Timber.e("BLUR", "OnBorderClick");
         this.managerRectanglePhoto.getmRectanglePhotoSeleted().resizeBorder(progress);

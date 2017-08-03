@@ -36,6 +36,7 @@ import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.view.RenderSurfaceView;
+import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 public abstract class BaseGame extends SimpleBaseGameActivity {
@@ -49,6 +50,7 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
     public Scene mainScene;
     public FrameLayout mainView;
 
+    @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         this.asyncTaskLoader = new AsyncTaskLoader();
@@ -225,14 +227,14 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
             }
         });
     }
-
+    @Override
     public void onPause() {
         super.onPause();
         if (this.mEngine.isRunning()) {
             this.mEngine.stop();
         }
     }
-
+    @Override
     public void onResume() {
         super.onResume();
         if (!this.mEngine.isRunning()) {
@@ -240,12 +242,13 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
         }
     }
 
+    @Override
     protected void onSetContentView() {
         super.onSetContentView();
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
         View v = View.inflate(this, R.layout.baselibsandengine_activity_main, null);
-        this.mainView = (FrameLayout) v.findViewById(R.id.mainView_base);
+        this.mainView = v.findViewById(R.id.mainView_base);
         this.mainView.addView(this.mRenderSurfaceView, 0);
         setContentView(v);
     }

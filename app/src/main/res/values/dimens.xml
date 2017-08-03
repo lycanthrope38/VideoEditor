@@ -28,4 +28,5 @@
     <dimen name="normal_space">8dp</dimen>
     <dimen name="no_space">0dp</dimen>
     <dimen name="lib_sticker_size_title_bar">16sp</dimen>
+    <dimen name="large_space">12dp</dimen>
 </resources>

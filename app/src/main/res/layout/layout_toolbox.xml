@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+              android:orientation="horizontal"
+              android:id="@+id/root_tool_bar"
+              android:paddingTop="@dimen/tiny_space"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="5.0">
+
+    <LinearLayout
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:orientation="vertical"
+            android:id="@+id/button_tool_theme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4.0"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/image_btn_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_theme"
+                android:layout_weight="2.0"/>
+
+        <TextView
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/color_title_toolbox"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/text_title_theme"
+                android:paddingBottom="@dimen/very_tiny_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_theme"
+                android:layout_weight="2.0"/>
+
+        <View
+                android:id="@+id/view_divide_theme"
+                android:background="@color/color_bkg_tab_color"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/button_tool_duration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4.0"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/image_btn_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_duration_selector"
+                android:layout_weight="2.0"/>
+
+        <TextView
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@drawable/text_toolbox_selector"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/text_title_duration"
+                android:paddingBottom="@dimen/very_tiny_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_duration"
+                android:layout_weight="2.0"/>
+
+        <View
+                android:id="@+id/view_divide_duration"
+                android:background="@color/color_bkg_tab_color"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/button_tool_music"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4.0"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/image_btn_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_music"
+                android:layout_weight="2.0"/>
+
+        <TextView
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/color_title_toolbox"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/text_title_music"
+                android:paddingBottom="@dimen/very_tiny_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_music"
+                android:layout_weight="2.0"/>
+
+        <View
+                android:id="@+id/view_divide_music"
+                android:background="@color/color_bkg_tab_color"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/button_tool_effect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4.0"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/image_btn_effect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_effect"
+                android:layout_weight="2.0"/>
+
+        <TextView
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/color_title_toolbox"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/text_title_effect"
+                android:paddingBottom="@dimen/very_tiny_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_effect"
+                android:layout_weight="2.0"/>
+
+        <View
+                android:id="@+id/view_divide_effect"
+                android:background="@color/color_bkg_tab_color"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/button_tool_editor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4.0"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/image_btn_editor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_editor_selector"
+                android:layout_weight="2.0"/>
+
+        <TextView
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@drawable/text_toolbox_selector"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/text_title_editor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_editor"
+                android:layout_weight="2.0"/>
+
+        <View
+                android:id="@+id/view_divide_editor"
+                android:background="@color/color_bkg_tab_color"
+                android:paddingBottom="@dimen/very_tiny_space"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    </LinearLayout>
+</LinearLayout>
