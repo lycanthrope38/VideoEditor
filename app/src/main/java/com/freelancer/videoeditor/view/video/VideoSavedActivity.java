@@ -130,7 +130,7 @@ public class VideoSavedActivity extends BaseActivity {
         return this.mVideoUrl.substring(this.mVideoUrl.lastIndexOf(File.separator) + 1, this.mVideoUrl.length());
     }
 
-    @OnClick({2131689643, 2131689644, 2131689645, 2131689637})
+    @OnClick({R.id.button_share_video, R.id.button_rate, R.id.button_more, R.id.button_back_home})
     public void onClickShare(View view) {
         switch (view.getId()) {
             case R.id.button_back_home /*2131689637*/:

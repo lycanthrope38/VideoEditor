@@ -142,24 +142,27 @@ public class FilterFragment extends BaseFragment implements OnRecyclerClickListe
         }
     }
 
+    @Override
     public void onItemClicked(int position, View viewClicked, Object obj) {
         if (((String) obj).contains("none")) {
             this.mListener.onPassData(Action.ADD_FILTER, "none");
         } else {
-            loadFilter("http://139.59.241.64/App/VideoEditor/Filter/filter" + position + AppConst.FORMAT_FRAME, new OnLoadImageFromURL() {
-                public void onCompleted(final Bitmap mBitmap) {
-                    UtilLib.getInstance().handlerDoWork(new IHandler() {
-                        public void doWork() {
-                            if (FilterFragment.this.mListener != null) {
-                                FilterFragment.this.mListener.onPassData(Action.ADD_FILTER, mBitmap);
-                            }
-                        }
-                    });
-                }
+            this.mListener.onPassData(Action.ADD_FILTER, obj);
+//            loadFilter("http://139.59.241.64/App/VideoEditor/Filter/filter" + position + AppConst.FORMAT_FRAME, new OnLoadImageFromURL() {
+//                public void onCompleted(final Bitmap mBitmap) {
+//                    UtilLib.getInstance().handlerDoWork(new IHandler() {
+//                        public void doWork() {
+//                            if (FilterFragment.this.mListener != null) {
+//                                FilterFragment.this.mListener.onPassData(Action.ADD_FILTER, mBitmap);
+//                            }
+//                        }
+//                    });
+//                }
+//
+//                public void onFail() {
+//                }
+//            });
 
-                public void onFail() {
-                }
-            });
         }
     }
 

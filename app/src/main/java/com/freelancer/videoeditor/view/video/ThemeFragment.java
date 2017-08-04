@@ -142,6 +142,7 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
         }
     }
 
+    @Override
     public void onItemClicked(int position, View viewClicked, Object obj) {
         if (this.mListener != null) {
             this.mListener.onPassData(Action.ADD_OVERLAY_BORDER, obj);

@@ -14,9 +14,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -57,7 +54,6 @@ import net.margaritov.preference.colorpicker.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -398,7 +394,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         int heightTop = (this.SCREEN_HEIGHT * 80) / ORIGIN_HEIGHT_SCREEN;
         this.rootHeader.getLayoutParams().height = heightTop;
         setSquareSize(this.buttonBack, heightTop);
-        this.layoutButtonSave.getLayoutParams().height = heightTop;
+//        this.layoutButtonSave.getLayoutParams().height = heightTop;
         int width = (this.SCREEN_WIDTH * 2) / ORIGIN_WDITH_SCREEN;
         int height = (width * 24) /2;
         this.textButtonSave.getLayoutParams().width = (int) (((float) width) * 1.3f);
@@ -522,6 +518,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         Intent intent = new Intent(this, VideoSavedActivity.class);
         intent.putExtra(AppConst.BUNDLE_KEY_VIDEO_URL, videoUrl);
         intent.putExtra(AppConst.BUNDLE_KEY_HOME, true);
+        Toast.makeText(this, videoUrl, Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
@@ -900,9 +897,10 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         }
     }
 
+    @Override
     public void onPassData(Action action, Object object) {
         switch (action.ordinal()) {
-            case 1:
+            case 3:
                 if (object instanceof String) {
                     String data = (String) object;
                     if (data.contains("none")) {
@@ -922,38 +920,46 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                     return;
                 }
                 return;
-            case 2:
+            case 5:
                 if (object instanceof String) {
-                    this.mFilterPath = null;
-                    this.imageFilter.setVisibility(View.GONE);
-                    hideSeekBar();
-                    return;
-                } else if (object instanceof Bitmap) {
-                    showLayoutSeekBar();
-                    this.mBitmapFilter = (Bitmap) object;
-                    this.imageFilter.setImageBitmap(this.mBitmapFilter);
-                    this.imageFilter.setVisibility(View.VISIBLE);
-                    return;
-                } else {
-                    return;
+                    String data = (String) object;
+                    if (data.contains("none")) {
+                        this.mFilterPath = null;
+                        this.imageFilter.setVisibility(View.GONE);
+                        hideSeekBar();
+                        return;
+                    }
+
                 }
-            case 3:
-                if (object instanceof Audio) {
-                    this.mCurrentAudioSelected = (Audio) object;
-                    addMusicToVideo(this.mCurrentAudioSelected);
-                    return;
-                }
+
+                showLayoutSeekBar();
+                this.mBitmapFilter = (Bitmap) object;
+                this.imageFilter.setImageBitmap(this.mBitmapFilter);
+                this.imageFilter.setVisibility(View.VISIBLE);
                 return;
+
+//                else if (object instanceof Bitmap) {
+//
+//                } else {
+//                    return;
+//                }
+//            case 3:
+//                if (object instanceof Audio) {
+//                    this.mCurrentAudioSelected = (Audio) object;
+//                    addMusicToVideo(this.mCurrentAudioSelected);
+//                    return;
+//                }
+//                return;
             case 4:
                 removeAudio();
                 return;
-            case 5:
-                if (object instanceof ListVideoEffect) {
-                    this.mCurrentEffectSelected = (ListVideoEffect) object;
-                    addEffectToVideo(this.mCurrentEffectSelected);
-                    return;
-                }
-                return;
+//            case 5:
+//                if (object instanceof ListVideoEffect) {
+//                    this.mCurrentEffectSelected = (ListVideoEffect) object;
+//                    addEffectToVideo(this.mCurrentEffectSelected);
+//                    return;
+//                }
+//                return;
             default:
                 return;
         }
