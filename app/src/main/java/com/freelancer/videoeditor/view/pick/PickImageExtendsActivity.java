@@ -571,6 +571,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         return listString;
     }
 
+    @Override
     public void OnCustomClick(View v, MotionEvent event) {
         if (v.getId() ==R.id.btnSort) {
             if (this.layoutDetailAlbum.getVisibility() == View.GONE) {
@@ -590,6 +591,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         }
     }
 
+    @Override
     public void onClick(View v) {
     }
 
@@ -639,6 +641,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
 //        }
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == -1 && requestCode == R.styleable.AppCompatTheme_autoCompleteTextViewStyle) {
             File path = new File(getFilesDir(), this.PATH_FILE_SAVE_TEMP);

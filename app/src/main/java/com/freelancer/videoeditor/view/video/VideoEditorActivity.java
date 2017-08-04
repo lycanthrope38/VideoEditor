@@ -302,6 +302,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         EFFECT
     }
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_editor);
@@ -319,11 +320,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 
     private void scanAudio(String path) {
         int i = 0;
-        File[] file = new File(path.substring(0, path.lastIndexOf("/"))).listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".mp3");
-            }
-        });
+        File[] file = new File(path.substring(0, path.lastIndexOf("/"))).listFiles((dir, name) -> name.endsWith(".mp3"));
         String[] paths = new String[file.length];
         int i2 = 0;
         int length = file.length;
