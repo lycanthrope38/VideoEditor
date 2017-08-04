@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelancer.videoeditor.R;
-import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.OnToolBoxListener;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 import com.freelancer.videoeditor.view.pick.PickAudioActivity;
@@ -24,12 +23,12 @@ import timber.log.Timber;
 
 public class MusicFragment extends BaseFragment {
     private static final String TAG = "MusicFragment";
-    @BindView({2131689703})
+    @BindView(R.id.btnRemoveAudio)
     ImageView imageRemove;
     private String mCurrentPickPath;
     private OnToolBoxListener mListener;
     private View mRootView;
-    @BindView({2131689704})
+    @BindView(R.id.text_audio_picked)
     TextView textAddAudio;
 
     public static MusicFragment newInstance() {
@@ -58,14 +57,14 @@ public class MusicFragment extends BaseFragment {
         return this.mRootView;
     }
 
-    @OnClick({2131689703, 2131689704})
+    @OnClick({R.id.btnRemoveAudio, R.id.text_audio_picked})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnRemoveAudio /*2131689703*/:
+            case R.id.btnRemoveAudio:
                 removeAudioText();
                 removeAudio();
                 return;
-            case R.id.text_audio_picked /*2131689704*/:
+            case R.id.text_audio_picked:
                 gotoPickAudio();
                 return;
             default:

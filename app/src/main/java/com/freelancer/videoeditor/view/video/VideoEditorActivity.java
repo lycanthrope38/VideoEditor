@@ -42,6 +42,7 @@ import com.freelancer.videoeditor.util.FFMpegListener;
 import com.freelancer.videoeditor.util.FFmpegCommands;
 import com.freelancer.videoeditor.util.FFmpegUtils;
 import com.freelancer.videoeditor.util.FileUtils;
+import com.freelancer.videoeditor.util.FilenameUtils;
 import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.OnToolBoxListener;
 import com.freelancer.videoeditor.view.base.BaseActivity;
@@ -401,8 +402,8 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         this.rootHeader.getLayoutParams().height = heightTop;
         setSquareSize(this.buttonBack, heightTop);
         this.layoutButtonSave.getLayoutParams().height = heightTop;
-        int width = (this.SCREEN_WIDTH * mylibsutil.util.R.styleable.AppCompatTheme_buttonStyleSmall) / ORIGIN_WDITH_SCREEN;
-        int height = (width * 24) / mylibsutil.util.R.styleable.AppCompatTheme_buttonStyleSmall;
+        int width = (this.SCREEN_WIDTH * 2) / ORIGIN_WDITH_SCREEN;
+        int height = (width * 24) /2;
         this.textButtonSave.getLayoutParams().width = (int) (((float) width) * 1.3f);
         this.textButtonSave.getLayoutParams().height = (int) (((float) height) * 1.3f);
         setSquareSize(this.rootVideo, this.SCREEN_WIDTH);
@@ -422,7 +423,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         view.getLayoutParams().height = size;
     }
 
-    @OnClick({2131689733, 2131689734, 2131689749, 2131689757, 2131689753, 2131689745, 2131689761})
+    @OnClick({R.id.button_back, R.id.linear_button_save, R.id.button_tool_duration, R.id.button_tool_effect, R.id.button_tool_music, R.id.button_tool_theme, R.id.button_tool_editor})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_back /*2131689733*/:
@@ -451,14 +452,14 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         createFolder(outVideoPath);
         String saveFile = AppUtils.getFullOutputVideoPath(outVideoPath, AppConst.OUT_VIDEO_PREFIX + AppUtils.createVideoNameByTime(), VideoEncode.MP4);
         try {
-            L.d(TAG, "CURRENT VIDEO URL: " + this.mCurrentVideoUrl);
+            Timber.d(TAG, "CURRENT VIDEO URL: " + this.mCurrentVideoUrl);
             new File(this.mCurrentVideoUrl).renameTo(new File(saveFile));
             showVideoSavedSuccessfully(saveFile);
             scanVideoFile(saveFile);
             finish();
         } catch (Exception e) {
             e.printStackTrace();
-            T.show("Error Save: " + e.getMessage());
+            Toast.makeText(this, "Error Save: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -538,7 +539,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             Timber.d(TAG, "VIDEO PLAY: " + urlVideo);
             stopVideo();
             this.mCurrentVideoUrl = urlVideo;
-            this.mMediaController.setFullscreenEnabled(false);
+//            this.mMediaController.setFullscreenEnabled(false);
             this.videoViewEditor.setVideoPath(urlVideo);
             this.videoViewEditor.requestFocus();
             this.videoViewEditor.setOnPreparedListener(new OnPreparedListener() {
@@ -566,7 +567,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     private void generateVideoFromImagePicked() {
         if (this.mListImage != null && !this.mListImage.isEmpty()) {
             this.mCurrentProcess = Process.GEN_VIDEO;
-            L.d(TAG, "LIST IMG: " + this.mListImage.toString());
+            Timber.d(TAG, "LIST IMG: " + this.mListImage.toString());
             String outFolder = AppConst.OUT_IMAGE_TEMP_FOLDER;
             String outVideo = AppConst.OUT_VIDEO_TEMP_FOLDER;
             String videoName = AppConst.VIDEO_TEMP_NAME;
@@ -588,7 +589,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         String[] cmd = FFmpegCommands.getInstance().genAudioLoop(outMediaTempFolder + File.separator + AppConst.MEDIA_TEXT_TEMP, this.mAudioPickedPath);
         this.mCommands = Arrays.toString(cmd);
         this.fmpegUtils.executeCommand(cmd);
-        L.d(TAG, "AUDIO LOOP PATH OUT:" + this.mAudioPickedPath);
+        Timber.d(TAG, "AUDIO LOOP PATH OUT:" + this.mAudioPickedPath);
     }
 
     private void generateVideoWithAudio() {
@@ -646,7 +647,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         String[] cmd = FFmpegCommands.getInstance().genVideoLoop(outMediaTempFolder + File.separator + AppConst.MEDIA_TEXT_TEMP, this.mEffectPathSelected);
         this.mCommands = Arrays.toString(cmd);
         this.fmpegUtils.executeCommand(cmd);
-        L.d(TAG, "EFFECT LOOP PATH OUT:" + this.mEffectPathSelected);
+        Timber.d(TAG, "EFFECT LOOP PATH OUT:" + this.mEffectPathSelected);
     }
 
     private void generateVideoWithEffect() {
@@ -776,7 +777,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     }
 
     private void showChangeDuration() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, 17367058, Arrays.asList(getResources().getStringArray(R.array.array_duration)));
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(getResources().getStringArray(R.array.array_duration)));
         Builder builder = new Builder(this);
         builder.setTitle(R.string.title_dialog_duration);
         builder.setCancelable(true);
@@ -1050,7 +1051,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     private void checkDuration(Audio audio) {
         int audioDuration = audio.getSeconds();
         if (audioDuration <= 0) {
-            T.show((int) R.string.message_audio_length_too_short);
+            Toast.makeText(this,  R.string.message_audio_length_too_short, Toast.LENGTH_SHORT).show();
             return;
         }
         int videoDuration = getCurrentVideoDuration();
@@ -1186,7 +1187,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         Builder builder = new Builder(this);
         builder.setTitle(R.string.title_reset_media);
         builder.setMessage(message);
-        builder.setIcon(17301543);
+//        builder.setIcon(17301543);
         builder.setPositiveButton(R.string.text_continue, onClick);
         builder.setNegativeButton(R.string.text_cancel, onCancel);
         builder.create().show();

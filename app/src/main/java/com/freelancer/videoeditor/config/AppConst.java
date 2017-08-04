@@ -52,7 +52,6 @@ public class AppConst {
 
     public static final String ACTION_INTENT_FILTER_PHOTO_CROP = "com.BestPhotoEditor.CropPhoto.COMPLETED";
     public static final String APP_ID = "ca-app-pub-5692934122522554~5955826829";
-    public static final String ASSETS = "file:///android_asset";
     public static final String ASSET_FILTER_NAME = "filter_video";
     public static final String ASSET_FOLDER_BORDER_NAME = "overlay_border";
     public static final String ASSET_FOLDER_EFFECT_NAME = "effect";

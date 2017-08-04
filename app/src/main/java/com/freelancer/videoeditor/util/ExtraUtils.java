@@ -39,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.signature.StringSignature;
 import com.freelancer.videoeditor.R;
@@ -145,61 +146,61 @@ public class ExtraUtils {
             ex.printStackTrace();
         }
     }
-//
-//    public static void openApp(Context context, String packageName) {
-//        Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-//        if (launchIntent != null) {
-//            context.startActivity(launchIntent);
-//        } else {
-//            T.show(context.getString(R.string.message_package_not_found));
-//        }
-//    }
 
-//    public static void displayImage(Context context, ImageView image, String url) {
-//        displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
-//    }
-//
-//    public static void displayImage(Context context, ImageView image, String url, IOnResourceReady iOnResourceReady) {
-//        displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null, iOnResourceReady);
-//    }
-//
-//    public static void displayImage(Context context, ImageView image, int resourceId) {
-//        displayImage(context, image, Integer.valueOf(resourceId), R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
-//    }
-//
-//    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable) {
-//        Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(image);
-//    }
+    public static void openApp(Context context, String packageName) {
+        Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (launchIntent != null) {
+            context.startActivity(launchIntent);
+        } else {
+            Toast.makeText(context, context.getString(R.string.message_package_not_found), Toast.LENGTH_SHORT).show();
+        }
+    }
 
-//    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable, final IOnResourceReady iOnResourceReady) {
-//        Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(new BitmapImageViewTarget(image) {
-//            public void onLoadStarted(Drawable placeholder) {
-//                super.onLoadStarted(placeholder);
-//            }
-//
-//            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-//                super.onLoadFailed(e, errorDrawable);
-//                if (iOnResourceReady != null) {
-//                    iOnResourceReady.onLoadFailed();
-//                }
-//            }
-//
-//            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-//                super.onResourceReady(drawable, anim);
-//                if (iOnResourceReady != null) {
-//                    iOnResourceReady.OnResourceReady(drawable);
-//                }
-//            }
-//        });
-//    }
+    public static void displayImage(Context context, ImageView image, String url) {
+        displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
+    }
 
-//    public static void displayImageWithTransform(Context context, ImageView imageView, String url, Transformation transformation) {
-//        Glide.with(context).load(url).fitCenter().bitmapTransform(new Transformation[]{transformation}).diskCacheStrategy(DiskCacheStrategy.ALL).fallback(R.drawable.mylibsutil_bg_null).error(R.drawable.mylibsutil_bg_null).into(imageView);
-//    }
+    public static void displayImage(Context context, ImageView image, String url, IOnResourceReady iOnResourceReady) {
+        displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null, iOnResourceReady);
+    }
 
-//    public static void displayImageNoCache(Context context, ImageView image, Object url) {
-//        displayImageNoCache(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
-//    }
+    public static void displayImage(Context context, ImageView image, int resourceId) {
+        displayImage(context, image, Integer.valueOf(resourceId), R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
+    }
+
+    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable) {
+        Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(image);
+    }
+
+    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable, final IOnResourceReady iOnResourceReady) {
+        Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(new BitmapImageViewTarget(image) {
+            public void onLoadStarted(Drawable placeholder) {
+                super.onLoadStarted(placeholder);
+            }
+
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                super.onLoadFailed(e, errorDrawable);
+                if (iOnResourceReady != null) {
+                    iOnResourceReady.onLoadFailed();
+                }
+            }
+
+            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                super.onResourceReady(drawable, anim);
+                if (iOnResourceReady != null) {
+                    iOnResourceReady.OnResourceReady(drawable);
+                }
+            }
+        });
+    }
+
+    public static void displayImageWithTransform(Context context, ImageView imageView, String url, Transformation transformation) {
+        Glide.with(context).load(url).fitCenter().bitmapTransform(new Transformation[]{transformation}).diskCacheStrategy(DiskCacheStrategy.ALL).fallback(R.drawable.mylibsutil_bg_null).error(R.drawable.mylibsutil_bg_null).into(imageView);
+    }
+
+    public static void displayImageNoCache(Context context, ImageView image, Object url) {
+        displayImageNoCache(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
+    }
 
     public static void displayImageNoCache(Context context, ImageView image, Object url, int fallBackDrawable, int errorDrawable) {
         Glide.with(context).load(url).asBitmap().signature(new StringSignature(String.valueOf(System.currentTimeMillis()))).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).fitCenter().fallback(fallBackDrawable).error(errorDrawable).into(image);

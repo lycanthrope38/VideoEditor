@@ -4,7 +4,8 @@
         android:background="@color/color_bkg_saved_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
             android:orientation="vertical"
@@ -60,15 +61,15 @@
                     android:id="@+id/video_view_saved"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:uvv_fitXY="true"
-                    android:uvv_autoRotation="false"/>
+                    app:uvv_fitXY="true"
+                    app:uvv_autoRotation="false"/>
 
             <com.universalvideoview.UniversalMediaController
                     android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:id="@+id/media_controller_saved"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:uvv_scalable="true"/>
+                    app:uvv_scalable="true"/>
         </FrameLayout>
 
         <RelativeLayout

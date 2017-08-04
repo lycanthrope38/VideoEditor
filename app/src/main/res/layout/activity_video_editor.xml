@@ -89,7 +89,7 @@
                         android:layout_height="match_parent">
 
                     <fragment
-                            android:name="com.BestPhotoEditor.FreeVideoEditor.fragment.MusicFragment"
+                            android:name="com.freelancer.videoeditor.view.video.MusicFragment"
                             android:id="@+id/music_fragment"
                             android:tag="@string/fragment_tag_music"
                             android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         android:layout_height="match_parent">
 
                     <fragment
-                            android:name="com.BestPhotoEditor.FreeVideoEditor.fragment.FilterFragment"
+                            android:name="com.freelancer.videoeditor.view.video.FilterFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                 </LinearLayout>
@@ -115,7 +115,7 @@
                         android:layout_height="match_parent">
 
                     <fragment
-                            android:name="com.BestPhotoEditor.FreeVideoEditor.fragment.ThemeFragment"
+                            android:name="com.freelancer.videoeditor.view.video.ThemeFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                 </LinearLayout>

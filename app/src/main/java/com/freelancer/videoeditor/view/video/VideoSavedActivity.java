@@ -12,13 +12,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
+import com.freelancer.videoeditor.util.AppUtils;
+import com.freelancer.videoeditor.util.ExtraUtils;
+import com.freelancer.videoeditor.util.FileUtils;
+import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
@@ -70,7 +76,7 @@ public class VideoSavedActivity extends BaseActivity {
         if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_HOME, false)) {
             this.buttonBackHome.setImageResource(R.drawable.btn_home_selector);
         } else {
-            this.buttonBackHome.setImageResource(com.piclistphotofromgallery.R.drawable.piclist_selector_button_back);
+            this.buttonBackHome.setImageResource(R.drawable.piclist_selector_button_back);
         }
         resizeLayout();
     }
@@ -101,20 +107,16 @@ public class VideoSavedActivity extends BaseActivity {
 
     private void showVideo() {
         if (TextUtils.isEmpty(this.mVideoUrl)) {
-            T.show((int) R.string.message_no_video);
+            Toast.makeText(this, R.string.message_no_video, Toast.LENGTH_SHORT).show();
             return;
         }
-        L.d(TAG, "VIDEO PLAY: " + this.mVideoUrl);
+        Timber.d(TAG, "VIDEO PLAY: " + this.mVideoUrl);
         stopVideo();
         this.mMediaController.setTitle(getVideoName());
-        this.mMediaController.setFullscreenEnabled(false);
+//        this.mMediaController.setFullscreenEnabled(false);
         this.videoViewEditor.setVideoPath(this.mVideoUrl);
         this.videoViewEditor.requestFocus();
-        this.videoViewEditor.setOnPreparedListener(new OnPreparedListener() {
-            public void onPrepared(MediaPlayer mp) {
-                VideoSavedActivity.this.videoViewEditor.start();
-            }
-        });
+        this.videoViewEditor.setOnPreparedListener(mp -> VideoSavedActivity.this.videoViewEditor.start());
         this.videoViewEditor.setOnCompletionListener(new OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
                 VideoSavedActivity.this.mMediaController.reset();
@@ -135,9 +137,9 @@ public class VideoSavedActivity extends BaseActivity {
                 finish();
                 return;
             case R.id.button_share_video /*2131689643*/:
-                ExtraUtils.shareVideoViaIntent(this, this.mVideoUrl, true);
+//                ExtraUtils.shareVideoViaIntent(this, this.mVideoUrl, true);
                 return;
-            case com.libmoreutil.R.id.button_rate /*2131689644*/:
+            case R.id.button_rate /*2131689644*/:
                 ExtraUtils.openMarket(this, getPackageName());
                 return;
             case R.id.button_more /*2131689645*/:
