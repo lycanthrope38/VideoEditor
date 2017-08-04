@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
@@ -18,9 +21,7 @@ import com.freelancer.videoeditor.util.OnRecyclerClickListener;
 import com.freelancer.videoeditor.util.OnToolBoxListener;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import timber.log.Timber;
+import net.margaritov.preference.colorpicker.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import net.margaritov.preference.colorpicker.BuildConfig;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class ThemeFragment extends BaseFragment implements OnRecyclerClickListener {
     private static final int DIMEN_PADDING = 2131296461;
@@ -72,11 +76,10 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
         return this.mRootView;
     }
 
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.mRecyclerView.setHasFixedSize(true);
-        this.mLayoutManager = new LinearLayoutManager(getContext(), 0, false);
-        this.mRecyclerView.setLayoutManager(this.mLayoutManager);
+
         init();
         fillListBorder();
     }
@@ -126,7 +129,11 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
     }
 
     private void fillListBorder() {
+
         if (this.mDataFrame != null && !this.mDataFrame.isEmpty()) {
+            this.mRecyclerView.setHasFixedSize(true);
+            this.mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            this.mRecyclerView.setLayoutManager(this.mLayoutManager);
             this.mAdapter = new ListBorderAdapter(getActivity(), this.mDataFrame);
 //            this.mAdapter.setColumnWith(this.mColumnWith);
 //            this.mAdapter.setColumnSpace(getResources().getDimensionPixelSize(DIMEN_PADDING));

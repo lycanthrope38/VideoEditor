@@ -65,19 +65,18 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
         this.mListener = listener;
     }
 
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(this.mInflater.inflate(R.layout.item_list_border_horizontal, parent, false));
     }
-
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ((LayoutParams) holder.container.getLayoutParams()).width = this.mColumnWith;
-        holder.container.setPadding(this.mColumnSpace, 0, this.mColumnSpace, 0);
-        final String item = (String) this.mAppInfo.get(position);
-        holder.container.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (ListBorderAdapter.this.mListener != null) {
-                    ListBorderAdapter.this.mListener.onItemClicked(holder.getAdapterPosition(), holder.container, item);
-                }
+//        ((LayoutParams) holder.container.getLayoutParams()).width = this.mColumnWith;
+//        holder.container.setPadding(this.mColumnSpace, 0, this.mColumnSpace, 0);
+        final String item = this.mAppInfo.get(position);
+        holder.container.setOnClickListener(v -> {
+            if (ListBorderAdapter.this.mListener != null) {
+                ListBorderAdapter.this.mListener.onItemClicked(holder.getAdapterPosition(), holder.container, item);
             }
         });
         if (this.mBitmapGirl == null || item.contains("none")) {
@@ -91,11 +90,11 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
         }
         ExtraUtils.displayImage(this.mContext, holder.icon, item);
     }
-
+    @Override
     public long getItemId(int position) {
         return 0;
     }
-
+    @Override
     public int getItemCount() {
         return this.mAppInfo.size();
     }

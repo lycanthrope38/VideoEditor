@@ -4,8 +4,8 @@
                 android:id="@+id/container"
                 android:background="@drawable/selector_list"
                 android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="70dp"
+                android:layout_height="70dp">
 
     <ImageView
             android:id="@+id/thumb_bkg"

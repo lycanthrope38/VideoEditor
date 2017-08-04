@@ -199,20 +199,20 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             VideoEditorActivity.this.dismissDialog();
             Timber.d(VideoEditorActivity.TAG, "Process: " + VideoEditorActivity.this.mCurrentProcess + " >>> OUT SUCCESS: " + message);
             switch (VideoEditorActivity.this.mCurrentProcess.ordinal()) {
-                case 1:
+                case 0:
                     VideoEditorActivity.this.isVideoWithAudio = false;
                     VideoEditorActivity.this.showVideo(VideoEditorActivity.this.mFullVideoPath);
                     return;
-                case 2:
+                case 1:
                     VideoEditorActivity.this.isVideoWithAudio = true;
                     VideoEditorActivity.this.showVideo(VideoEditorActivity.this.mFullVideoAudioPath);
                     return;
-                case 3:
+                case 2:
                     VideoEditorActivity.this.showVideoSavedSuccessfully(VideoEditorActivity.this.mFullVideoBorderPath);
                     VideoEditorActivity.this.scanVideoFile(VideoEditorActivity.this.mFullVideoBorderPath);
                     VideoEditorActivity.this.finish();
                     return;
-                case 4:
+                case 3:
                     if (VideoEditorActivity.this.isBorderSelected()) {
                         VideoEditorActivity.this.mCurrentVideoUrl = VideoEditorActivity.this.mFullVideoFilterPath;
                         VideoEditorActivity.this.generateVideoWithBorder();
@@ -222,14 +222,14 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                     VideoEditorActivity.this.scanVideoFile(VideoEditorActivity.this.mFullVideoFilterPath);
                     VideoEditorActivity.this.finish();
                     return;
-                case 5:
+                case 4:
                     VideoEditorActivity.this.isVideoWithEffect = true;
                     VideoEditorActivity.this.showVideo(VideoEditorActivity.this.mFullVideoEffectPath);
                     return;
-                case 6:
+                case 5:
                     VideoEditorActivity.this.generateVideoWithAudio();
                     return;
-                case 7:
+                case 6:
                     VideoEditorActivity.this.generateVideoWithEffect();
                     return;
                 default:
@@ -423,10 +423,10 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     @OnClick({R.id.button_back, R.id.linear_button_save, R.id.button_tool_duration, R.id.button_tool_effect, R.id.button_tool_music, R.id.button_tool_theme, R.id.button_tool_editor})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_back /*2131689733*/:
+            case R.id.button_back :
                 onBackPressed();
                 return;
-            case R.id.linear_button_save /*2131689734*/:
+            case R.id.linear_button_save :
                 if (isFilterSelected()) {
                     saveVideoWithFilter();
                     return;
@@ -539,17 +539,11 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 //            this.mMediaController.setFullscreenEnabled(false);
             this.videoViewEditor.setVideoPath(urlVideo);
             this.videoViewEditor.requestFocus();
-            this.videoViewEditor.setOnPreparedListener(new OnPreparedListener() {
-                public void onPrepared(MediaPlayer mp) {
-                    VideoEditorActivity.this.videoViewEditor.start();
-                }
-            });
-            this.videoViewEditor.setOnCompletionListener(new OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    VideoEditorActivity.this.mMediaController.reset();
-                    VideoEditorActivity.this.videoViewEditor.requestFocus();
-                    VideoEditorActivity.this.videoViewEditor.start();
-                }
+            this.videoViewEditor.setOnPreparedListener(mp -> VideoEditorActivity.this.videoViewEditor.start());
+            this.videoViewEditor.setOnCompletionListener(mp -> {
+                VideoEditorActivity.this.mMediaController.reset();
+                VideoEditorActivity.this.videoViewEditor.requestFocus();
+                VideoEditorActivity.this.videoViewEditor.start();
             });
         }
     }
@@ -686,7 +680,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 
     private void clickToolBox(View view) {
         switch (view.getId()) {
-            case R.id.button_tool_theme /*2131689745*/:
+            case R.id.button_tool_theme :
                 showTheme();
                 this.btnTheme.setImageResource(R.drawable.ic_theme_press);
                 this.btnEffect.setImageResource(R.drawable.ic_filter);
@@ -698,10 +692,10 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                 this.divideEffect.setVisibility(View.INVISIBLE);
                 this.divideMusic.setVisibility(View.INVISIBLE);
                 return;
-            case R.id.button_tool_duration /*2131689749*/:
+            case R.id.button_tool_duration:
                 showChangeDuration();
                 return;
-            case R.id.button_tool_music /*2131689753*/:
+            case R.id.button_tool_music:
                 showMusic();
                 this.btnMusic.setImageResource(R.drawable.ic_music_press);
                 this.btnEffect.setImageResource(R.drawable.ic_filter);
@@ -713,7 +707,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                 this.divideEffect.setVisibility(View.INVISIBLE);
                 this.divideTheme.setVisibility(View.INVISIBLE);
                 return;
-            case R.id.button_tool_effect /*2131689757*/:
+            case R.id.button_tool_effect :
                 showFilter();
                 this.btnEffect.setImageResource(R.drawable.ic_filter_press);
                 this.btnMusic.setImageResource(R.drawable.ic_music);
@@ -725,13 +719,9 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                 this.divideMusic.setVisibility(View.INVISIBLE);
                 this.divideTheme.setVisibility(View.INVISIBLE);
                 return;
-            case R.id.button_tool_editor /*2131689761*/:
+            case R.id.button_tool_editor :
                 if (isResetMedia()) {
-                    showResetMediaDialog(R.string.message_warning_change_image, new OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            VideoEditorActivity.this.showEditorPhoto();
-                        }
-                    }, null);
+                    showResetMediaDialog(R.string.message_warning_change_image, (dialog, which) -> VideoEditorActivity.this.showEditorPhoto(), null);
                     return;
                 } else {
                     showEditorPhoto();
@@ -779,30 +769,22 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         builder.setTitle(R.string.title_dialog_duration);
         builder.setCancelable(true);
         builder.setSingleChoiceItems(adapter, this.mIndexDurationSelected, null);
-        builder.setPositiveButton(R.string.text_apply, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                final int itemClick = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                final String value = (String) VideoEditorActivity.this.arrDuration.get(itemClick);
-                if (VideoEditorActivity.this.isResetMedia()) {
-                    VideoEditorActivity.this.showResetMediaDialog(R.string.message_warning_change_duration, new OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            VideoEditorActivity.this.mItemMusicFragment.removeAudioText();
-                            VideoEditorActivity.this.isVideoWithEffect = false;
-                            VideoEditorActivity.this.isVideoWithAudio = false;
-                            VideoEditorActivity.this.mIndexDurationSelected = itemClick;
-                            VideoEditorActivity.this.mIntervalImage = value;
-                            VideoEditorActivity.this.createVideoFromImages();
-                        }
-                    }, new OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            VideoEditorActivity.this.showChangeDuration();
-                        }
-                    });
-                    return;
-                }
-                VideoEditorActivity.this.mIndexDurationSelected = itemClick;
-                VideoEditorActivity.this.clickApplyDuration(value);
+        builder.setPositiveButton(R.string.text_apply, (dialog, which) -> {
+            final int itemClick = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            final String value = VideoEditorActivity.this.arrDuration.get(itemClick);
+            if (VideoEditorActivity.this.isResetMedia()) {
+                VideoEditorActivity.this.showResetMediaDialog(R.string.message_warning_change_duration, (dialog1, which1) -> {
+                    VideoEditorActivity.this.mItemMusicFragment.removeAudioText();
+                    VideoEditorActivity.this.isVideoWithEffect = false;
+                    VideoEditorActivity.this.isVideoWithAudio = false;
+                    VideoEditorActivity.this.mIndexDurationSelected = itemClick;
+                    VideoEditorActivity.this.mIntervalImage = value;
+                    VideoEditorActivity.this.createVideoFromImages();
+                }, (dialog12, which12) -> VideoEditorActivity.this.showChangeDuration());
+                return;
             }
+            VideoEditorActivity.this.mIndexDurationSelected = itemClick;
+            VideoEditorActivity.this.clickApplyDuration(value);
         });
         builder.setNegativeButton(R.string.text_cancel, null);
         AlertDialog dialog = builder.create();
@@ -977,6 +959,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         }
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Timber.d(TAG, "RESULT CODE: " + resultCode);

@@ -120,13 +120,7 @@
                             android:layout_height="match_parent"/>
                 </LinearLayout>
 
-                <LinearLayout
-                        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
-                        android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill"
-                        android:orientation="horizontal"
-                        android:id="@+id/layoutAdmob"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>
