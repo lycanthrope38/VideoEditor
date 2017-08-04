@@ -47,9 +47,9 @@ public class DetailAlbumAdapter extends ArrayAdapter<Item> {
         if (row == null) {
             row = ((Activity) this.context).getLayoutInflater().inflate(this.layoutResourceId, parent, false);
             holder = new RecordHolder();
-            holder.imageItem = (ImageView) row.findViewById(R.id.imageItem);
-            holder.click = (ImageView) row.findViewById(R.id.click);
-            holder.layoutRoot = (RelativeLayout) row.findViewById(R.id.layoutRoot);
+            holder.imageItem = row.findViewById(R.id.imageItem);
+            holder.click = row.findViewById(R.id.click);
+            holder.layoutRoot = row.findViewById(R.id.layoutRoot);
             holder.layoutRoot.getLayoutParams().height = this.pHeightItem;
             holder.imageItem.getLayoutParams().width = this.pHeightItem;
             holder.imageItem.getLayoutParams().height = this.pHeightItem;

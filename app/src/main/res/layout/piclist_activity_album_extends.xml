@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:stretchMode="columnWidth"
-            android:numColumns="3"
+            android:numColumns="1"
             android:layout_above="@+id/layoutBottom"
             android:layout_below="@+id/shadow_bg_bar_top"/>
 
@@ -110,20 +110,12 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true">
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/layoutListImage"
-                android:visibility="visible"
-                android:layout_alignParentStart="true"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
 
-            <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="80.0"
-                    android:layout_alignParentBottom="true">
+        <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="80.0">
 
             <LinearLayout
                     android:orientation="horizontal"
@@ -133,32 +125,45 @@
                     android:layout_height="match_parent">
 
                 <LinearLayout
-                        android:orientation="vertical"
-                        android:id="@+id/btnDone"
-                        android:background="@drawable/piclist_selector_btn_done_extends"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="20.0">
-
-                <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/layoutListImage"
+                        android:visibility="gone"
+                        android:layout_alignParentStart="true"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/btnDone"
+                android:background="@drawable/piclist_selector_btn_done_extends"
+                android:layout_width="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="20.0">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:background="@drawable/piclib_icon_check"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="3dp"/>
+
+                <TextView
+                        android:textSize="14sp"
+                        android:textColor="@color/title_extends"
+                        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                    <ImageView
-                            android:background="@drawable/piclib_icon_check"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginRight="3dp"/>
-
-                    <TextView
-                            android:textSize="14sp"
-                            android:textColor="@color/title_extends"
-                            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_button_done_extends"/>
+                        android:text="@string/text_button_done_extends"/>
             </LinearLayout>
 
             <TextView
@@ -170,11 +175,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/text_images_extends"/>
-                </LinearLayout>
-            </LinearLayout>
-            </HorizontalScrollView>
+        </LinearLayout>
 
-            <TextView
+        <TextView
                     android:textSize="16sp"
                     android:textColor="@color/title_extends"
                     android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill"
@@ -184,9 +187,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_message_select_image"
                     android:layout_centerInParent="true"/>
-        </LinearLayout>
     </RelativeLayout>
-
 
 </RelativeLayout>
 
