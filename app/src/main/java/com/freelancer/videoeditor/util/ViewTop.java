@@ -11,6 +11,9 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
 public class ViewTop implements OnClickListener {
     public static int PHEIGHT_TOP = 0;
     int PERCENT_TOP = 5;
@@ -51,22 +54,22 @@ public class ViewTop implements OnClickListener {
     }
 
     public void isSaveChange(final boolean isSave) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (ViewTop.this.isSaveOld != isSave) {
-                    ViewTop.this.isSaveOld = isSave;
-                    if (isSave) {
-                        ViewTop.this.btnSave.setVisibility(View.GONE);
-                        ViewTop.this.btnDone.setVisibility(View.VISIBLE);
-                    } else {
-                        ViewTop.this.btnSave.setVisibility(View.VISIBLE);
-                        ViewTop.this.btnDone.setVisibility(View.GONE);
-                    }
-                    ViewTop.this.startAnimation(ViewTop.this.btnSave);
-                    ViewTop.this.startAnimation(ViewTop.this.btnDone);
+        Observable.fromCallable(() -> {
+            if (ViewTop.this.isSaveOld != isSave) {
+                ViewTop.this.isSaveOld = isSave;
+                if (isSave) {
+                    ViewTop.this.btnSave.setVisibility(View.GONE);
+                    ViewTop.this.btnDone.setVisibility(View.VISIBLE);
+                } else {
+                    ViewTop.this.btnSave.setVisibility(View.VISIBLE);
+                    ViewTop.this.btnDone.setVisibility(View.GONE);
                 }
+                ViewTop.this.startAnimation(ViewTop.this.btnSave);
+                ViewTop.this.startAnimation(ViewTop.this.btnDone);
             }
-        });
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     private void startAnimation(View mView) {

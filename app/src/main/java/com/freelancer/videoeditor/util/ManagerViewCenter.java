@@ -9,6 +9,9 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
 
 public class ManagerViewCenter implements OnClickListener {
     RelativeLayout layoutCenter;
@@ -73,22 +76,22 @@ public class ManagerViewCenter implements OnClickListener {
     }
 
     public void setVisibleLayoutCenter(final int visible, final boolean isAnimation) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                ManagerViewCenter.this.layoutCenter.setVisibility(visible);
-                if (!isAnimation) {
-                    return;
-                }
-                if (visible == View.VISIBLE) {
-                    ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_in));
-                } else if (visible == View.GONE) {
-                    ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_out));
-                    if (ManagerViewCenter.this.onManagerViewCenter != null) {
-                        ManagerViewCenter.this.onManagerViewCenter.onHideViewCenter();
-                    }
+        Observable.fromCallable(() -> {
+            ManagerViewCenter.this.layoutCenter.setVisibility(visible);
+            if (!isAnimation) {
+                return "";
+            }
+            if (visible == View.VISIBLE) {
+                ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_in));
+            } else if (visible == View.GONE) {
+                ManagerViewCenter.this.layoutCenter.startAnimation(AnimationUtils.loadAnimation(ManagerViewCenter.this.mainActivity, R.anim.libphotoeditor_fade_out));
+                if (ManagerViewCenter.this.onManagerViewCenter != null) {
+                    ManagerViewCenter.this.onManagerViewCenter.onHideViewCenter();
                 }
             }
-        });
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void setOnClickItemBaseList(OnClickItemBaseList onClickItemBaseListBorder, OnClickItemBaseList onClickItemBaseListFilter, OnClickItemBaseList onClickItemBaseListBackground) {

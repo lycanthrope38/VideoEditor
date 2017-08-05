@@ -31,7 +31,6 @@ import com.freelancer.videoeditor.config.ShareConstants;
 import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
@@ -65,7 +64,6 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 
@@ -125,12 +123,8 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
 
         public void OnItemNoneClick() {
-            UtilLib.getInstance().handlerDoWork(new IHandler() {
-                public void doWork() {
-                    PhotoEditorActivity.this.managerViewCenter.getListFilter().hideLayoutSeekbar();
-                    PhotoEditorActivity.this.rectangleFilter.removePhoto();
-                }
-            });
+            PhotoEditorActivity.this.managerViewCenter.getListFilter().hideLayoutSeekbar();
+            PhotoEditorActivity.this.rectangleFilter.removePhoto();
         }
     };
     private OnViewBottom onViewBottom = new OnViewBottom() {
@@ -418,13 +412,14 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
                 Timber.e("PhotoEditorActivity", "listPathPhoto.get(0) = " + ((String) PhotoEditorActivity.this.listPathPhoto.get(0)));
                 Timber.e("PhotoEditorActivity", "onSuccess = " + PhotoEditorActivity.this.pathFileSave);
                 Timber.e("PhotoEditorActivity", "viewBottom.listPhoto.index_change_photo_old = " + PhotoEditorActivity.this.viewBottom.listPhoto.index_change_photo_old);
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
-                    public void doWork() {
-                        if (PhotoEditorActivity.this.onCaptureChangePhoto != null) {
-                            PhotoEditorActivity.this.onCaptureChangePhoto.onSuccess(pathFile);
-                        }
+
+                Observable.fromCallable(() -> {
+                    if (PhotoEditorActivity.this.onCaptureChangePhoto != null) {
+                        PhotoEditorActivity.this.onCaptureChangePhoto.onSuccess(pathFile);
                     }
-                });
+                    return "";
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe();
                 PhotoEditorActivity.this.isSaveChange();
             }
 

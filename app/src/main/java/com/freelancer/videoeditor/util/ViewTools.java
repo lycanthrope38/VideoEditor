@@ -13,6 +13,7 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ViewTools {
     LinearLayout btnChangePhoto;
@@ -139,37 +140,38 @@ public class ViewTools {
     }
 
     public void setVisibleLayoutTools(final int visible, final boolean isAnimation, final int type) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (ViewTools.this.isFistShowToolsBottom) {
-                    if (visible == 0) {
-                        if (type == 1) {
-                            ViewTools.this.btnChangePhoto.setVisibility(View.VISIBLE);
-                        } else {
-                            ViewTools.this.btnChangePhoto.setVisibility(View.GONE);
-                        }
+        Observable.fromCallable(() -> {
+            if (ViewTools.this.isFistShowToolsBottom) {
+                if (visible == 0) {
+                    if (type == 1) {
+                        ViewTools.this.btnChangePhoto.setVisibility(View.VISIBLE);
+                    } else {
+                        ViewTools.this.btnChangePhoto.setVisibility(View.GONE);
                     }
-                    if (visible != ViewTools.this.layoutTools.getVisibility()) {
-                        ViewTools.this.layoutTools.setVisibility(visible);
-                        ViewTools.this.onViewTools.onShowHide(visible);
-                        if (!isAnimation) {
-                            return;
-                        }
-                        if (visible == 0) {
-                            ViewTools.this.layoutTools.startAnimation(AnimationUtils.loadAnimation(ViewTools.this.mainActivity, R.anim.libphotoeditor_slide_in_bottom));
-                            return;
-                        } else if (visible == 8) {
-                            ViewTools.this.layoutTools.startAnimation(AnimationUtils.loadAnimation(ViewTools.this.mainActivity, R.anim.libphotoeditor_slide_out_bottom));
-                            return;
-                        } else {
-                            return;
-                        }
-                    }
-                    return;
                 }
-                ViewTools.this.isFistShowToolsBottom = true;
+                if (visible != ViewTools.this.layoutTools.getVisibility()) {
+                    ViewTools.this.layoutTools.setVisibility(visible);
+                    ViewTools.this.onViewTools.onShowHide(visible);
+                    if (!isAnimation) {
+                        return "";
+                    }
+                    if (visible == 0) {
+                        ViewTools.this.layoutTools.startAnimation(AnimationUtils.loadAnimation(ViewTools.this.mainActivity, R.anim.libphotoeditor_slide_in_bottom));
+                        return "";
+                    } else if (visible == 8) {
+                        ViewTools.this.layoutTools.startAnimation(AnimationUtils.loadAnimation(ViewTools.this.mainActivity, R.anim.libphotoeditor_slide_out_bottom));
+                        return "";
+                    } else {
+                        return "";
+                    }
+                }
+                return "";
             }
-        });
+            ViewTools.this.isFistShowToolsBottom = true;
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
     }
 
     void setWHButton(ImageView mButton, int pW, int pH) {

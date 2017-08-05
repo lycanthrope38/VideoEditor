@@ -15,6 +15,8 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     public static final int BORDER_1 = 1;
@@ -60,14 +62,14 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     }
 
     public void setVisibleLayoutBorder(final int visible, final boolean isAnimation) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                ListBlur.this.layoutParentBlur.setVisibility(visible);
-                if (isAnimation) {
-                    ListBlur.this.layoutParentBlur.startAnimation(AnimationUtils.loadAnimation(ListBlur.this.mainActivity, R.anim.libphotoeditor_fade_in));
-                }
+        Observable.fromCallable(() -> {
+            ListBlur.this.layoutParentBlur.setVisibility(visible);
+            if (isAnimation) {
+                ListBlur.this.layoutParentBlur.startAnimation(AnimationUtils.loadAnimation(ListBlur.this.mainActivity, R.anim.libphotoeditor_fade_in));
             }
-        });
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void handlerButtonTools(View view) {
@@ -101,13 +103,11 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     }
 
     public void updateProgress(final int progress) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
+
                 if (ListBlur.this.seekBarToolsPhoto != null) {
                     ListBlur.this.seekBarToolsPhoto.setProgress(progress);
                 }
-            }
-        });
+
     }
 
     @OnClick

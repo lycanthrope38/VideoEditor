@@ -361,23 +361,19 @@ public class UtilLib {
 
     public void showLoading(final Activity mActivity, final IOnBackLoading mOnBackLoading) {
         if (mActivity != null) {
-            handlerDoWork(new IHandler() {
-                public void doWork() {
-                    if (UtilLib.this.mProgressDialog == null) {
-                        UtilLib.this.mProgressDialog = new ProgressDialog(mActivity) {
-                            public void onBackPressed() {
-                                super.onBackPressed();
-                                if (mOnBackLoading != null) {
-                                    mOnBackLoading.onBack();
-                                }
-                            }
-                        };
-                        UtilLib.this.mProgressDialog.setMessage("Loading");
-                        UtilLib.this.mProgressDialog.setCancelable(false);
-                        UtilLib.this.mProgressDialog.show();
+            if (UtilLib.this.mProgressDialog == null) {
+                UtilLib.this.mProgressDialog = new ProgressDialog(mActivity) {
+                    public void onBackPressed() {
+                        super.onBackPressed();
+                        if (mOnBackLoading != null) {
+                            mOnBackLoading.onBack();
+                        }
                     }
-                }
-            });
+                };
+                UtilLib.this.mProgressDialog.setMessage("Loading");
+                UtilLib.this.mProgressDialog.setCancelable(false);
+                UtilLib.this.mProgressDialog.show();
+            }
         }
     }
 
@@ -397,14 +393,10 @@ public class UtilLib {
     }
 
     public void hideLoading() {
-        handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (UtilLib.this.mProgressDialog != null && UtilLib.this.mProgressDialog.isShowing()) {
-                    UtilLib.this.mProgressDialog.dismiss();
-                    UtilLib.this.mProgressDialog = null;
-                }
-            }
-        });
+        if (UtilLib.this.mProgressDialog != null && UtilLib.this.mProgressDialog.isShowing()) {
+            UtilLib.this.mProgressDialog.dismiss();
+            UtilLib.this.mProgressDialog = null;
+        }
     }
 
 //    public void showLoadingProgress(final Activity activity) {
@@ -425,40 +417,28 @@ public class UtilLib {
 
     public void showLoadingProgress(final Activity activity, final String message) {
         if (activity != null) {
-            handlerDoWork(new IHandler() {
-                public void doWork() {
-                    if (UtilLib.this.mProgressDialogDownload == null) {
-                        UtilLib.this.mProgressDialogDownload = new ProgressDialog(activity);
-                        UtilLib.this.mProgressDialogDownload.setProgressStyle(UtilLib.FLIP_VERTICAL);
-                        UtilLib.this.mProgressDialogDownload.setMessage(message);
-                        UtilLib.this.mProgressDialogDownload.setCancelable(false);
-                        UtilLib.this.mProgressDialogDownload.show();
-                    }
-                }
-            });
+            if (UtilLib.this.mProgressDialogDownload == null) {
+                UtilLib.this.mProgressDialogDownload = new ProgressDialog(activity);
+                UtilLib.this.mProgressDialogDownload.setProgressStyle(UtilLib.FLIP_VERTICAL);
+                UtilLib.this.mProgressDialogDownload.setMessage(message);
+                UtilLib.this.mProgressDialogDownload.setCancelable(false);
+                UtilLib.this.mProgressDialogDownload.show();
+            }
         }
     }
 
     public void updateDialogProgress(final int progress) {
-        handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
-                    UtilLib.this.mProgressDialogDownload.setIndeterminate(false);
-                    UtilLib.this.mProgressDialogDownload.setProgress(progress);
-                }
-            }
-        });
+        if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
+            UtilLib.this.mProgressDialogDownload.setIndeterminate(false);
+            UtilLib.this.mProgressDialogDownload.setProgress(progress);
+        }
     }
 
     public void hideLoadingDownload() {
-        handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
-                    UtilLib.this.mProgressDialogDownload.dismiss();
-                    UtilLib.this.mProgressDialogDownload = null;
-                }
-            }
-        });
+        if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
+            UtilLib.this.mProgressDialogDownload.dismiss();
+            UtilLib.this.mProgressDialogDownload = null;
+        }
     }
 
     @TargetApi(23)

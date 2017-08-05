@@ -1,6 +1,7 @@
 package com.freelancer.videoeditor.util;
 
 import android.graphics.Bitmap;
+import android.view.View;
 
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
@@ -12,6 +13,9 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RectangleFilter extends RectangleBorder {
     public static int publicAlpha = 40;
@@ -47,11 +51,11 @@ public class RectangleFilter extends RectangleBorder {
         mSpritePhoto.registerEntityModifier(new AlphaModifier(0.3f, 0.0f, ((float) publicAlpha) / 100.0f) {
             protected void onModifierFinished(IEntity pItem) {
                 super.onModifierFinished(pItem);
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
-                    public void doWork() {
-                        RectangleFilter.this.listFilter.updateProgess();
-                    }
-                });
+                Observable.fromCallable(() -> {
+                    RectangleFilter.this.listFilter.updateProgess();
+                    return "";
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe();
             }
         });
     }

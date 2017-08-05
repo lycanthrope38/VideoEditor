@@ -158,21 +158,17 @@ public class ViewBottom {
     }
 
     public void setVisibleLayoutBottom(final int visible, final boolean isAnimation) {
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                if (visible != ViewBottom.this.layoutBottomTools.getVisibility()) {
-                    ViewBottom.this.layoutBottomTools.setVisibility(visible);
-                    if (!isAnimation) {
-                        return;
-                    }
-                    if (visible == 0) {
-                        ViewBottom.this.layoutBottomTools.startAnimation(AnimationUtils.loadAnimation(ViewBottom.this.mainActivity, R.anim.libphotoeditor_slide_in_bottom));
-                    } else if (visible == 8) {
-                        ViewBottom.this.layoutBottomTools.startAnimation(AnimationUtils.loadAnimation(ViewBottom.this.mainActivity, R.anim.libphotoeditor_slide_out_bottom));
-                    }
-                }
+        if (visible != ViewBottom.this.layoutBottomTools.getVisibility()) {
+            ViewBottom.this.layoutBottomTools.setVisibility(visible);
+            if (!isAnimation) {
+                return;
             }
-        });
+            if (visible == 0) {
+                ViewBottom.this.layoutBottomTools.startAnimation(AnimationUtils.loadAnimation(ViewBottom.this.mainActivity, R.anim.libphotoeditor_slide_in_bottom));
+            } else if (visible == 8) {
+                ViewBottom.this.layoutBottomTools.startAnimation(AnimationUtils.loadAnimation(ViewBottom.this.mainActivity, R.anim.libphotoeditor_slide_out_bottom));
+            }
+        }
     }
 
     public OnViewBottom getOnViewBottom() {

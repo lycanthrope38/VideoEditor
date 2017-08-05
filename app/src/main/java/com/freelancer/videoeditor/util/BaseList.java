@@ -135,48 +135,40 @@ public class BaseList implements OnSeekBarChangeListener {
         final int i = pWItem;
         final int i2 = pHItem;
         final int i3 = index;
-        UtilLib.getInstance().handlerDoWork(new IHandler() {
-            public void doWork() {
-                ImageView image_frame = (ImageView) relativeLayout.findViewById(R.id.image_frame);
-                ImageView image_icon_check = (ImageView) relativeLayout.findViewById(R.id.image_icon_check);
-                BaseList.this.setSize(relativeLayout, image_frame, (ImageView) relativeLayout.findViewById(R.id.image_selected), image_icon_check, i, i2);
-                image_icon_check.setVisibility(View.GONE);
-                Glide.with(BaseList.this.mainActivity).load(Uri.parse(BaseList.this.pathFolderIamge + "/" + BaseList.this.prefixImage + i3 + BaseList.this.formatImage)).asBitmap().override(i, i2).thumbnail(AppConst.ZOOM_MIN).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(image_frame);
-            }
-        });
+        ImageView image_frame = (ImageView) relativeLayout.findViewById(R.id.image_frame);
+        ImageView image_icon_check = (ImageView) relativeLayout.findViewById(R.id.image_icon_check);
+        BaseList.this.setSize(relativeLayout, image_frame, (ImageView) relativeLayout.findViewById(R.id.image_selected), image_icon_check, i, i2);
+        image_icon_check.setVisibility(View.GONE);
+        Glide.with(BaseList.this.mainActivity).load(Uri.parse(BaseList.this.pathFolderIamge + "/" + BaseList.this.prefixImage + i3 + BaseList.this.formatImage)).asBitmap().override(i, i2).thumbnail(AppConst.ZOOM_MIN).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(image_frame);
     }
 
     private void setOnClickOnItem(final RelativeLayout mRelativeLayout, final int index) {
         mRelativeLayout.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
-                    public void doWork() {
-                        if (BaseList.this.itemSelected == null) {
-                            BaseList.this.itemSelected = mRelativeLayout;
-                            ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.VISIBLE);
-                            if (BaseList.this.onClickItemBaseList == null) {
-                                return;
-                            }
-                            if (index != -1) {
-                                BaseList.this.onClickItemBaseList.OnItemClick(mRelativeLayout, index);
-                            } else {
-                                BaseList.this.onClickItemBaseList.OnItemNoneClick();
-                            }
-                        } else if (BaseList.this.itemSelected != mRelativeLayout) {
-                            ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.GONE);
-                            BaseList.this.itemSelected = mRelativeLayout;
-                            ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.VISIBLE);
-                            if (BaseList.this.onClickItemBaseList == null) {
-                                return;
-                            }
-                            if (index != -1) {
-                                BaseList.this.onClickItemBaseList.OnItemClick(mRelativeLayout, index);
-                            } else {
-                                BaseList.this.onClickItemBaseList.OnItemNoneClick();
-                            }
-                        }
+                if (BaseList.this.itemSelected == null) {
+                    BaseList.this.itemSelected = mRelativeLayout;
+                    ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.VISIBLE);
+                    if (BaseList.this.onClickItemBaseList == null) {
+                        return;
                     }
-                });
+                    if (index != -1) {
+                        BaseList.this.onClickItemBaseList.OnItemClick(mRelativeLayout, index);
+                    } else {
+                        BaseList.this.onClickItemBaseList.OnItemNoneClick();
+                    }
+                } else if (BaseList.this.itemSelected != mRelativeLayout) {
+                    ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.GONE);
+                    BaseList.this.itemSelected = mRelativeLayout;
+                    ((ImageView) BaseList.this.itemSelected.findViewById(R.id.image_icon_check)).setVisibility(View.VISIBLE);
+                    if (BaseList.this.onClickItemBaseList == null) {
+                        return;
+                    }
+                    if (index != -1) {
+                        BaseList.this.onClickItemBaseList.OnItemClick(mRelativeLayout, index);
+                    } else {
+                        BaseList.this.onClickItemBaseList.OnItemNoneClick();
+                    }
+                }
             }
         });
     }
