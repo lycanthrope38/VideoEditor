@@ -372,38 +372,37 @@ public class RectanglePhoto extends RectangleBaseClipping {
     public void addPhotoBlur() {
         if (this.photoBlur == null) {
             UtilLib.getInstance().showLoading(this.mainActivity);
-            UtilLib.getInstance().doBackGround(new IDoBackGround() {
-                public void onDoBackGround(boolean isCancelled) {
-                    RectanglePhoto.this.bitmapPhoto = BlurBitmap.blurBitmap(RectanglePhoto.this.bitmapPhoto, HandlerTools.ROTATE_R, 10);
-                    RectanglePhoto.this.photoBlurITR = RectanglePhoto.this.loadITextureRegion(RectanglePhoto.this.bitmapPhoto);
-                    if (RectanglePhoto.this.photoBlur != null) {
-                        RectanglePhoto.this.mainActivity.removeEntity(RectanglePhoto.this.photoBlur);
-                        RectanglePhoto.this.photoBlur = null;
-                    }
-                    float pW = RectanglePhoto.this.getWidth();
-                    float pH = (RectanglePhoto.this.photoBlurITR.getHeight() * pW) / RectanglePhoto.this.photoBlurITR.getWidth();
-                    if (pH < RectanglePhoto.this.getHeight()) {
-                        pH = RectanglePhoto.this.getHeight();
-                        pW = (RectanglePhoto.this.photoBlurITR.getWidth() * pH) / RectanglePhoto.this.photoBlurITR.getHeight();
-                    }
-                    float pX = (RectanglePhoto.this.getWidth() / 2.0f) - (pW / 2.0f);
-                    float pY = (RectanglePhoto.this.getHeight() / 2.0f) - (pH / 2.0f);
-                    RectanglePhoto.this.photoBlur = new Sprite(pX, pY, pW, pH, RectanglePhoto.this.photoBlurITR, RectanglePhoto.this.mVertexBufferObjectManager);
-                    RectanglePhoto.this.photoBlur.setZIndex(RectanglePhoto.DRAG);
-                    RectanglePhoto.this.attachChild(RectanglePhoto.this.photoBlur);
-                    try {
-                        RectanglePhoto.this.sortChildren();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            Observable.fromCallable(() -> {
+                RectanglePhoto.this.bitmapPhoto = BlurBitmap.blurBitmap(RectanglePhoto.this.bitmapPhoto, HandlerTools.ROTATE_R, 10);
+                RectanglePhoto.this.photoBlurITR = RectanglePhoto.this.loadITextureRegion(RectanglePhoto.this.bitmapPhoto);
+                if (RectanglePhoto.this.photoBlur != null) {
+                    RectanglePhoto.this.mainActivity.removeEntity(RectanglePhoto.this.photoBlur);
+                    RectanglePhoto.this.photoBlur = null;
                 }
-
-                public void onCompleted() {
-                    UtilLib.getInstance().hideLoading();
-                    RectanglePhoto.this.mainActivity.isSave = false;
-                    RectanglePhoto.this.mainActivity.isSaveChange();
+                float pW = RectanglePhoto.this.getWidth();
+                float pH = (RectanglePhoto.this.photoBlurITR.getHeight() * pW) / RectanglePhoto.this.photoBlurITR.getWidth();
+                if (pH < RectanglePhoto.this.getHeight()) {
+                    pH = RectanglePhoto.this.getHeight();
+                    pW = (RectanglePhoto.this.photoBlurITR.getWidth() * pH) / RectanglePhoto.this.photoBlurITR.getHeight();
                 }
-            });
+                float pX = (RectanglePhoto.this.getWidth() / 2.0f) - (pW / 2.0f);
+                float pY = (RectanglePhoto.this.getHeight() / 2.0f) - (pH / 2.0f);
+                RectanglePhoto.this.photoBlur = new Sprite(pX, pY, pW, pH, RectanglePhoto.this.photoBlurITR, RectanglePhoto.this.mVertexBufferObjectManager);
+                RectanglePhoto.this.photoBlur.setZIndex(RectanglePhoto.DRAG);
+                RectanglePhoto.this.attachChild(RectanglePhoto.this.photoBlur);
+                try {
+                    RectanglePhoto.this.sortChildren();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "";
+            }).subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(s -> {
+                        UtilLib.getInstance().hideLoading();
+                        RectanglePhoto.this.mainActivity.isSave = false;
+                        RectanglePhoto.this.mainActivity.isSaveChange();
+                    });
         }
     }
 

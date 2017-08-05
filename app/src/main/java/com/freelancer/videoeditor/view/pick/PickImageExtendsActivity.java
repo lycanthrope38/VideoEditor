@@ -48,6 +48,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class PickImageExtendsActivity extends Activity implements OnClickListener, OnAlbum, OnListAlbum, com.freelancer.videoeditor.util.OnCustomClickListener {
@@ -300,28 +302,27 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                     break;
                 case 1:
                     UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
-                    UtilLib.getInstance().doBackGround(new IDoBackGround() {
-                        public void onDoBackGround(boolean isCancelled) {
-                            Collections.sort(PickImageExtendsActivity.this.dataAlbum, (lhs, rhs) -> {
-                                File fileI = new File(lhs.getPathFolder());
-                                File fileJ = new File(rhs.getPathFolder());
-                                long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
-                                long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
-                                if (totalSizeFileI > totalSizeFileJ) {
-                                    return -1;
-                                }
-                                if (totalSizeFileI < totalSizeFileJ) {
-                                    return PickImageExtendsActivity.ACTION_PICK_IMAGE;
-                                }
-                                return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                    Observable.fromCallable(() -> {
+                        Collections.sort(PickImageExtendsActivity.this.dataAlbum, (lhs, rhs) -> {
+                            File fileI = new File(lhs.getPathFolder());
+                            File fileJ = new File(rhs.getPathFolder());
+                            long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
+                            long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
+                            if (totalSizeFileI > totalSizeFileJ) {
+                                return -1;
+                            }
+                            if (totalSizeFileI < totalSizeFileJ) {
+                                return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                            }
+                            return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                        });
+                        return "";
+                    }).subscribeOn(AndroidSchedulers.mainThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(t -> {
+                                PickImageExtendsActivity.this.refreshGridViewAlbum();
+                                UtilLib.getInstance().hideLoading();
                             });
-                        }
-
-                        public void onCompleted() {
-                            PickImageExtendsActivity.this.refreshGridViewAlbum();
-                            UtilLib.getInstance().hideLoading();
-                        }
-                    });
                     Log.e("TAG", "showDialogSortAlbum by Size");
                     break;
                 case 2:
@@ -373,28 +374,27 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                 case 1:
                     try {
                         UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
-                        UtilLib.getInstance().doBackGround(new IDoBackGround() {
-                            public void onDoBackGround(boolean isCancelled) {
-                                Collections.sort(PickImageExtendsActivity.this.dataListPhoto, (lhs, rhs) -> {
-                                    File fileI = new File(lhs.getPathFolder());
-                                    File fileJ = new File(rhs.getPathFolder());
-                                    long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
-                                    long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
-                                    if (totalSizeFileI > totalSizeFileJ) {
-                                        return -1;
-                                    }
-                                    if (totalSizeFileI < totalSizeFileJ) {
-                                        return PickImageExtendsActivity.ACTION_PICK_IMAGE;
-                                    }
-                                    return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                        Observable.fromCallable(() -> {
+                            Collections.sort(PickImageExtendsActivity.this.dataListPhoto, (lhs, rhs) -> {
+                                File fileI = new File(lhs.getPathFolder());
+                                File fileJ = new File(rhs.getPathFolder());
+                                long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
+                                long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
+                                if (totalSizeFileI > totalSizeFileJ) {
+                                    return -1;
+                                }
+                                if (totalSizeFileI < totalSizeFileJ) {
+                                    return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                                }
+                                return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                            });
+                            return "";
+                        }).subscribeOn(AndroidSchedulers.mainThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(s -> {
+                                    PickImageExtendsActivity.this.refreshGridViewListAlbum();
+                                    UtilLib.getInstance().hideLoading();
                                 });
-                            }
-
-                            public void onCompleted() {
-                                PickImageExtendsActivity.this.refreshGridViewListAlbum();
-                                UtilLib.getInstance().hideLoading();
-                            }
-                        });
                         break;
                     } catch (Exception e2) {
                         break;

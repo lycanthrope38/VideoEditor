@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
+import io.reactivex.Observable;
+
 public class ViewTools {
     LinearLayout btnChangePhoto;
     LinearLayout btnClose;
@@ -142,9 +144,9 @@ public class ViewTools {
                 if (ViewTools.this.isFistShowToolsBottom) {
                     if (visible == 0) {
                         if (type == 1) {
-                            ViewTools.this.btnChangePhoto.setVisibility(0);
+                            ViewTools.this.btnChangePhoto.setVisibility(View.VISIBLE);
                         } else {
-                            ViewTools.this.btnChangePhoto.setVisibility(8);
+                            ViewTools.this.btnChangePhoto.setVisibility(View.GONE);
                         }
                     }
                     if (visible != ViewTools.this.layoutTools.getVisibility()) {

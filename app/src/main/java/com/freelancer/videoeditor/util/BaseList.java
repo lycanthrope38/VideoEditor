@@ -199,7 +199,7 @@ public class BaseList implements OnSeekBarChangeListener {
     }
 
     public void setVisibleLayoutBaseList(final int visible, final boolean isAnimation) {
-        UtilLib.getInstance().handlerDoWork(() -> {
+        Observable.fromCallable(() -> {
             BaseList.this.layoutBaseList.setVisibility(visible);
             if (BaseList.this.isShowLayoutSeekbar) {
                 BaseList.this.layoutSeekBar.setVisibility(visible);
@@ -211,7 +211,10 @@ public class BaseList implements OnSeekBarChangeListener {
                     BaseList.this.layoutSeekBar.startAnimation(mAnimation);
                 }
             }
-        });
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
     }
 
     public void showLayoutSeekbar() {

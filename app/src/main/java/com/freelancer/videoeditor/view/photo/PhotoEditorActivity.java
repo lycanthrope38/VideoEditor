@@ -760,12 +760,12 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public void onSetSpriteForTools(Sprite mSprite, int type) {
         this.spriteTools = mSprite;
         this.typeObject = type;
-        this.viewBottom.viewTools.setVisibleLayoutTools(0, true, type);
+        this.viewBottom.viewTools.setVisibleLayoutTools(View.VISIBLE, true, type);
     }
 
     @Override
     public void onDeleteSprite() {
-        this.viewBottom.viewTools.setVisibleLayoutTools(8, true, 1);
+        this.viewBottom.viewTools.setVisibleLayoutTools(View.GONE, true, 1);
         this.spriteTools = null;
         this.isSave = false;
         isSaveChange();
