@@ -43,16 +43,16 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     }
 
     public void findID(View mView) {
-        this.layoutParentBlur = (RelativeLayout) mView.findViewById(R.id.layoutParentBlur);
+        this.layoutParentBlur = mView.findViewById(R.id.layoutParentBlur);
         this.layoutParentBlur.setOnClickListener(this);
-        this.seekBarToolsPhoto = (SeekBar) this.layoutParentBlur.findViewById(R.id.seekBarToolsPhoto);
+        this.seekBarToolsPhoto = this.layoutParentBlur.findViewById(R.id.seekBarToolsPhoto);
         this.seekBarToolsPhoto.setOnSeekBarChangeListener(this);
-        this.btnColor = (ImageView) this.layoutParentBlur.findViewById(R.id.btnColor);
-        this.btnBorder_none = (ImageView) this.layoutParentBlur.findViewById(R.id.btnBorder_none);
-        this.btnBorder_1 = (ImageView) this.layoutParentBlur.findViewById(R.id.btnBorder_1);
-        this.btnBorder_2 = (ImageView) this.layoutParentBlur.findViewById(R.id.btnBorder_2);
-        this.btnBorder_3 = (ImageView) this.layoutParentBlur.findViewById(R.id.btnBorder_3);
-        this.btnBorder_4 = (ImageView) this.layoutParentBlur.findViewById(R.id.btnBorder_4);
+        this.btnColor = this.layoutParentBlur.findViewById(R.id.btnColor);
+        this.btnBorder_none = this.layoutParentBlur.findViewById(R.id.btnBorder_none);
+        this.btnBorder_1 = this.layoutParentBlur.findViewById(R.id.btnBorder_1);
+        this.btnBorder_2 = this.layoutParentBlur.findViewById(R.id.btnBorder_2);
+        this.btnBorder_3 = this.layoutParentBlur.findViewById(R.id.btnBorder_3);
+        this.btnBorder_4 = this.layoutParentBlur.findViewById(R.id.btnBorder_4);
         handlerButtonTools(this.btnColor);
         handlerButtonTools(this.btnBorder_none);
         handlerButtonTools(this.btnBorder_1);

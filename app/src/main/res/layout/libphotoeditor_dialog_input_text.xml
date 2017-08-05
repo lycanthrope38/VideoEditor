@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="#3d3d3d"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<LinearLayout
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<TextView
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+        android:id="@+id/textView1"
+        android:background="#242424"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_title_dialog_text"/>
+
+<ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <EditText
+            android:textSize="24sp"
+            android:textColor="#fff"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:id="@+id/edtInput"
+            android:padding="5dp"
+            android:drawingCacheQuality="high"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="@string/text_hint_edit_text"
+            android:ems="10"
+            android:inputType="text"/>
+</ScrollView>
+
+<LinearLayout
+        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="3dp">
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnB"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_b"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnI"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_i"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnBI"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_bi"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnN"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_n"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnLe"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_left"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnCe"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_center"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnRi"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginRight="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/libphotoeditor_icon_right"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnColor"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:padding="0dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:text="B"
+            android:layout_weight="1.0">
+
+        <View
+                android:id="@+id/viewColor"
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"/>
+
+        <TextView
+                android:textSize="8sp"
+                android:textColor="#fff"
+                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:id="@+id/textView3"
+                android:background="@color/bg_button_bottom_selected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Color"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</LinearLayout>
+
+<LinearLayout
+        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <Button
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnDown"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"/>
+
+    <TextView
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/textView2"
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_text_text_font_size"/>
+
+    <TextView
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/txtSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:text="24"/>
+
+    <Button
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:id="@+id/btnUp"
+            android:background="@drawable/libphotoeditor_selector_button_input_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"/>
+</LinearLayout>
+
+<GridView
+        android:id="@+id/gridView"
+        android:padding="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="3dp"
+        android:stretchMode="columnWidth"
+        android:columnWidth="150dp"
+        android:numColumns="3"/>
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <Button
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:id="@+id/btnApply"
+            android:background="@drawable/libphotoeditor_selector_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="@string/dialog_text_text_btn_apply"
+            android:layout_weight="1.0"/>
+
+    <Button
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:id="@+id/btnNo"
+            android:background="@drawable/libphotoeditor_selector_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="@string/dialog_text_text_btn_cancel"
+            android:layout_weight="1.0"/>
+</LinearLayout>
+</LinearLayout>
+        </LinearLayout>

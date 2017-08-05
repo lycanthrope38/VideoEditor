@@ -29,14 +29,18 @@ import com.freelancer.videoeditor.config.AppConstLibSticker;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.config.ShareConstants;
 import com.freelancer.videoeditor.util.AppUtils;
+import com.freelancer.videoeditor.util.DialogConfirm;
+import com.freelancer.videoeditor.util.DialogInputText;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
+import com.freelancer.videoeditor.util.IBitmap;
 import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
 import com.freelancer.videoeditor.util.MyFile;
 import com.freelancer.videoeditor.util.OnCapture;
 import com.freelancer.videoeditor.util.OnClickItemBaseList;
+import com.freelancer.videoeditor.util.OnDialogConfirm;
 import com.freelancer.videoeditor.util.OnManagerViewCenter;
 import com.freelancer.videoeditor.util.OnSetSpriteForTools;
 import com.freelancer.videoeditor.util.OnToolsBlur;
@@ -73,7 +77,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public static final int REQUEST_CODE_CROP = 10001;
     int REQUEST_CODE_SAVE = R.styleable.AppCompatTheme_seekBarStyle;
     final String TAG = "PhotoEditorActivity";
-//    DialogInputText dialogInputText;
+    DialogInputText dialogInputText;
     HandlerTools handlerTools = new HandlerTools();
     public int indexItemPhotoCurrent = -1;
     boolean isFinishResult = false;
@@ -151,23 +155,23 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         public void OnText() {
             Timber.e("OnViewBottom", "OnText");
             PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
-//            if (PhotoEditorActivity.this.dialogInputText == null) {
-//                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
-//                    public void onCompleted(Bitmap mBitmap) {
-//                        if (mBitmap != null) {
-//                            PhotoEditorActivity.this.rectangleTextAndSticker.addItem(mBitmap, 3);
-//                            PhotoEditorActivity.this.isSave = false;
-//                            PhotoEditorActivity.this.isSaveChange();
-//                        }
-//                    }
-//                });
-//                PhotoEditorActivity.this.dialogInputText.setOnDismissListener(new OnDismissListener() {
-//                    public void onDismiss(DialogInterface dialog) {
-//                        PhotoEditorActivity.this.viewBottom.setUnCheckButtonBottom();
-//                    }
-//                });
-//            }
-//            PhotoEditorActivity.this.dialogInputText.show();
+            if (PhotoEditorActivity.this.dialogInputText == null) {
+                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
+                    public void onCompleted(Bitmap mBitmap) {
+                        if (mBitmap != null) {
+                            PhotoEditorActivity.this.rectangleTextAndSticker.addItem(mBitmap, 3);
+                            PhotoEditorActivity.this.isSave = false;
+                            PhotoEditorActivity.this.isSaveChange();
+                        }
+                    }
+                });
+                PhotoEditorActivity.this.dialogInputText.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    public void onDismiss(DialogInterface dialog) {
+                        PhotoEditorActivity.this.viewBottom.setUnCheckButtonBottom();
+                    }
+                });
+            }
+            PhotoEditorActivity.this.dialogInputText.show();
         }
 
         public void UnCheck() {
@@ -489,10 +493,10 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     public void changePhoto(final View item_photo, final int index) {
-        this.pathItemPhotoCurrent = (String) this.listPathPhoto.get(index);
+        this.pathItemPhotoCurrent = this.listPathPhoto.get(index);
         this.item_photo_ItemPhotoCurrent = item_photo;
         this.indexItemPhotoCurrent = index;
-        String pathItemSave = (String) this.listPathPhoto.get(this.viewBottom.listPhoto.index_change_photo_old);
+        String pathItemSave = this.listPathPhoto.get(this.viewBottom.listPhoto.index_change_photo_old);
         if (this.isSave) {
             loadPhotoForRectanglePhoto(item_photo, index, this.pathItemPhotoCurrent);
             return;
@@ -514,15 +518,15 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         final View view = item_photo;
         final int i = index;
         final String str2 = pathItemClick;
-//        new DialogConfirm(this, new OnDialogConfirm() {
-//            public void OnYes() {
-//                PhotoEditorActivity.this.savePhoto(str);
-//            }
-//
-//            public void OnNo() {
-//                PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
-//            }
-//        }).show();
+        new DialogConfirm(this, new OnDialogConfirm() {
+            public void OnYes() {
+                PhotoEditorActivity.this.savePhoto(str);
+            }
+
+            public void OnNo() {
+                PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
+            }
+        }).show();
     }
 
     void loadPhotoForRectanglePhoto(View item_photo, int index, String pathItemClick) {
