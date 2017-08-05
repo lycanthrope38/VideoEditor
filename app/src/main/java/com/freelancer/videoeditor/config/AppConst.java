@@ -21,7 +21,7 @@ public class AppConst {
     public static final int EMOTICON_MAX_ROWS = 2;
     public static final String FOLDER_APP = "/Frames/VideoMaker/";
     public static final String FOLDER_BACKGROUND = "/Background/";
-    public static final String FOLDER_FILTER = "/Filter/";
+    public static final String FOLDER_FILTER = "filter_video";
     public static final String FORMAT_BACKGROUND = ".jpg";
     public static final String FORMAT_FILLTER = ".jpg";
     public static final String FORMAT_FRAME = ".png";
@@ -77,6 +77,8 @@ public class AppConst {
     public static final String EFFECT_NONE_NAME = "NONE";
     public static final String FILTER_TEMP_NAME = "Filter.png";
     public static final String FOLDER_THEME = "overlay_border";
+    public static final String FOLDER_BORDER = "border";
+    public static final String FOLDER_FILTER_IMAGE = "filter";
     public static final String FORMAT_DATE_DEFAULT = "yyyy/MM/dd";
     public static final String FORMAT_DATE_VN = "dd/MM/yyyy";
     public static final String FORMAT_FILTER = ".png";

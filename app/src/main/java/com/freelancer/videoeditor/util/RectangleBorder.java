@@ -1,8 +1,11 @@
 package com.freelancer.videoeditor.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
+
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.TextureOptions;
@@ -12,6 +15,13 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RectangleBorder extends RectangleBaseClipping {
     private static final String TAG = "RectangleBorder";
@@ -78,7 +88,7 @@ public class RectangleBorder extends RectangleBaseClipping {
 //        });
 //    }
 
-//    public void load(String url, final OnLoadImageFromURL onLoadSuccessFail) {
+    public void load(Context context, String folder, String url) {
 //        OnLoadImageFromURL mOnLoadImageFromURL = new OnLoadImageFromURL() {
 //            public void onCompleted(Bitmap mBitmap) {
 //                RectangleBorder.this.reLoad(mBitmap);
@@ -100,9 +110,28 @@ public class RectangleBorder extends RectangleBaseClipping {
 //                });
 //            }
 //        };
-//        UtilLib.getInstance().showLoadingProgress(this.mainActivity);
+
+        Observable.fromCallable(() -> {
+            Bitmap bm = getBitmapFromAssets(context, folder, url.substring(url.lastIndexOf(File.separator) + 1, url.length()));
+            RectangleBorder.this.reLoad(bm);
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
 //        downloadFrame(url, mOnLoadImageFromURL);
-//    }
+
+
+    }
+
+    public Bitmap getBitmapFromAssets(Context context, String folder, String fileName) {
+        InputStream is = null;
+        try {
+            is = context.getAssets().open(folder + File.separator + fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeStream(is);
+    }
 
     void animationShow(Sprite mSpritePhoto) {
         mSpritePhoto.registerEntityModifier(new AlphaModifier(0.3f, 0.0f, HandlerTools.ROTATE_R));

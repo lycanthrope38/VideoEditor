@@ -34,7 +34,6 @@ import com.freelancer.videoeditor.util.DialogInputText;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
 import com.freelancer.videoeditor.util.IBitmap;
-import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
 import com.freelancer.videoeditor.util.MyFile;
@@ -93,7 +92,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     OnCapture onCaptureChangePhoto;
     private OnClickItemBaseList onClickItemBaseListBackground = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-//            PhotoEditorActivity.this.rectangleBackground.load("http://139.59.241.64/App/Background/background" + index + AppConst.FORMAT_FILLTER, null);
+//            PhotoEditorActivity.this.rectangleBackground.load(PhotoEditorActivity.this,AppConst);
         }
 
         public void OnItemNoneClick() {
@@ -103,7 +102,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     };
     private OnClickItemBaseList onClickItemBaseListBorder = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-//            PhotoEditorActivity.this.rectangleBorder.load("http://139.59.241.64/App/Frames/VideoMaker/frame" + index + AppConst.FORMAT_FRAME, null);
+            PhotoEditorActivity.this.rectangleBorder.load(PhotoEditorActivity.this, AppConst.FOLDER_BORDER, "file:///android_asset/border/border" + index + ".png");
         }
 
         public void OnItemNoneClick() {
@@ -112,18 +111,8 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     };
     private OnClickItemBaseList onClickItemBaseListFilter = new OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
-//            PhotoEditorActivity.this.rectangleFilter.load("http://139.59.241.64/App/Filter/filter" + index + AppConst.FORMAT_FILLTER, new OnLoadImageFromURL() {
-//                public void onCompleted(Bitmap mBitmap) {
-//                    UtilLib.getInstance().handlerDoWork(new IHandler() {
-//                        public void doWork() {
-//                            PhotoEditorActivity.this.managerViewCenter.getListFilter().showLayoutSeekbar();
-//                        }
-//                    });
-//                }
-//
-//                public void onFail() {
-//                }
-//            });
+            rectangleFilter.load(PhotoEditorActivity.this, AppConst.FOLDER_FILTER_IMAGE, "file:///android_asset/border/filter" + index + ".jpg");
+            PhotoEditorActivity.this.managerViewCenter.getListFilter().showLayoutSeekbar();
         }
 
         public void OnItemNoneClick() {

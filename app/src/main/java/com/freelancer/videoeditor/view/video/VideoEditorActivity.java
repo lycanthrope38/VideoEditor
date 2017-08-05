@@ -209,7 +209,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                     VideoEditorActivity.this.scanVideoFile(VideoEditorActivity.this.mFullVideoBorderPath);
                     VideoEditorActivity.this.finish();
                     return;
-                case 3:
+                case 4:
                     if (VideoEditorActivity.this.isBorderSelected()) {
                         VideoEditorActivity.this.mCurrentVideoUrl = VideoEditorActivity.this.mFullVideoFilterPath;
                         VideoEditorActivity.this.generateVideoWithBorder();
@@ -219,7 +219,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                     VideoEditorActivity.this.scanVideoFile(VideoEditorActivity.this.mFullVideoFilterPath);
                     VideoEditorActivity.this.finish();
                     return;
-                case 4:
+                case 3:
                     VideoEditorActivity.this.isVideoWithEffect = true;
                     VideoEditorActivity.this.showVideo(VideoEditorActivity.this.mFullVideoEffectPath);
                     return;
@@ -859,10 +859,10 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         this.effectFragment.setVisibility(View.VISIBLE);
     }
 
-    public Bitmap getBitmapFromAssets(String fileName) {
+    public Bitmap getBitmapFromAssets(String folder, String fileName) {
         InputStream is = null;
         try {
-            is = getAssets().open(AppConst.FOLDER_THEME + File.separator + fileName);
+            is = getAssets().open(folder + File.separator + fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -914,7 +914,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                         this.imageOverlayBorder.setVisibility(View.INVISIBLE);
                         return;
                     }
-                    Bitmap bm = getBitmapFromAssets(data.substring(data.lastIndexOf(File.separator) + 1, data.length()));
+                    Bitmap bm = getBitmapFromAssets(AppConst.FOLDER_THEME, data.substring(data.lastIndexOf(File.separator) + 1, data.length()));
                     if (bm != null) {
                         this.imageOverlayBorder.setImageBitmap(bm);
                     } else {
@@ -934,13 +934,14 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                         hideSeekBar();
                         return;
                     }
-
+                    Bitmap bm = getBitmapFromAssets(AppConst.FOLDER_FILTER,data.substring(data.lastIndexOf(File.separator) + 1, data.length()));
+                    showLayoutSeekBar();
+                    this.mBitmapFilter = bm;
+                    this.imageFilter.setImageBitmap(this.mBitmapFilter);
+                    this.imageFilter.setVisibility(View.VISIBLE);
                 }
 
-                showLayoutSeekBar();
-                this.mBitmapFilter = (Bitmap) object;
-                this.imageFilter.setImageBitmap(this.mBitmapFilter);
-                this.imageFilter.setVisibility(View.VISIBLE);
+
                 return;
 
 //                else if (object instanceof Bitmap) {
@@ -1178,7 +1179,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         Builder builder = new Builder(this);
         builder.setTitle(R.string.title_reset_media);
         builder.setMessage(message);
-//        builder.setIcon(17301543);
         builder.setPositiveButton(R.string.text_continue, onClick);
         builder.setNegativeButton(R.string.text_cancel, onCancel);
         builder.create().show();
