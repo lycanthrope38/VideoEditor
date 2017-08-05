@@ -41,7 +41,7 @@
         <item>Create video and share it</item>
         <item>Let’s share your memory</item>
     </array>
-    <array name="array_duration_value">
+    <string-array name="array_duration_value">
         <item>0.5</item>
         <item>1</item>
         <item>1.5</item>
@@ -62,5 +62,5 @@
         <item>9</item>
         <item>9.5</item>
         <item>10</item>
-    </array>
+    </string-array>
 </resources>

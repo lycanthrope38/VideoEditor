@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -75,7 +76,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     private static final String TAG = "VideoEditorActivity";
     private int SCREEN_HEIGHT = ORIGIN_HEIGHT_SCREEN;
     private int SCREEN_WIDTH = ORIGIN_WDITH_SCREEN;
-    private List<String> arrDuration;
+    private List<String> arrDuration =new ArrayList<>();
     @BindView(R.id.image_btn_duration)
     ImageView btnDuration;
     @BindView(R.id.image_btn_editor)
@@ -763,14 +764,16 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     }
 
     private void showChangeDuration() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(getResources().getStringArray(R.array.array_duration)));
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, Arrays.asList(getResources().getStringArray(R.array.array_duration)));
         Builder builder = new Builder(this);
         builder.setTitle(R.string.title_dialog_duration);
         builder.setCancelable(true);
         builder.setSingleChoiceItems(adapter, this.mIndexDurationSelected, null);
         builder.setPositiveButton(R.string.text_apply, (dialog, which) -> {
+            ListView lw = ((AlertDialog)dialog).getListView();
+            Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
             final int itemClick = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            final String value = VideoEditorActivity.this.arrDuration.get(itemClick);
+            final String value = arrDuration.get(itemClick);
             if (VideoEditorActivity.this.isResetMedia()) {
                 VideoEditorActivity.this.showResetMediaDialog(R.string.message_warning_change_duration, (dialog1, which1) -> {
                     VideoEditorActivity.this.mItemMusicFragment.removeAudioText();
