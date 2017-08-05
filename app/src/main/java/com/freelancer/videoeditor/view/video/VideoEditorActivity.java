@@ -952,7 +952,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                     return;
                 }
                 return;
-            case 4:
+            case 2:
                 removeAudio();
                 return;
 //            case 5:
