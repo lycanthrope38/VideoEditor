@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.media.ExifInterface;
 import android.net.Uri;
-import timber.log.Timber;
 
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
@@ -15,8 +14,6 @@ import com.wang.avi.indicators.BallSpinFadeLoaderIndicator;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -27,6 +24,14 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class RectanglePhoto extends RectangleBaseClipping {
     private static final int DRAG = 1;
@@ -275,21 +280,21 @@ public class RectanglePhoto extends RectangleBaseClipping {
 
     public void reLoad(final Uri mImageCaptureUri) {
         UtilLib.getInstance().showLoading(this.mainActivity);
-        UtilLib.getInstance().doBackGround(new IDoBackGround() {
-            public void onDoBackGround(boolean isCancelled) {
-                Bitmap bitmap = RectanglePhoto.this.getBimapFromUri(mImageCaptureUri);
-                if (bitmap != null) {
-                    RectanglePhoto.this.uriPathFile = mImageCaptureUri;
-                    RectanglePhoto.this.reLoad(bitmap);
-                    RectanglePhoto.this.removeBtnAdd();
-                    RectanglePhoto.this.setColor(Color.TRANSPARENT);
-                }
+        Observable.fromCallable(() -> {
+            Bitmap bitmap = RectanglePhoto.this.getBimapFromUri(mImageCaptureUri);
+            if (bitmap != null) {
+                RectanglePhoto.this.uriPathFile = mImageCaptureUri;
+                RectanglePhoto.this.reLoad(bitmap);
+                RectanglePhoto.this.removeBtnAdd();
+                RectanglePhoto.this.setColor(Color.TRANSPARENT);
             }
+            return "";
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(t -> {
+                    UtilLib.getInstance().hideLoading();
+                });
 
-            public void onCompleted() {
-                UtilLib.getInstance().hideLoading();
-            }
-        });
     }
 
     public Bitmap getBimapFromUri(Uri mImageCaptureUri) {

@@ -80,6 +80,7 @@
                             android:orientation="vertical"
                             android:id="@+id/btnBorder"
                             android:layout_width="0dp"
+                            android:gravity="center"
                             android:layout_height="match_parent"
                             android:layout_weight="1.0">
 
@@ -103,6 +104,7 @@
                             android:orientation="vertical"
                             android:id="@+id/btnBackground"
                             android:layout_width="0dp"
+                            android:gravity="center"
                             android:layout_height="match_parent"
                             android:layout_weight="1.0">
 
@@ -125,6 +127,7 @@
                             android:orientation="vertical"
                             android:id="@+id/btnSticker"
                             android:layout_width="0dp"
+                            android:gravity="center"
                             android:layout_height="match_parent"
                             android:layout_weight="1.0">
 
@@ -147,6 +150,7 @@
                             android:orientation="vertical"
                             android:id="@+id/btnFilter"
                             android:layout_width="0dp"
+                            android:gravity="center"
                             android:layout_height="match_parent"
                             android:layout_weight="1.0">
 
@@ -169,6 +173,7 @@
                             android:orientation="vertical"
                             android:id="@+id/btnText"
                             android:layout_width="0dp"
+                            android:gravity="center"
                             android:layout_height="match_parent"
                             android:layout_weight="1.0">
 
@@ -214,7 +219,7 @@
                         android:textColor="#fff"
                         android:id="@+id/txtTotalPhoto"
                         android:layout_width="wrap_content"
-                        android:layout_height="10dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginRight="2dp"
@@ -226,7 +231,7 @@
                 <HorizontalScrollView
                         android:id="@+id/layoutHorizontalScrollView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentBottom="true">
 
                     <LinearLayout
@@ -266,6 +271,7 @@
                         android:id="@+id/layoutParentBlur"
                         android:background="#313548"
                         android:padding="1dp"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">

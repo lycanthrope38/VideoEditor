@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -64,6 +63,9 @@ import org.andengine.opengl.view.RenderSurfaceView;
 import java.io.File;
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 
@@ -255,8 +257,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-//        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-//        SharePrefUtils.init(this);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
         Bundle mBundle = getIntent().getExtras();
         if (mBundle != null) {
             this.photoEditorData = (PhotoEditorData) mBundle.getSerializable(KEY_PHOTO_EDITOR_DATA);
@@ -339,23 +340,17 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     public void showStart() {
-        final IDoBackGround mIDoBackGround = new IDoBackGround() {
-            public void onDoBackGround(boolean isCancelled) {
-                PhotoEditorActivity.this.iniUI();
-                PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
-            }
-
-            public void onCompleted() {
-                UtilLib.getInstance().hideLoading();
-                PhotoEditorActivity.this.managerRectanglePhoto.loadPhotoFromURI(Uri.fromFile(new File((String) PhotoEditorActivity.this.listPathPhoto.get(0))));
-            }
-        };
-        runOnUiThread(new Runnable() {
-            public void run() {
-                UtilLib.getInstance().showLoading(PhotoEditorActivity.this);
-                UtilLib.getInstance().doBackGround(mIDoBackGround);
-            }
-        });
+        Observable.fromCallable(() -> {
+            UtilLib.getInstance().showLoading(PhotoEditorActivity.this);
+            PhotoEditorActivity.this.iniUI();
+            PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    UtilLib.getInstance().hideLoading();
+                    PhotoEditorActivity.this.managerRectanglePhoto.loadPhotoFromURI(Uri.fromFile(new File(PhotoEditorActivity.this.listPathPhoto.get(0))));
+                });
     }
 
     @Override

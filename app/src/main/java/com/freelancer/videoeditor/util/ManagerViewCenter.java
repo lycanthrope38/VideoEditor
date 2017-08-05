@@ -54,20 +54,20 @@ public class ManagerViewCenter implements OnClickListener {
     }
 
     void hideAll() {
-        this.listBorder.setVisibleLayoutBaseList(8, false);
-        this.listBackground.setVisibleLayoutBaseList(8, false);
-        this.listFilter.setVisibleLayoutBaseList(8, false);
-        this.listBlur.setVisibleLayoutBorder(8, false);
+        this.listBorder.setVisibleLayoutBaseList(View.GONE, false);
+        this.listBackground.setVisibleLayoutBaseList(View.GONE, false);
+        this.listFilter.setVisibleLayoutBaseList(View.GONE, false);
+        this.listBlur.setVisibleLayoutBorder(View.GONE, false);
     }
 
     void show(LIST_ITEM listitem) {
         if (listitem == LIST_ITEM.BORDER) {
-            this.listBorder.setVisibleLayoutBaseList(0, true);
+            this.listBorder.setVisibleLayoutBaseList(View.VISIBLE, true);
         } else if (listitem == LIST_ITEM.BACKGROUND) {
-            this.listBlur.setVisibleLayoutBorder(0, true);
+            this.listBlur.setVisibleLayoutBorder(View.VISIBLE, true);
             this.mainActivity.managerRectanglePhoto.getmRectanglePhotoSeleted().addPhotoBlur();
         } else if (listitem == LIST_ITEM.FILTER) {
-            this.listFilter.setVisibleLayoutBaseList(0, true);
+            this.listFilter.setVisibleLayoutBaseList(View.VISIBLE, true);
         }
         setVisibleLayoutCenter(0, false);
     }
@@ -113,7 +113,7 @@ public class ManagerViewCenter implements OnClickListener {
     public void onClick(View v) {
         if (this.layoutCenter.getId() == v.getId()) {
             this.list_item_selected = null;
-            setVisibleLayoutCenter(8, true);
+            setVisibleLayoutCenter(View.GONE, true);
             this.onManagerViewCenter.onHideViewCenter();
         }
     }

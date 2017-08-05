@@ -14,6 +14,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
+import butterknife.OnClick;
+
 public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     public static final int BORDER_1 = 1;
     public static final int BORDER_2 = 2;
@@ -84,6 +86,8 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
         });
     }
 
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (this.seekBarToolsPhoto != null) {
             this.onToolsBlur.OnSeekBarChange(progress);
@@ -106,6 +110,7 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
         });
     }
 
+    @OnClick
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btnColor) {

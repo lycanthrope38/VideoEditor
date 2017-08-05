@@ -13,15 +13,19 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
-import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.freelancer.videoeditor.util.ManagerViewCenter.LIST_ITEM;
+import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 import java.io.IOException;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class BaseList implements OnSeekBarChangeListener {
     final int PERCENT_HorizontalScrollView = 15;
@@ -78,30 +82,29 @@ public class BaseList implements OnSeekBarChangeListener {
     }
 
     private void loadItem() {
-        UtilLib.getInstance().doBackGround(new IDoBackGround() {
-            LinearLayout mLinearLayout;
+        final LinearLayout[] mLinearLayout = new LinearLayout[1];
 
-            public void onDoBackGround(boolean isCancelled) {
-                int totalItem = BaseList.this.getTotalItem(BaseList.this.prefixImage);
-                this.mLinearLayout = (LinearLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_layout_linearlayout, null);
-                int pHItem = BaseList.this.PHEIGHT_HorizontalScrollView;
-                int pWItem = pHItem;
-                BaseList.this.addItemNone(this.mLinearLayout, pHItem, pWItem);
-                for (int i = 0; i < totalItem; i++) {
-                    RelativeLayout mRelativeLayout = (RelativeLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_item_base_list, null);
-                    this.mLinearLayout.addView(mRelativeLayout);
-                    BaseList.this.setOnClickOnItem(mRelativeLayout, i + 1);
-                    BaseList.this.displayItem(mRelativeLayout, i + 1, pHItem, pWItem);
-                }
+        Observable.fromCallable(() -> {
+            int totalItem = BaseList.this.getTotalItem(BaseList.this.prefixImage);
+            mLinearLayout[0] = (LinearLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_layout_linearlayout, null);
+            int pHItem = BaseList.this.PHEIGHT_HorizontalScrollView;
+            int pWItem = pHItem;
+            BaseList.this.addItemNone(mLinearLayout[0], pHItem, pWItem);
+            for (int i = 0; i < totalItem; i++) {
+                RelativeLayout mRelativeLayout = (RelativeLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_item_base_list, null);
+                mLinearLayout[0].addView(mRelativeLayout);
+                BaseList.this.setOnClickOnItem(mRelativeLayout, i + 1);
+                BaseList.this.displayItem(mRelativeLayout, i + 1, pHItem, pWItem);
             }
-
-            public void onCompleted() {
-                BaseList.this.loading.setVisibility(View.GONE);
-                BaseList.this.loading.startAnimation(AnimationUtils.loadAnimation(BaseList.this.mainActivity, R.anim.libphotoeditor_fade_out));
-                BaseList.this.layoutList.addView(this.mLinearLayout);
-                BaseList.this.layoutList.startAnimation(AnimationUtils.loadAnimation(BaseList.this.mainActivity, R.anim.libphotoeditor_fade_in));
-            }
-        });
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    BaseList.this.loading.setVisibility(View.GONE);
+                    BaseList.this.loading.startAnimation(AnimationUtils.loadAnimation(BaseList.this.mainActivity, R.anim.libphotoeditor_fade_out));
+                    BaseList.this.layoutList.addView(mLinearLayout[0]);
+                    BaseList.this.layoutList.startAnimation(AnimationUtils.loadAnimation(BaseList.this.mainActivity, R.anim.libphotoeditor_fade_in));
+                });
     }
 
     private void addItemNone(LinearLayout mLinearLayout, int pWItem, int pHItem) {

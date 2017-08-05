@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
@@ -14,6 +15,9 @@ import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 import java.util.ArrayList;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ListPhoto {
     public int index_change_photo_old = 0;
@@ -39,22 +43,17 @@ public class ListPhoto {
         this.layoutPhoto.getLayoutParams().height = pHLayoutBottom;
         this.layoutHorizontalScrollView.getLayoutParams().height = this.pWHPhoto;
         this.layoutListPhoto.getLayoutParams().height = this.pWHPhoto;
-        UtilLib.getInstance().doBackGround(new IDoBackGround() {
-            public void onDoBackGround(boolean isCancelled) {
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
-                    public void doWork() {
-                        ListPhoto.this.loadPhoto();
-                    }
-                });
-            }
 
-            public void onCompleted() {
-                ListPhoto.this.layoutListPhoto.addView(ListPhoto.this.mLinearLayout);
-                mainActivity.pathItemPhotoCurrent = (String) listPathPhoto.get(0);
-                mainActivity.item_photo_ItemPhotoCurrent = ListPhoto.this.getItem_photo_old();
-                mainActivity.indexItemPhotoCurrent = 0;
-            }
-        });
+        Observable.fromCallable(() -> {
+            loadPhoto();
+            return "";
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    ListPhoto.this.layoutListPhoto.addView(ListPhoto.this.mLinearLayout);
+                    mainActivity.pathItemPhotoCurrent = (String) listPathPhoto.get(0);
+                    mainActivity.item_photo_ItemPhotoCurrent = ListPhoto.this.getItem_photo_old();
+                    mainActivity.indexItemPhotoCurrent = 0;
+                });
     }
 
     void loadPhoto() {
