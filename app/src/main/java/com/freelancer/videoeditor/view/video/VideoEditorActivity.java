@@ -242,6 +242,17 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             }
         }
     };
+
+    private enum Process {
+        GEN_VIDEO,
+        GEN_VIDEO_WITH_AUDIO,
+        GEN_VIDEO_WITH_BORDER,
+        GEN_VIDEO_WITH_EFFECT,
+        GEN_VIDEO_WITH_FILTER,
+        GEN_AUDIO_LOOP,
+        GEN_VIDEO_LOOP
+    }
+
     @BindView(R.id.fragment_music_container)
     LinearLayout musicFragment;
     private OnSeekBarChangeListener onSeekBarChange = new OnSeekBarChangeListener() {
@@ -282,15 +293,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     @BindView(R.id.video_view_editor)
     UniversalVideoView videoViewEditor;
 
-    private enum Process {
-        GEN_VIDEO,
-        GEN_VIDEO_WITH_AUDIO,
-        GEN_VIDEO_WITH_BORDER,
-        GEN_VIDEO_WITH_EFFECT,
-        GEN_VIDEO_WITH_FILTER,
-        GEN_AUDIO_LOOP,
-        GEN_VIDEO_LOOP
-    }
 
     private enum Reset {
         BOTH,
@@ -943,13 +945,13 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 //                } else {
 //                    return;
 //                }
-//            case 3:
-//                if (object instanceof Audio) {
-//                    this.mCurrentAudioSelected = (Audio) object;
-//                    addMusicToVideo(this.mCurrentAudioSelected);
-//                    return;
-//                }
-//                return;
+            case 1:
+                if (object instanceof Audio) {
+                    this.mCurrentAudioSelected = (Audio) object;
+                    addMusicToVideo(this.mCurrentAudioSelected);
+                    return;
+                }
+                return;
             case 4:
                 removeAudio();
                 return;
