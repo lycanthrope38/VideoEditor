@@ -77,6 +77,7 @@ public class AppConst {
     public static final String EFFECT_NONE_NAME = "NONE";
     public static final String FILTER_TEMP_NAME = "Filter.png";
     public static final String FOLDER_THEME = "overlay_border";
+    public static final String FOLDER_STICKER = "sticker";
     public static final String FOLDER_BORDER = "border";
     public static final String FOLDER_FILTER_IMAGE = "filter";
     public static final String FORMAT_DATE_DEFAULT = "yyyy/MM/dd";
@@ -86,6 +87,7 @@ public class AppConst {
     public static final String FULL_ASSET_EFFECT0_THUMB = "file:///android_asset/effect/thumb/thumb0.png";
     public static final String FULL_ASSET_EFFECT0_VIDEO = "file:///android_asset/effect/video/effect0.mp4";
     public static final String FULL_ASSET_FOLDER_BORDER_NAME = "file:///android_asset/overlay_border";
+    public static final String FULL_ASSET_FOLDER_STICKER = "file:///android_asset/sticker";
     public static final String FULL_ASSET_FOLDER_EFFECT_FOLDER = "file:///android_asset/effect";
     public static final String FULL_ASSET_FOLDER_FILTER_NAME = "file:///android_asset/filter_video";
     public static int HEIGHT_IMAGE = WIDTH_VIDEO;

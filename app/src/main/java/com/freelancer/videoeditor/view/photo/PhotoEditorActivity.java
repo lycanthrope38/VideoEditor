@@ -63,6 +63,8 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.view.RenderSurfaceView;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
@@ -132,7 +134,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
 
         public void OnSticker() {
-//            PhotoEditorActivity.this.goStickerScreen(PhotoEditorActivity.this.photoEditorData.getUrlApiSticker(), PhotoEditorActivity.this.photoEditorData.getKeyFullBannerAdmob(), PhotoEditorActivity.this.photoEditorData.getKeyNativeAdmob());
+            PhotoEditorActivity.this.goStickerScreen();
             Timber.e("OnViewBottom", "OnSticker");
         }
 
@@ -354,11 +356,22 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             Timber.e("PhotoEditorActivity", "byteArray = " + byteArray);
             this.managerRectanglePhoto.getmRectanglePhotoSeleted().reLoad(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
         } else if (requestCode == R.styleable.AppCompatTheme_ratingBarStyleIndicator && data != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(data.getStringExtra(AppConstLibSticker.BUNDLE_KEY_STICKER_PATH));
+            String uri = data.getStringExtra(AppConstLibSticker.BUNDLE_KEY_STICKER_PATH);
+            Bitmap bitmap = getBitmapFromAssets(uri.substring(uri.lastIndexOf(File.separator) + 1, uri.length()));
             if (bitmap != null) {
                 onStickerEmoticonClick(bitmap);
             }
         }
+    }
+
+    public Bitmap getBitmapFromAssets(String url) {
+        InputStream is = null;
+        try {
+            is = getAssets().open(AppConst.FOLDER_STICKER + File.separator + url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeStream(is);
     }
 
     void addRectangleMain() {
@@ -581,15 +594,12 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         finish();
     }
 
-//    private void goStickerScreen(String urlApiSticker, String keyFullBannerAmob, String keyNativeAdmob) {
-//        Intent intent = new Intent(this, StickerActivityLibSticker.class);
-//        intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
-//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_URL_STICKER, urlApiSticker);
-//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_FULL_BANNER_ADMOB, keyFullBannerAmob);
-//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_NATIVE_ADMOB, keyNativeAdmob);
-//        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
-//        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
-//    }
+    private void goStickerScreen() {
+        Intent intent = new Intent(this, StickerActivityLibSticker.class);
+        intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
+        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
+        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
+    }
 @Override
     public void onCrop() {
         if (this.spriteTools == null) {
