@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<View xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/view_shadow_top_common"
-      android:background="@drawable/lib_sticker_shadow_bg_bar_top"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"/>

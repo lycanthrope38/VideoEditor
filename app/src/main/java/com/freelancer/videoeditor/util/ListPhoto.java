@@ -57,12 +57,12 @@ public class ListPhoto {
     }
 
     void loadPhoto() {
-        this.mLinearLayout = (LinearLayout) View.inflate(this.mainActivity, R.layout.libphotoeditor_layout_linearlayout, null);
+        this.mLinearLayout = (LinearLayout) View.inflate(this.mainActivity, R.layout.view_linearlayout, null);
         int pWHCheck = (int) ((((float) this.pWHPhoto) / 100.0f) * 20.0f);
         int pWHOrder = (int) ((((float) this.pWHPhoto) / 100.0f) * 30.0f);
         for (int i = 0; i < this.listPathPhoto.size(); i++) {
             String path = (String) this.listPathPhoto.get(i);
-            View item_photo = View.inflate(this.mainActivity, R.layout.libphotoeditor_item_photo, null);
+            View item_photo = View.inflate(this.mainActivity, R.layout.item_photo, null);
             this.mLinearLayout.addView(item_photo);
             RelativeLayout root = (RelativeLayout) item_photo.findViewById(R.id.root);
             root.getLayoutParams().width = this.pWHPhoto;

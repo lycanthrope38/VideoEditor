@@ -55,7 +55,7 @@ public class FontAdapter extends BaseAdapter {
         if (view != null) {
             return view;
         }
-        view = View.inflate(this.mContext, R.layout.libphotoeditor_row_typeface, null);
+        view = View.inflate(this.mContext, R.layout.view_row_typeface, null);
         final Typeface mTypeface = Typeface.createFromAsset(this.mContext.getAssets(), "fonts/" + this.mList[position]);
         ((TextView) view.findViewById(R.id.txt_name)).setTypeface(mTypeface);
         view.setOnClickListener(new OnClickListener() {

@@ -193,7 +193,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <include layout="@layout/libphotoeditor_layout_tools_bottom"/>
+                <include layout="@layout/view_tools_bottom"/>
             </RelativeLayout>
 
             <RelativeLayout

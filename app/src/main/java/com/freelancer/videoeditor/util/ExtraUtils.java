@@ -242,44 +242,44 @@ public class ExtraUtils {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-//    public static void shareImageViaIntent(Activity activity, String pathImage, boolean isChooser) {
-//        Intent shareIntent;
-//        Intent intent = new Intent("android.intent.action.SEND");
-//        intent.setType(FileUtils.MIME_TYPE_IMAGE);
-//        intent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(pathImage)));
-//        if (isChooser) {
-//            shareIntent = Intent.createChooser(intent, activity.getString(R.string.text_share_via));
-//        } else {
-//            shareIntent = intent;
-//        }
-//        activity.startActivity(shareIntent);
-//    }
+    public static void shareImageViaIntent(Activity activity, String pathImage, boolean isChooser) {
+        Intent shareIntent;
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setType(FileUtils.MIME_TYPE_IMAGE);
+        intent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(pathImage)));
+        if (isChooser) {
+            shareIntent = Intent.createChooser(intent, activity.getString(R.string.text_share_via));
+        } else {
+            shareIntent = intent;
+        }
+        activity.startActivity(shareIntent);
+    }
 
-//    public static void shareTextViaIntent(Activity activity, String content, boolean isChooser) {
-//        Intent shareIntent;
-//        Intent intent = new Intent("android.intent.action.SEND");
-//        intent.setType("text/plain");
-//        intent.putExtra("android.intent.extra.TEXT", content);
-//        if (isChooser) {
-//            shareIntent = Intent.createChooser(intent, activity.getString(R.string.text_share_via));
-//        } else {
-//            shareIntent = intent;
-//        }
-//        activity.startActivity(shareIntent);
-//    }
-//
-//    public static void shareVideoViaIntent(Context context, String pathVideo, boolean isChooser) {
-//        Intent shareIntent;
-//        Intent intent = new Intent("android.intent.action.SEND");
-//        intent.setType(FileUtils.MIME_TYPE_VIDEO);
-//        intent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(pathVideo)));
-//        if (isChooser) {
-//            shareIntent = Intent.createChooser(intent, context.getString(R.string.text_share_via));
-//        } else {
-//            shareIntent = intent;
-//        }
-//        context.startActivity(shareIntent);
-//    }
+    public static void shareTextViaIntent(Activity activity, String content, boolean isChooser) {
+        Intent shareIntent;
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setType("text/plain");
+        intent.putExtra("android.intent.extra.TEXT", content);
+        if (isChooser) {
+            shareIntent = Intent.createChooser(intent, activity.getString(R.string.text_share_via));
+        } else {
+            shareIntent = intent;
+        }
+        activity.startActivity(shareIntent);
+    }
+
+    public static void shareVideoViaIntent(Context context, String pathVideo, boolean isChooser) {
+        Intent shareIntent;
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setType(FileUtils.MIME_TYPE_VIDEO);
+        intent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(pathVideo)));
+        if (isChooser) {
+            shareIntent = Intent.createChooser(intent, context.getString(R.string.text_share_via));
+        } else {
+            shareIntent = intent;
+        }
+        context.startActivity(shareIntent);
+    }
 
     public static void playVideoViaIntent(Context context, String pathVideo) {
         Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(pathVideo));

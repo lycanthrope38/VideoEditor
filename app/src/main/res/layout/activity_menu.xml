@@ -1,20 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_loading"
         android:orientation="vertical">
-    <Button
-            android:id="@+id/btn_create_video"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="create video"
-            />
-    <Button
-            android:id="@+id/btn_my_studio"
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="my studio"/>
-</android.widget.LinearLayout>
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+        <LinearLayout
+                android:id="@+id/ln_create_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#00ba9c">
+        <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_video_player"
+                android:padding="5dp"
+                android:layout_marginStart="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Create Video"
+                    android:textSize="21sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ln_my_studio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#f79e00"
+                android:layout_marginTop="10dp">
+            <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/ic_my_studio"
+                    android:padding="5dp"
+                    android:layout_marginStart="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="My Studio"
+                    android:textSize="21sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

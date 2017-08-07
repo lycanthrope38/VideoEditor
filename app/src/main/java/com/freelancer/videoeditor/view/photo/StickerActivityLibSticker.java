@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
-import com.freelancer.videoeditor.config.AppConstLibSticker;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.OnStickerClick;
 
@@ -24,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ThongLe on 8/5/2017.
@@ -74,9 +74,14 @@ public class StickerActivityLibSticker extends AppCompatActivity implements OnSt
         finishActivityAndReturn(item);
     }
 
+    @OnClick(R.id.image_back)
+    public void onBackClick(){
+        finish();
+    }
+
     private void finishActivityAndReturn(String url) {
         Intent intent = new Intent();
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_STICKER_PATH, url);
+        intent.putExtra(AppConst.BUNDLE_KEY_STICKER_PATH, url);
         setResult(-1, intent);
         finish();
     }

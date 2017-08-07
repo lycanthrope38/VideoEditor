@@ -20,7 +20,6 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
-import net.margaritov.preference.colorpicker.BuildConfig;
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 import net.margaritov.preference.colorpicker.ColorPickerDialog.OnColorChangedListener;
 
@@ -43,7 +42,7 @@ public class DialogInputText extends Dialog implements OnClickListener {
         this.mIBitmap = mIBitmap;
         this.mainActivity = mainActivity;
         getWindow().requestFeature(1);
-        setContentView(R.layout.libphotoeditor_dialog_input_text);
+        setContentView(R.layout.dialog_input_text);
         this.scrollView = (ScrollView) findViewById(R.id.scrollView);
         this.scrollView.getLayoutParams().height = this.pH;
         this.viewColor = findViewById(R.id.viewColor);

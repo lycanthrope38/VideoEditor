@@ -5,9 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,11 +34,8 @@ import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IDoBackGround;
-import com.freelancer.videoeditor.util.IHandler;
 import com.freelancer.videoeditor.util.OnCustomTouchListener;
 import com.freelancer.videoeditor.util.UtilLib;
-import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.freelancer.videoeditor.vo.Item;
 
 import java.io.File;
@@ -189,7 +184,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(ACTION_PICK_IMAGE);
         getWindow().setFlags(1024, 1024);
-        setContentView(R.layout.piclist_activity_album_extends);
+        setContentView(R.layout.activity_album_extends);
         this.CAPTURE_IMAGE_FILE_PROVIDER = getPackageName() + ".fileprovider";
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -269,7 +264,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             });
         } catch (Exception e) {
         }
-        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.piclist_row_album_extends, this.dataAlbum);
+        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.item_album_extends, this.dataAlbum);
         this.adapterExtends.setOnItem(this);
 //        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
             new GetItemAlbum().execute();
@@ -350,7 +345,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void refreshGridViewAlbum() {
-        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.piclist_row_album_extends, this.dataAlbum);
+        this.adapterExtends = new AlbumAdapterExtends(this, R.layout.item_album_extends, this.dataAlbum);
         this.adapterExtends.setOnItem(this);
         this.gridViewAlbum.setAdapter(adapterExtends);
         this.gridViewAlbum.setVisibility(View.GONE);
@@ -493,7 +488,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         item.setId(this.listItemSelect.size());
         this.listItemSelect.add(item);
         updateTxtTotalImage();
-        final View viewItemSelected = View.inflate(this, R.layout.piclist_item_selected_extends, null);
+        final View viewItemSelected = View.inflate(this, R.layout.item_selected_extends, null);
         ImageView imageItem = viewItemSelected.findViewById(R.id.imageItem);
         ImageView btnDelete = viewItemSelected.findViewById(R.id.btnDelete);
         viewItemSelected.findViewById(R.id.layoutRoot).getLayoutParams().height = this.pWHItemSelected;

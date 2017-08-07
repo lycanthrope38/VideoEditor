@@ -21,12 +21,11 @@ import android.widget.Toast;
 
 import com.freelancer.videoeditor.BuildConfig;
 import com.freelancer.videoeditor.R;
-import com.freelancer.videoeditor.config.ShareConstants;
+import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
 import com.freelancer.videoeditor.util.Util;
 import com.freelancer.videoeditor.view.base.BaseActivity;
-import com.freelancer.videoeditor.view.base.BasePresenter;
 import com.freelancer.videoeditor.vo.Audio;
 
 import java.io.File;
@@ -67,14 +66,14 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
         }
 
         protected String doInBackground(Void... params) {
-            String[] projection = new String[]{"_id", "artist", ShareConstants.WEB_DIALOG_PARAM_TITLE, "_data", "_display_name", "duration"};
+            String[] projection = new String[]{"_id", "artist", AppConst.WEB_DIALOG_PARAM_TITLE, "_data", "_display_name", "duration"};
             Uri uri = Media.EXTERNAL_CONTENT_URI;
             Cursor cursor = PickAudioActivity.this.getContentResolver().query(uri, projection, "is_music != 0", null, null);
             if (cursor == null || cursor.getCount() == 0) {
                 PickAudioActivity.this.runOnUiThread(() -> Toast.makeText(PickAudioActivity.this, "No audio found", Toast.LENGTH_SHORT).show());
             } else {
                 int column_index_path = cursor.getColumnIndexOrThrow("_data");
-                int columnIndexTitle = cursor.getColumnIndexOrThrow(ShareConstants.WEB_DIALOG_PARAM_TITLE);
+                int columnIndexTitle = cursor.getColumnIndexOrThrow(AppConst.WEB_DIALOG_PARAM_TITLE);
                 int columnIndexName = cursor.getColumnIndexOrThrow("_display_name");
                 int columnIndexDuration = cursor.getColumnIndexOrThrow("duration");
                 int columnIndexArtist = cursor.getColumnIndexOrThrow("artist");
@@ -342,7 +341,7 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
     }
 
     private Audio getAudioFromUri(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, new String[]{"_id", "artist", ShareConstants.WEB_DIALOG_PARAM_TITLE, "_data", "_display_name", "duration"}, null, null, null);
+        Cursor cursor = getContentResolver().query(uri, new String[]{"_id", "artist", AppConst.WEB_DIALOG_PARAM_TITLE, "_data", "_display_name", "duration"}, null, null, null);
         if (!(cursor == null || cursor.getCount() == 0)) {
             int columnIndexName = cursor.getColumnIndexOrThrow("_display_name");
             int columnIndexDuration = cursor.getColumnIndexOrThrow("duration");

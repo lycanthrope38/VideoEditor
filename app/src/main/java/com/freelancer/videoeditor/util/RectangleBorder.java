@@ -65,61 +65,14 @@ public class RectangleBorder extends RectangleBaseClipping {
         this.mainActivity.isSaveChange();
     }
 
-//    void downloadFrame(String url, final OnLoadImageFromURL onLoad) {
-//        MyImageLoader.download(this.mainActivity, url, new FakeImageSimpleImageLoadingListener(MyImageLoader.getSingleFakeImage(this.mainActivity, url)) {
-//            public void onLoadingStarted(String imageUri, View view) {
-//            }
-//
-//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                onLoad.onFail();
-//            }
-//
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                onLoad.onCompleted(loadedImage);
-//            }
-//
-//            public void onLoadingCancelled(String imageUri, View view) {
-//                RectangleBorder.this.load(imageUri, onLoad);
-//            }
-//        }, new ImageLoadingProgressListener() {
-//            public void onProgressUpdate(String imageUri, View view, int current, int total) {
-//                UtilLib.getInstance().updateDialogProgress((int) ((((float) current) / ((float) total)) * 100.0f));
-//            }
-//        });
-//    }
 
     public void load(Context context, String folder, String url) {
-//        OnLoadImageFromURL mOnLoadImageFromURL = new OnLoadImageFromURL() {
-//            public void onCompleted(Bitmap mBitmap) {
-//                RectangleBorder.this.reLoad(mBitmap);
-//                if (onLoadSuccessFail != null) {
-//                    onLoadSuccessFail.onCompleted(mBitmap);
-//                }
-//                UtilLib.getInstance().hideLoadingDownload();
-//            }
-//
-//            public void onFail() {
-//                if (onLoadSuccessFail != null) {
-//                    onLoadSuccessFail.onFail();
-//                }
-//                UtilLib.getInstance().hideLoadingDownload();
-//                UtilLib.getInstance().handlerDoWork(new IHandler() {
-//                    public void doWork() {
-//                        CommonDialog.netWorkNotConnect(RectangleBorder.this.mainActivity);
-//                    }
-//                });
-//            }
-//        };
-
         Observable.fromCallable(() -> {
             Bitmap bm = getBitmapFromAssets(context, folder, url.substring(url.lastIndexOf(File.separator) + 1, url.length()));
             RectangleBorder.this.reLoad(bm);
             return "";
         }).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe();
-
-//        downloadFrame(url, mOnLoadImageFromURL);
-
 
     }
 

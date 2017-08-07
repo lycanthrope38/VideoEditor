@@ -18,7 +18,7 @@ public class DialogConfirm extends Dialog implements OnClickListener {
         this.mainActivity = mainActivity;
         this.onDialogConfirm = onDialogConfirm;
         getWindow().requestFeature(1);
-        setContentView(R.layout.libphotoeditor_dialog_confirm);
+        setContentView(R.layout.dialog_confirm);
         ((Button) findViewById(R.id.btnSave)).setOnClickListener(this);
         ((Button) findViewById(R.id.btnNo)).setOnClickListener(this);
         ((Button) findViewById(R.id.btnCancel)).setOnClickListener(this);

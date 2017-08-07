@@ -25,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -113,6 +112,32 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     View divideMusic;
     @BindView(R.id.view_divide_theme)
     View divideTheme;
+    @BindView(R.id.root_header_video_editor)
+    RelativeLayout rootHeader;
+    @BindView(R.id.root_tool_bar)
+    LinearLayout rootToolBar;
+    @BindView(R.id.video_layout)
+    FrameLayout rootVideo;
+    @BindView(R.id.seekBarAlpha)
+    SeekBar seekBarAlpha;
+    @BindView(R.id.image_button_save)
+    ImageView textButtonSave;
+    @BindView(R.id.text_title_duration)
+    TextView textDuration;
+    @BindView(R.id.text_title_editor)
+    TextView textEditor;
+    @BindView(R.id.text_title_effect)
+    TextView textEffect;
+    @BindView(R.id.text_title_music)
+    TextView textMusic;
+    @BindView(R.id.text_title_theme)
+    TextView textTheme;
+    @BindView(R.id.fragment_theme)
+    LinearLayout themeFragment;
+    @BindView(R.id.txtAlpha)
+    TextView txtAlpha;
+    @BindView(R.id.video_view_editor)
+    UniversalVideoView videoViewEditor;
     private long durationExec = 0;
     @BindView(R.id.fragment_effect)
     LinearLayout effectFragment;
@@ -238,7 +263,9 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             super.onFinish();
             VideoEditorActivity.this.durationExec = System.currentTimeMillis() - VideoEditorActivity.this.durationExec;
             Timber.d(VideoEditorActivity.TAG, ">>> TIME FINISHED: " + VideoEditorActivity.this.durationExec + " ms");
+            Timber.tag("passedVideoAfter").d("onFinish");
             if (VideoEditorActivity.this.isGenSuccess && VideoEditorActivity.this.mCurrentProcess == Process.GEN_VIDEO && VideoEditorActivity.this.iHandler != null) {
+                Timber.tag("passedVideoAfter").d("iHandler.doWork()");
                 VideoEditorActivity.this.iHandler.doWork();
             }
         }
@@ -267,32 +294,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
     };
-    @BindView(R.id.root_header_video_editor)
-    RelativeLayout rootHeader;
-    @BindView(R.id.root_tool_bar)
-    LinearLayout rootToolBar;
-    @BindView(R.id.video_layout)
-    FrameLayout rootVideo;
-    @BindView(R.id.seekBarAlpha)
-    SeekBar seekBarAlpha;
-    @BindView(R.id.image_button_save)
-    ImageView textButtonSave;
-    @BindView(R.id.text_title_duration)
-    TextView textDuration;
-    @BindView(R.id.text_title_editor)
-    TextView textEditor;
-    @BindView(R.id.text_title_effect)
-    TextView textEffect;
-    @BindView(R.id.text_title_music)
-    TextView textMusic;
-    @BindView(R.id.text_title_theme)
-    TextView textTheme;
-    @BindView(R.id.fragment_theme)
-    LinearLayout themeFragment;
-    @BindView(R.id.txtAlpha)
-    TextView txtAlpha;
-    @BindView(R.id.video_view_editor)
-    UniversalVideoView videoViewEditor;
+
 
 
     private enum Reset {
@@ -770,8 +772,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         builder.setCancelable(true);
         builder.setSingleChoiceItems(adapter, this.mIndexDurationSelected, null);
         builder.setPositiveButton(R.string.text_apply, (dialog, which) -> {
-            ListView lw = ((AlertDialog)dialog).getListView();
-            Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
             final int itemClick = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
             final String value = arrDuration.get(itemClick);
             if (VideoEditorActivity.this.isResetMedia()) {
@@ -807,6 +807,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         if (this.isVideoWithAudio) {
             this.iHandler = new IHandler() {
                 public void doWork() {
+                    Timber.tag("passedVideoAfter").d("isVideoWithAudio");
                     VideoEditorActivity.this.addMusicToVideo(VideoEditorActivity.this.mCurrentAudioSelected);
                     VideoEditorActivity.this.iHandler = null;
                 }
@@ -815,12 +816,14 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         } else if (this.isVideoWithEffect) {
             this.iHandler = new IHandler() {
                 public void doWork() {
+                    Timber.tag("passedVideoAfter").d("isVideoWithEffect");
                     VideoEditorActivity.this.addEffectToVideo(VideoEditorActivity.this.mCurrentEffectSelected);
                     VideoEditorActivity.this.iHandler = null;
                 }
             };
             generateVideoFromImagePicked();
         } else {
+            Timber.tag("passedVideoAfter").d("createVideoFromImages");
             createVideoFromImages();
         }
     }
@@ -944,11 +947,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 
                 return;
 
-//                else if (object instanceof Bitmap) {
-//
-//                } else {
-//                    return;
-//                }
             case 1:
                 if (object instanceof Audio) {
                     this.mCurrentAudioSelected = (Audio) object;
@@ -958,15 +956,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
                 return;
             case 2:
                 removeAudio();
-                return;
-//            case 5:
-//                if (object instanceof ListVideoEffect) {
-//                    this.mCurrentEffectSelected = (ListVideoEffect) object;
-//                    addEffectToVideo(this.mCurrentEffectSelected);
-//                    return;
-//                }
-//                return;
-            default:
                 return;
         }
     }
@@ -1209,10 +1198,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         photoEditorData.setNumerStartImage(1);
         photoEditorData.setWidthImage(AppConst.WIDTH_IMAGE);
         photoEditorData.setHeightImage(AppConst.HEIGHT_IMAGE);
-        photoEditorData.setUrlApiSticker(AppConst.URL_STICKER);
         photoEditorData.setFormatOutImage(AppConst.FORMAT_FILLTER);
-        photoEditorData.setPackageNameCrop(AppConst.PACKAGE_NAME_CROP);
-        photoEditorData.setCurrentCropVersion(2);
         photoEditorData.setActionIntentFilterPhotoCrop(AppConst.ACTION_INTENT_FILTER_PHOTO_CROP);
         Intent mIntent = new Intent(this, PhotoEditorActivity.class);
         Bundle bundle = new Bundle();

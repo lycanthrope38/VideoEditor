@@ -36,7 +36,6 @@ import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.view.RenderSurfaceView;
-import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 public abstract class BaseGame extends SimpleBaseGameActivity {
@@ -247,7 +246,7 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
         super.onSetContentView();
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
-        View v = View.inflate(this, R.layout.baselibsandengine_activity_main, null);
+        View v = View.inflate(this, R.layout.activity_andengine, null);
         this.mainView = v.findViewById(R.id.mainView_base);
         this.mainView.addView(this.mRenderSurfaceView, 0);
         setContentView(v);

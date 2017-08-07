@@ -4,7 +4,7 @@
                 android:id="@+id/root_header_video_editor"
                 android:background="@color/color_top_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp">
 
     <ImageView
             android:id="@+id/button_back"
@@ -17,7 +17,7 @@
             android:layout_alignParentStart="true"/>
 
     <LinearLayout
-            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+            android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linear_button_save"
             android:background="@drawable/btn_save_selector"
@@ -28,7 +28,6 @@
             android:layout_alignParentEnd="true">
 
         <ImageView
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                 android:id="@+id/image_button_save"
                 android:paddingLeft="@dimen/normal_space"
                 android:paddingRight="@dimen/normal_space"

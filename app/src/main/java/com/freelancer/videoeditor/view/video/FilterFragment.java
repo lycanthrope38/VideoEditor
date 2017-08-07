@@ -148,69 +148,9 @@ public class FilterFragment extends BaseFragment implements OnRecyclerClickListe
             this.mListener.onPassData(Action.ADD_FILTER, "none");
         } else {
             this.mListener.onPassData(Action.ADD_FILTER, obj);
-//            loadFilter("http://139.59.241.64/App/VideoEditor/Filter/filter" + position + AppConst.FORMAT_FRAME, new OnLoadImageFromURL() {
-//                public void onCompleted(final Bitmap mBitmap) {
-//                    UtilLib.getInstance().handlerDoWork(new IHandler() {
-//                        public void doWork() {
-//                            if (FilterFragment.this.mListener != null) {
-//                                FilterFragment.this.mListener.onPassData(Action.ADD_FILTER, mBitmap);
-//                            }
-//                        }
-//                    });
-//                }
-//
-//                public void onFail() {
-//                }
-//            });
 
         }
     }
 
-    private void downloadFrame(String url, final OnLoadImageFromURL onLoad) {
-//        MyImageLoader.download(getActivity(), url, new FakeImageSimpleImageLoadingListener(MyImageLoader.getSingleFakeImage(getActivity(), url)) {
-//            public void onLoadingStarted(String imageUri, View view) {
-//            }
-//
-//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                onLoad.onFail();
-//            }
-//
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                onLoad.onCompleted(loadedImage);
-//            }
-//
-//            public void onLoadingCancelled(String imageUri, View view) {
-//                FilterFragment.this.loadFilter(imageUri, onLoad);
-//            }
-//        }, new ImageLoadingProgressListener() {
-//            public void onProgressUpdate(String imageUri, View view, int current, int total) {
-//                UtilLib.getInstance().updateDialogProgress((int) ((((float) current) / ((float) total)) * 100.0f));
-//            }
-//        });
-    }
 
-    private void loadFilter(String url, final OnLoadImageFromURL onLoadSuccessFail) {
-        OnLoadImageFromURL mOnLoadImageFromURL = new OnLoadImageFromURL() {
-            public void onCompleted(Bitmap mBitmap) {
-                if (onLoadSuccessFail != null) {
-                    onLoadSuccessFail.onCompleted(mBitmap);
-                }
-                UtilLib.getInstance().hideLoadingDownload();
-            }
-
-            public void onFail() {
-                if (onLoadSuccessFail != null) {
-                    onLoadSuccessFail.onFail();
-                }
-                UtilLib.getInstance().hideLoadingDownload();
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
-                    public void doWork() {
-//                        CommonDialog.netWorkNotConnect(FilterFragment.this.getActivity());
-                    }
-                });
-            }
-        };
-//        UtilLib.getInstance().showLoadingProgress(getActivity());
-        downloadFrame(url, mOnLoadImageFromURL);
-    }
 }

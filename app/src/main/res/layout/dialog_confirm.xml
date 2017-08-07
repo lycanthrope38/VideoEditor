@@ -31,7 +31,7 @@
         <Button
                 android:textStyle="bold"
                 android:textColor="#fff"
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:gravity="center"
                 android:id="@+id/btnSave"
                 android:background="@drawable/libphotoeditor_selector_button"
                 android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
         <Button
                 android:textStyle="bold"
                 android:textColor="#fff"
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:gravity="center"
                 android:id="@+id/btnNo"
                 android:background="@drawable/libphotoeditor_selector_button"
                 android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         <Button
                 android:textStyle="bold"
                 android:textColor="#fff"
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:gravity="center"
                 android:id="@+id/btnCancel"
                 android:background="@drawable/libphotoeditor_selector_button"
                 android:layout_width="wrap_content"

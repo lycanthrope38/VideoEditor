@@ -37,8 +37,6 @@ public class VideoSavedActivity extends BaseActivity {
     private static final String TAG = "VideoSavedActivity";
     @BindView(R.id.button_back_home)
     ImageView buttonBackHome;
-    @BindView(R.id.button_more)
-    ImageView buttonMore;
     @BindView(R.id.button_rate)
     ImageView buttonRate;
     @BindView(R.id.button_share_video)
@@ -91,7 +89,6 @@ public class VideoSavedActivity extends BaseActivity {
         setSquareSize(this.rootVideo, SCREEN_WIDTH);
         setSquareSize(this.buttonShare, SCREEN_WIDTH / 5);
         setSquareSize(this.buttonRate, SCREEN_WIDTH / 5);
-        setSquareSize(this.buttonMore, SCREEN_WIDTH / 5);
     }
 
     private void setSquareSize(View view, int size) {
@@ -130,22 +127,17 @@ public class VideoSavedActivity extends BaseActivity {
         return this.mVideoUrl.substring(this.mVideoUrl.lastIndexOf(File.separator) + 1, this.mVideoUrl.length());
     }
 
-    @OnClick({R.id.button_share_video, R.id.button_rate, R.id.button_more, R.id.button_back_home})
+    @OnClick({R.id.button_share_video, R.id.button_rate, R.id.button_back_home})
     public void onClickShare(View view) {
         switch (view.getId()) {
-            case R.id.button_back_home /*2131689637*/:
+            case R.id.button_back_home :
                 finish();
                 return;
-            case R.id.button_share_video /*2131689643*/:
-//                ExtraUtils.shareVideoViaIntent(this, this.mVideoUrl, true);
+            case R.id.button_share_video :
+                ExtraUtils.shareVideoViaIntent(this, this.mVideoUrl, true);
                 return;
-            case R.id.button_rate /*2131689644*/:
+            case R.id.button_rate :
                 ExtraUtils.openMarket(this, getPackageName());
-                return;
-            case R.id.button_more /*2131689645*/:
-                UtilLib.getInstance().nextMyListAppOnGooglePlay(this, AppConst.NAME_STORE);
-                return;
-            default:
                 return;
         }
     }

@@ -1,4 +1,4 @@
-package com.BestPhotoEditor.FreeVideoEditor.adapter;
+package com.freelancer.videoeditor.view.video;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,19 +15,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.BestPhotoEditor.FreeVideoEditor.AppConst;
-import com.BestPhotoEditor.FreeVideoEditor.R;
-import com.BestPhotoEditor.FreeVideoEditor.activity.VideoSavedActivity;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.freelancer.videoeditor.R;
+import com.freelancer.videoeditor.config.AppConst;
+import com.freelancer.videoeditor.util.ExtraUtils;
+
 import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import mylibsutil.util.ExtraUtils;
-import mylibsutil.util.T;
 
-public class MyVideoAdapter extends Adapter<ViewHolder> {
+public class MyVideoAdapter extends Adapter<MyVideoAdapter.ViewHolder> {
     private int PH_ICON_PLAY;
     private int PH_ITEM_VIDEO;
     private int PH_LINE;
@@ -56,9 +57,9 @@ public class MyVideoAdapter extends Adapter<ViewHolder> {
             this.txtDuration = (TextView) view.findViewById(com.universalvideoview.R.id.duration);
             this.txtDate = (TextView) view.findViewById(R.id.date);
             this.thumbVideo = (ImageView) view.findViewById(R.id.thumbVideo);
-            this.btnDelete = (ImageView) view.findViewById(com.piclistphotofromgallery.R.id.btnDelete);
+            this.btnDelete = (ImageView) view.findViewById(R.id.btnDelete);
             this.btnShare = (ImageView) view.findViewById(R.id.btnShare);
-            this.line = (ImageView) view.findViewById(libs.photoeditor.R.id.line);
+            this.line = (ImageView) view.findViewById(R.id.line);
             this.iconPlay = (ImageView) view.findViewById(R.id.iconPlay);
             this.bgClick = (ImageView) view.findViewById(R.id.bgClick);
             this.layoutImage = (RelativeLayout) view.findViewById(R.id.layoutImage);
@@ -122,6 +123,7 @@ public class MyVideoAdapter extends Adapter<ViewHolder> {
         }
         long duration = timeMillis / 1000;
         long hours = duration / 3600;
+        long minutes = ((duration - (3600 * hours)) / 60);
         long seconds = duration - ((3600 * hours) + (60 * ((duration - (3600 * hours)) / 60)));
         final File file = new File(pathVideo);
         String name = file.getName();
@@ -142,20 +144,16 @@ public class MyVideoAdapter extends Adapter<ViewHolder> {
                     ExtraUtils.scanFile(MyVideoAdapter.this.context, file.getAbsolutePath());
                     MyVideoAdapter.this.resetData();
                     if (MyVideoAdapter.this.listFile.size() == 0) {
-                        MyVideoAdapter.this.context.finish();
-                        T.show(MyVideoAdapter.this.context.getResources().getString(R.string.message_no_video_my_video));
+//                       context.finish();
+                        Toast.makeText(context, context.getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    T.show(MyVideoAdapter.this.context.getResources().getString(R.string.message_delete_video_my_video));
+                    Toast.makeText(context, context.getResources().getString(R.string.message_delete_video_my_video), Toast.LENGTH_SHORT).show();
                     MyVideoAdapter.this.notifyDataSetChanged();
                 }
             }
         });
-        holder.btnShare.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                ExtraUtils.shareVideoViaIntent(MyVideoAdapter.this.context, pathVideo, true);
-            }
-        });
+        holder.btnShare.setOnClickListener(v -> ExtraUtils.shareVideoViaIntent(MyVideoAdapter.this.context, pathVideo, true));
     }
 
     public int getItemCount() {

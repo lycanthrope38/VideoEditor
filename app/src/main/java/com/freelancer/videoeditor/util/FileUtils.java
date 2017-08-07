@@ -18,7 +18,7 @@ import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import com.freelancer.videoeditor.BuildConfig;
-import com.freelancer.videoeditor.config.ShareConstants;
+import com.freelancer.videoeditor.config.AppConst;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -69,7 +69,7 @@ public class FileUtils {
     }
 
     public static boolean isMediaUri(Uri uri) {
-        return ShareConstants.WEB_DIALOG_PARAM_MEDIA.equalsIgnoreCase(uri.getAuthority());
+        return AppConst.WEB_DIALOG_PARAM_MEDIA.equalsIgnoreCase(uri.getAuthority());
     }
 
     public static Uri getUri(File file) {

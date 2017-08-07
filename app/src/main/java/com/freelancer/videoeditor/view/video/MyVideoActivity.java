@@ -1,4 +1,4 @@
-package com.BestPhotoEditor.FreeVideoEditor.activity;
+package com.freelancer.videoeditor.view.video;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,12 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import com.BestPhotoEditor.FreeVideoEditor.AppConst;
-import com.BestPhotoEditor.FreeVideoEditor.R;
-import com.BestPhotoEditor.FreeVideoEditor.adapter.MyVideoAdapter;
-import dg.admob.AdmobAds;
+
+import com.freelancer.videoeditor.R;
+import com.freelancer.videoeditor.config.AppConst;
+import com.freelancer.videoeditor.util.ExtraUtils;
+
 import java.io.File;
-import mylibsutil.util.ExtraUtils;
 
 public class MyVideoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -41,13 +41,11 @@ public class MyVideoActivity extends AppCompatActivity {
             this.mSampleAdapter = new MyVideoAdapter(this, AppConst.OUT_VIDEO_FOLDER);
             this.mRecyclerView.setAdapter(this.mSampleAdapter);
             this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            ((ImageView) findViewById(libs.photoeditor.R.id.btnBack)).setOnClickListener(new OnClickListener() {
+            ((ImageView) findViewById(R.id.btnBack)).setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     MyVideoActivity.this.finish();
                 }
             });
-            AdmobAds.getInstance((Activity) this, AppConst.APP_ID).addAdView_For_LayoutView((Activity) this, (int) com.piclistphotofromgallery.R.id.layoutAdmob, AppConst.KEY_ADMOB_BANNER, true);
-            AdmobAds.getInstance((Activity) this, AppConst.APP_ID).iniInterstitialAd(this, AppConst.KEY_ADMOB_FULL_BANNER);
             return;
         }
         mFile.mkdirs();

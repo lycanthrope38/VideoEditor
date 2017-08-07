@@ -55,7 +55,7 @@ public class BaseList implements OnSeekBarChangeListener {
         this.prefixImage = prefixImage;
         this.formatImage = formatImage;
         this.list_item = list_item;
-        this.layoutBaseList = View.inflate(mainActivity, R.layout.libphotoeditor_layout_base_list, null);
+        this.layoutBaseList = View.inflate(mainActivity, R.layout.view_base_list, null);
         layoutParent.addView(this.layoutBaseList);
         findID(this.layoutBaseList);
         iniSizeLayout();
@@ -86,12 +86,12 @@ public class BaseList implements OnSeekBarChangeListener {
 
         Observable.fromCallable(() -> {
             int totalItem = BaseList.this.getTotalItem(BaseList.this.prefixImage);
-            mLinearLayout[0] = (LinearLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_layout_linearlayout, null);
+            mLinearLayout[0] = (LinearLayout) View.inflate(BaseList.this.mainActivity, R.layout.view_linearlayout, null);
             int pHItem = BaseList.this.PHEIGHT_HorizontalScrollView;
             int pWItem = pHItem;
             BaseList.this.addItemNone(mLinearLayout[0], pHItem, pWItem);
             for (int i = 0; i < totalItem; i++) {
-                RelativeLayout mRelativeLayout = (RelativeLayout) View.inflate(BaseList.this.mainActivity, R.layout.libphotoeditor_item_base_list, null);
+                RelativeLayout mRelativeLayout = (RelativeLayout) View.inflate(BaseList.this.mainActivity, R.layout.item_base_list, null);
                 mLinearLayout[0].addView(mRelativeLayout);
                 BaseList.this.setOnClickOnItem(mRelativeLayout, i + 1);
                 BaseList.this.displayItem(mRelativeLayout, i + 1, pHItem, pWItem);
@@ -108,7 +108,7 @@ public class BaseList implements OnSeekBarChangeListener {
     }
 
     private void addItemNone(LinearLayout mLinearLayout, int pWItem, int pHItem) {
-        this.itemNone = (RelativeLayout) View.inflate(this.mainActivity, R.layout.libphotoeditor_item_none_base_list, null);
+        this.itemNone = (RelativeLayout) View.inflate(this.mainActivity, R.layout.item_none_base_list, null);
         this.itemSelected = this.itemNone;
         setOnClickOnItem(this.itemNone, -1);
         mLinearLayout.addView(this.itemNone);

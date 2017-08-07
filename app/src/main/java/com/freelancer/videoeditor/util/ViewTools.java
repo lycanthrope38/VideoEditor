@@ -143,11 +143,11 @@ public class ViewTools {
         Observable.fromCallable(() -> {
             if (ViewTools.this.isFistShowToolsBottom) {
                 if (visible == 0) {
-                    if (type == 1) {
-                        ViewTools.this.btnChangePhoto.setVisibility(View.VISIBLE);
-                    } else {
-                        ViewTools.this.btnChangePhoto.setVisibility(View.GONE);
-                    }
+//                    if (type == 1) {
+//                        ViewTools.this.btnChangePhoto.setVisibility(View.VISIBLE);
+//                    } else {
+//                        ViewTools.this.btnChangePhoto.setVisibility(View.GONE);
+//                    }
                 }
                 if (visible != ViewTools.this.layoutTools.getVisibility()) {
                     ViewTools.this.layoutTools.setVisibility(visible);

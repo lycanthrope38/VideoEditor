@@ -28,7 +28,7 @@
         <TextView
                 android:textSize="12sp"
                 android:textColor="#fff"
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:gravity="center"
                 android:id="@+id/txtOrder"
                 android:background="@drawable/libphotoeditor_bg_number"
                 android:layout_width="40dp"

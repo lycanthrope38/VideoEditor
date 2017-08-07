@@ -73,17 +73,6 @@ public class BaseActivityLibSticker extends FragmentActivity {
             return;
         }
         FragmentTransaction ft = fm.beginTransaction();
-//        switch (AnonymousClass1.$SwitchMap$com$libsticker$BaseActivityLibSticker$Transaction[transaction.ordinal()]) {
-//            case UtilLib.FLIP_VERTICAL /*1*/:
-//                ft.add(containerId, fragment, tagName);
-//                break;
-//            case UtilLib.FLIP_HORIZONTAL /*2*/:
-//                ft.replace(containerId, fragment, tagName);
-//                break;
-//            case R.styleable.View_paddingEnd /*3*/:
-//                ft.remove(fragment);
-//                break;
-//        }
         if (backStack == BackStack.ADD_TO_BACK_STACK) {
             ft.addToBackStack(tagName);
         }

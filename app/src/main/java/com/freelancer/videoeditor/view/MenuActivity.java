@@ -20,6 +20,7 @@ import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.view.base.BaseGame;
 import com.freelancer.videoeditor.view.pick.PickImageExtendsActivity;
+import com.freelancer.videoeditor.view.video.MyVideoActivity;
 import com.freelancer.videoeditor.view.video.VideoEditorActivity;
 
 import org.andengine.engine.camera.Camera;
@@ -64,13 +65,26 @@ public class MenuActivity extends BaseGame {
         Bundle bundle = getIntent().getExtras();
     }
 
-    @OnClick(R.id.btn_create_video)
+    @OnClick(R.id.ln_create_video)
     public void pickImage() {
         Intent mIntent = new Intent(this, PickImageExtendsActivity.class);
         mIntent.putExtra(PickImageExtendsActivity.KEY_LIMIT_MAX_IMAGE, 60);
         mIntent.putExtra(PickImageExtendsActivity.KEY_LIMIT_MIN_IMAGE, 3);
         mIntent.putExtra(PickImageExtendsActivity.KEY_ACTION, 2);
         startActivityForResult(mIntent, R.styleable.AppCompatTheme_ratingBarStyleSmall);
+    }
+
+    @OnClick(R.id.ln_my_studio)
+    public void myVideos() {
+        File mFile = new File(AppConst.OUT_VIDEO_FOLDER);
+        if (!mFile.exists()) {
+            mFile.mkdirs();
+            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
+        } else if (mFile.listFiles().length == 0) {
+            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
+        }else{
+            MyVideoActivity.startActivity(this);
+        }
     }
 
     @Override
@@ -109,15 +123,6 @@ public class MenuActivity extends BaseGame {
     }
 
 
-    public void myVideos() {
-        File mFile = new File(AppConst.OUT_VIDEO_FOLDER);
-        if (!mFile.exists()) {
-            mFile.mkdirs();
-            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
-        } else if (mFile.listFiles().length == 0) {
-            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -158,24 +163,6 @@ public class MenuActivity extends BaseGame {
                         MenuActivity.this.gotoVideoEditor(pathList);
                     }
                 });
-//        UtilLib.getInstance().doBackGround(new IDoBackGround() {
-//            public void onDoBackGround(boolean isCancelled) {
-//                try {
-//                    MenuActivity.this.scaleListBitmap(pathList, AppConst.WIDTH_IMAGE, AppConst.HEIGHT_IMAGE, AppConst.OUT_IMAGE_TEMP_FOLDER, AppConst.PREFIX_OUT_IMAGE);
-//                } catch (Exception e) {
-//                    Timber.e(MenuActivity.TAG, "startScaleBitmap e = " + e.toString());
-//                }
-//            }
-//
-//            public void onCompleted() {
-//                UtilLib.getInstance().hideLoadingDownload();
-//                if (pathList == null || pathList.isEmpty()) {
-//                    Timber.e(MenuActivity.TAG, "pathList is NULL");
-//                } else {
-//                    MenuActivity.this.gotoVideoEditor(pathList);
-//                }
-//            }
-//        });
     }
 
     private void scaleListBitmap(ArrayList<String> pathList, int pWScale, int pHScale, String pathFolder, String perFixName) throws Exception, OutOfMemoryError {
@@ -239,18 +226,5 @@ public class MenuActivity extends BaseGame {
     }
 
 
-//    @TargetApi(23)
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (requestCode != REQUEST_CODE_NEXT_MY_VIDEO) {
-//            return;
-//        }
-//        if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.READ_EXTERNAL_STORAGE")) {
-//            myVideos();
-//        } else if (shouldShowRequestPermissionRationale("android.permission.READ_EXTERNAL_STORAGE")) {
-//            UtilLib.getInstance().showDenyDialog(this, "android.permission.READ_EXTERNAL_STORAGE", REQUEST_CODE_NEXT_MY_VIDEO, false);
-//        } else {
-//            UtilLib.getInstance().openAppSettings(this, true);
-//        }
-//    }
 
 }

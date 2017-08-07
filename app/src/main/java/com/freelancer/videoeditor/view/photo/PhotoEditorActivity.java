@@ -25,9 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
-import com.freelancer.videoeditor.config.AppConstLibSticker;
 import com.freelancer.videoeditor.config.ConfigScreen;
-import com.freelancer.videoeditor.config.ShareConstants;
 import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.DialogConfirm;
 import com.freelancer.videoeditor.util.DialogInputText;
@@ -76,7 +74,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public static final String KEY_LIST_PATH_PHOTO = "KEY_LIST_PATH_PHOTO";
     public static final String KEY_PHOTO_EDITOR_DATA = "KEY_PHOTO_EDITOR_DATA";
     public static final int REQUEST_CODE_CROP = 10001;
-    int REQUEST_CODE_SAVE = R.styleable.AppCompatTheme_seekBarStyle;
+    private static final int REQUEST_CODE_STICKER = 100010;
     final String TAG = "PhotoEditorActivity";
     DialogInputText dialogInputText;
     HandlerTools handlerTools = new HandlerTools();
@@ -237,7 +235,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         super.onSetContentView();
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
-        View v = View.inflate(this, R.layout.libphotoeditor_activity_main, null);
+        View v = View.inflate(this, R.layout.activity_photo_editor, null);
         this.mainView = v.findViewById(R.id.mainView);
         this.mainView.addView(this.mRenderSurfaceView, 0);
         setContentView(v);
@@ -355,8 +353,8 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             byte[] byteArray = data.getByteArrayExtra("BITMAP");
             Timber.e("PhotoEditorActivity", "byteArray = " + byteArray);
             this.managerRectanglePhoto.getmRectanglePhotoSeleted().reLoad(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
-        } else if (requestCode == R.styleable.AppCompatTheme_ratingBarStyleIndicator && data != null) {
-            String uri = data.getStringExtra(AppConstLibSticker.BUNDLE_KEY_STICKER_PATH);
+        } else if (requestCode == REQUEST_CODE_STICKER && data != null) {
+            String uri = data.getStringExtra(AppConst.BUNDLE_KEY_STICKER_PATH);
             Bitmap bitmap = getBitmapFromAssets(uri.substring(uri.lastIndexOf(File.separator) + 1, uri.length()));
             if (bitmap != null) {
                 onStickerEmoticonClick(bitmap);
@@ -397,9 +395,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public void savePhoto(String pathFile) {
         this.managerViewCenter.setVisibleLayoutCenter(8, false);
         this.viewBottom.setUnCheckButtonBottom();
-        if (isPermissionAllow(this.REQUEST_CODE_SAVE, "android.permission.WRITE_EXTERNAL_STORAGE")) {
             startSavePhoto();
-        }
     }
 
     void startSavePhoto() {
@@ -407,7 +403,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         MyFile.ini(this);
         this.rectangleTextAndSticker.hideRectangBorderAndButtonDeleted();
         caculatorRectangleCapture();
-//        MyScreenCapture.SC_FORMAT_IMAGE_SAVE = FORMAT_IMAGE_SAVE.JPEG;
+//        myScreenCapture.SC_FORMAT_IMAGE_SAVE = FORMAT_IMAGE_SAVE.JPEG;
 //        MyScreenCapture.WIDTH_IMAGE = this.photoEditorData.getWidthImage();
 //        MyScreenCapture.HEIGHT_IMAGE = this.photoEditorData.getHeightImage();
         this.myScreenCapture.capture(this, this.pathFileSave, 0, new OnCapture() {
@@ -438,13 +434,6 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         });
     }
 
-    boolean isPermissionAllow(int requestCode, String permission) {
-        if (AppUtils.isPermissionAllow(this, permission)) {
-            return true;
-        }
-        AppUtils.requestPermission(this, permission, requestCode);
-        return false;
-    }
 
     public void onHideViewCenter() {
         this.viewBottom.setUnCheckButtonBottom();
@@ -458,41 +447,6 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         }
     }
 
-    @TargetApi(23)
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != this.REQUEST_CODE_SAVE) {
-            return;
-        }
-        if (AppUtils.isPermissionAllow(this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
-            startSavePhoto();
-        } else if (shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE")) {
-            showDenyDialog("android.permission.WRITE_EXTERNAL_STORAGE", this.REQUEST_CODE_SAVE);
-        } else {
-            openAppSettings();
-        }
-    }
-
-    void showDenyDialog(final String permission, final int requestCode) {
-        AppUtils.showDenyDialog(this, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                AppUtils.requestPermission(PhotoEditorActivity.this, permission, requestCode);
-            }
-        }, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-    }
-
-    void openAppSettings() {
-        AppUtils.showRememberDialog(this, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                ExtraUtils.openAppSettings(PhotoEditorActivity.this, PhotoEditorActivity.this.getPackageName());
-            }
-        }, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-    }
 
     public void changePhoto(final View item_photo, final int index) {
         this.pathItemPhotoCurrent = this.listPathPhoto.get(index);
@@ -596,9 +550,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
 
     private void goStickerScreen() {
         Intent intent = new Intent(this, StickerActivityLibSticker.class);
-        intent.putExtra(AppConst.BUNDLE_KEY_IS_SORT_TAB, this.isSortTab);
-        intent.putExtra(AppConstLibSticker.BUNDLE_KEY_COLOR_ITEMS, AppConst.STICKER_COLOR_DEFAULT);
-        startActivityForResult(intent, R.styleable.AppCompatTheme_ratingBarStyleIndicator);
+        startActivityForResult(intent,REQUEST_CODE_STICKER);
     }
 @Override
     public void onCrop() {
@@ -663,7 +615,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             registerReceiver(this.myBroadcast, intentFilter);
         }
         Intent intent = new Intent(this.photoEditorData.getActionIntentFilterPhotoCrop());
-        intent.putExtra(ShareConstants.MEDIA_URI, mCropImageUri);
+        intent.putExtra(AppConst.MEDIA_URI, mCropImageUri);
         intent.putExtra("isOtherApp", true);
         intent.setFlags(268435456);
         sendBroadcast(intent);
