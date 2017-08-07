@@ -8,6 +8,6 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="23" />
 
-    <application android:debuggable="true" />
+    <!-- <application android:debuggable="true"/> -->
 
 </manifest>
