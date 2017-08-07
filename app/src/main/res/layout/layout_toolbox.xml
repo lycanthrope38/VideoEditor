@@ -45,6 +45,8 @@
     </LinearLayout>
 
     <LinearLayout
+            android:gravity="center"
+
             android:orientation="vertical"
             android:id="@+id/button_tool_duration"
             android:layout_width="match_parent"
@@ -80,6 +82,8 @@
     </LinearLayout>
 
     <LinearLayout
+            android:gravity="center"
+
             android:orientation="vertical"
             android:id="@+id/button_tool_music"
             android:layout_width="match_parent"
@@ -117,6 +121,8 @@
     </LinearLayout>
 
     <LinearLayout
+            android:gravity="center"
+
             android:orientation="vertical"
             android:id="@+id/button_tool_effect"
             android:layout_width="match_parent"
@@ -158,12 +164,11 @@
             android:id="@+id/button_tool_editor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:weightSum="4.0"
             android:layout_weight="1.0">
 
         <ImageView
-                android:gravity="center"
-
                 android:id="@+id/image_btn_editor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,7 +178,6 @@
         <TextView
                 android:textSize="@dimen/text_size_tiny"
                 android:gravity="center"
-
                 android:textColor="@drawable/text_toolbox_selector"
                 android:id="@+id/text_title_editor"
                 android:layout_width="match_parent"

@@ -25,7 +25,6 @@ android:layout_height="match_parent">
     <EditText
             android:textSize="24sp"
             android:textColor="#fff"
-            android:gravity="center"
             android:id="@+id/edtInput"
             android:padding="5dp"
             android:drawingCacheQuality="high"

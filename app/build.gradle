@@ -107,4 +107,6 @@ dependencies {
     compile project(':andEngine')
     compile project(':andEnginePhysicsBox2DExtension')
     compile 'com.linsea:universalvideoview:1.1.0@aar'
+    compile 'com.jaredrummler:colorpicker:1.0.0'
+    compile 'com.github.yukuku:ambilwarna:2.0.1'
 }

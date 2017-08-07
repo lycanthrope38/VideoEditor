@@ -399,11 +399,11 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         int heightTop = (this.SCREEN_HEIGHT * 80) / ORIGIN_HEIGHT_SCREEN;
         this.rootHeader.getLayoutParams().height = heightTop;
         setSquareSize(this.buttonBack, heightTop);
-//        this.layoutButtonSave.getLayoutParams().height = heightTop;
+        this.layoutButtonSave.getLayoutParams().height = heightTop;
         int width = (this.SCREEN_WIDTH * 2) / ORIGIN_WDITH_SCREEN;
         int height = (width * 24) /2;
-        this.textButtonSave.getLayoutParams().width = (int) (((float) width) * 1.3f);
-        this.textButtonSave.getLayoutParams().height = (int) (((float) height) * 1.3f);
+//        this.textButtonSave.getLayoutParams().width = (int) (((float) width) * 1.3f);
+//        this.textButtonSave.getLayoutParams().height = (int) (((float) height) * 1.3f);
         setSquareSize(this.rootVideo, this.SCREEN_WIDTH);
         this.containerToolBar.getLayoutParams().height = (this.SCREEN_HEIGHT * 480) / ORIGIN_HEIGHT_SCREEN;
         this.rootToolBar.getLayoutParams().height = (this.SCREEN_HEIGHT * 175) / ORIGIN_HEIGHT_SCREEN;

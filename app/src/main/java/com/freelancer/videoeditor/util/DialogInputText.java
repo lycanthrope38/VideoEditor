@@ -21,7 +21,8 @@ import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
-import net.margaritov.preference.colorpicker.ColorPickerDialog.OnColorChangedListener;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class DialogInputText extends Dialog implements OnClickListener {
     int color = -1;
@@ -153,17 +154,31 @@ public class DialogInputText extends Dialog implements OnClickListener {
     }
 
     public void showDialogSelectColor(Context mContext) {
-        if (this.mColorPickerDialog == null) {
-            this.mColorPickerDialog = new ColorPickerDialog(mContext, this.color);
-            this.mColorPickerDialog.setAlphaSliderVisible(true);
-            this.mColorPickerDialog.setOnColorChangedListener(new OnColorChangedListener() {
-                public void onColorChanged(int color) {
-                    DialogInputText.this.color = color;
+
+        new AmbilWarnaDialog(mContext, color, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                DialogInputText.this.color = color;
                     DialogInputText.this.edtInput.setTextColor(color);
                     DialogInputText.this.viewColor.setBackgroundColor(color);
-                }
-            });
-        }
-        this.mColorPickerDialog.show();
+            }
+        }).show();
+//        if (this.mColorPickerDialog == null) {
+//            this.mColorPickerDialog = new ColorPickerDialog(mContext, this.color);
+//            this.mColorPickerDialog.setAlphaSliderVisible(true);
+//            this.mColorPickerDialog.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
+//                public void onColorChanged(int color) {
+//                    DialogInputText.this.color = color;
+//                    DialogInputText.this.edtInput.setTextColor(color);
+//                    DialogInputText.this.viewColor.setBackgroundColor(color);
+//                }
+//            });
+//        }
+//        this.mColorPickerDialog.show();
     }
 }
