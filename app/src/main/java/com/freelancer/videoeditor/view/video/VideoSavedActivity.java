@@ -29,7 +29,6 @@ import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 import java.io.File;
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 public class VideoSavedActivity extends BaseActivity {
     private static final int ORIGIN_HEIGHT_SCREEN = 1280;
@@ -65,7 +64,7 @@ public class VideoSavedActivity extends BaseActivity {
 
     private void init() {
         this.mVideoUrl = getIntent().getStringExtra(AppConst.BUNDLE_KEY_VIDEO_URL);
-        this.textFilePath.setText(getString(R.string.text_file_path, new Object[]{BuildConfig.FLAVOR + this.mVideoUrl}));
+        this.textFilePath.setText(getString(R.string.text_file_path, new Object[]{"" + this.mVideoUrl}));
         this.videoViewEditor.setMediaController(this.mMediaController);
         if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_VIDEO_OPEN_FROM_MY_VIDEO, false)) {
             String fileName = new File(this.mVideoUrl).getName();

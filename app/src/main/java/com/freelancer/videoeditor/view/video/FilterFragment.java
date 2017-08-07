@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 public class FilterFragment extends BaseFragment implements OnRecyclerClickListener {
     private static final int DIMEN_PADDING = 2131296461;
@@ -119,7 +118,7 @@ public class FilterFragment extends BaseFragment implements OnRecyclerClickListe
             }
 
             int extractInt(String s) {
-                String num = s.replaceAll("\\D", BuildConfig.FLAVOR);
+                String num = s.replaceAll("\\D", "");
                 return num.isEmpty() ? 0 : Integer.parseInt(num);
             }
         });

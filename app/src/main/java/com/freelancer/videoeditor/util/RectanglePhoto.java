@@ -12,7 +12,6 @@ import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.wang.avi.indicators.BallSpinFadeLoaderIndicator;
 
-import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.sprite.Sprite;
@@ -63,7 +62,6 @@ public class RectanglePhoto extends RectangleBaseClipping {
     Sprite left;
     ArrayList<Sprite> listBorder = new ArrayList();
     Color mColor;
-    ColorPickerDialog mColorPickerDialog;
     float mD = 0.0f;
     ArrayList<BitmapTextureAtlas> mListBitmapTextureAtlas = new ArrayList();
     ArrayList<BitmapTextureAtlas> mListBitmapTextureAtlasNoUnload = new ArrayList();
@@ -460,19 +458,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
         this.uriPathFile = uriPathFile;
     }
 
-    public void showDialogSelectColor(Context mContext) {
-        if (this.mColorPickerDialog == null) {
-            this.mColorPickerDialog = new ColorPickerDialog(mContext, ((Sprite) this.listBorder.get(NONE)).getColor().getARGBPackedInt());
-            this.mColorPickerDialog.setAlphaSliderVisible(true);
-            this.mColorPickerDialog.setOnColorChangedListener(color1 -> {
-                RectanglePhoto.this.color = color1;
-                for (int i = RectanglePhoto.NONE; i < RectanglePhoto.this.listBorder.size(); i += RectanglePhoto.DRAG) {
-                    ((Sprite) RectanglePhoto.this.listBorder.get(i)).setColor(((float) android.graphics.Color.red(color1)) / 255.0f, ((float) android.graphics.Color.green(color1)) / 255.0f, ((float) android.graphics.Color.blue(color1)) / 255.0f, HandlerTools.ROTATE_R);
-                }
-            });
-        }
-        this.mColorPickerDialog.show();
-    }
+
 
     public void OnBorderClick(int type) {
         Timber.e("BLUR", "OnBorderClick type = " + type);

@@ -71,7 +71,7 @@ public class MenuActivity extends BaseGame {
         mIntent.putExtra(PickImageExtendsActivity.KEY_LIMIT_MAX_IMAGE, 60);
         mIntent.putExtra(PickImageExtendsActivity.KEY_LIMIT_MIN_IMAGE, 3);
         mIntent.putExtra(PickImageExtendsActivity.KEY_ACTION, 2);
-        startActivityForResult(mIntent, R.styleable.AppCompatTheme_ratingBarStyleSmall);
+        startActivityForResult(mIntent,REQUEST_PICK_IMG);
     }
 
     @OnClick(R.id.ln_my_studio)
@@ -79,9 +79,9 @@ public class MenuActivity extends BaseGame {
         File mFile = new File(AppConst.OUT_VIDEO_FOLDER);
         if (!mFile.exists()) {
             mFile.mkdirs();
-            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
         } else if (mFile.listFiles().length == 0) {
-            Toast.makeText(mContext, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.message_no_video_my_video), Toast.LENGTH_SHORT).show();
         }else{
             MyVideoActivity.startActivity(this);
         }
@@ -127,7 +127,7 @@ public class MenuActivity extends BaseGame {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == -1 && requestCode == R.styleable.AppCompatTheme_ratingBarStyleSmall) {
+        if (resultCode == -1 && requestCode ==REQUEST_PICK_IMG) {
             this.pathList = data.getExtras().getStringArrayList(PickImageExtendsActivity.KEY_DATA_RESULT);
             Timber.d(TAG, "LIST IMG: " + (this.pathList != null ? this.pathList.toString() : "ARR NULL"));
             if (this.pathList != null && !this.pathList.isEmpty()) {

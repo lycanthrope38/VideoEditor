@@ -2,7 +2,6 @@ package com.freelancer.videoeditor.util;
 
 import com.freelancer.videoeditor.view.video.VideoEncode;
 
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 public class FFmpegCommands {
     private int FPS = 2;
@@ -49,7 +48,7 @@ public class FFmpegCommands {
     }
 
     public String[] genVideoWithAudio(String urlVideoTemp, String audioPath, String outputMovieFolder, VideoEncode encode, boolean ignoreShortest) {
-        return ("-i " + urlVideoTemp + " -i " + audioPath + " -c copy -map 0:v -map 1:a -strict experimental " + (ignoreShortest ? BuildConfig.FLAVOR : "-shortest ") + (outputMovieFolder + encode.toString()) + " -y").split(" ");
+        return ("-i " + urlVideoTemp + " -i " + audioPath + " -c copy -map 0:v -map 1:a -strict experimental " + (ignoreShortest ? "" : "-shortest ") + (outputMovieFolder + encode.toString()) + " -y").split(" ");
     }
 
     public String[] genVideoWithBorder(String urlVideo, String overlayImagePath, String outputMovieFolder, VideoEncode encode) {
@@ -61,7 +60,7 @@ public class FFmpegCommands {
     }
 
     public String[] genVideoWithEffect(String urlVideo, String urlEffect, String outputMovieFolder, VideoEncode encode, boolean ignoreShortest) {
-        return ("-i " + urlVideo + " -i " + urlEffect + " -filter_complex [0:v][1:v]blend=shortest=1:all_mode='normal':all_opacity=0.6" + " -vcodec mpeg4 -q:v " + this.QV + " -strict experimental " + (ignoreShortest ? BuildConfig.FLAVOR : "-shortest ") + (outputMovieFolder + encode.toString()) + " -y").split(" ");
+        return ("-i " + urlVideo + " -i " + urlEffect + " -filter_complex [0:v][1:v]blend=shortest=1:all_mode='normal':all_opacity=0.6" + " -vcodec mpeg4 -q:v " + this.QV + " -strict experimental " + (ignoreShortest ? "" : "-shortest ") + (outputMovieFolder + encode.toString()) + " -y").split(" ");
     }
 
     public String[] genVideoLoop(String txtPath, String outputAudioPath) {

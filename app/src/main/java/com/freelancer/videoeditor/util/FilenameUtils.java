@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 public class FilenameUtils {
     public static final char EXTENSION_SEPARATOR = '.';
@@ -110,7 +109,7 @@ public class FilenameUtils {
             i++;
         }
         if (length <= 0) {
-            return BuildConfig.FLAVOR;
+            return "";
         }
         if (length <= prefix) {
             return new String(array, 0, length);
@@ -277,7 +276,7 @@ public class FilenameUtils {
         }
         int index = indexOfLastSeparator(filename);
         if (prefix >= filename.length() || index < 0) {
-            return BuildConfig.FLAVOR;
+            return "";
         }
         return filename.substring(prefix, index + separatorAdd);
     }
@@ -334,7 +333,7 @@ public class FilenameUtils {
         }
         int index = indexOfExtension(filename);
         if (index == -1) {
-            return BuildConfig.FLAVOR;
+            return "";
         }
         return filename.substring(index + 1);
     }

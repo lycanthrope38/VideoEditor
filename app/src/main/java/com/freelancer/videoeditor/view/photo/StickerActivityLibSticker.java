@@ -12,7 +12,6 @@ import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.OnStickerClick;
 
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class StickerActivityLibSticker extends AppCompatActivity implements OnSt
             }
 
             int extractInt(String s) {
-                String num = s.replaceAll("\\D", BuildConfig.FLAVOR);
+                String num = s.replaceAll("\\D", "");
                 return num.isEmpty() ? 0 : Integer.parseInt(num);
             }
         });

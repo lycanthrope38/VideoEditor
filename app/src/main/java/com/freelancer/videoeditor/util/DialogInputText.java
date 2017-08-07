@@ -20,7 +20,6 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
-import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -28,7 +27,6 @@ public class DialogInputText extends Dialog implements OnClickListener {
     int color = -1;
     EditText edtInput;
     GridView gridView;
-    ColorPickerDialog mColorPickerDialog;
     IBitmap mIBitmap;
     PhotoEditorActivity mainActivity;
     int pH = (ConfigScreen.SCREENHEIGHT / 4);

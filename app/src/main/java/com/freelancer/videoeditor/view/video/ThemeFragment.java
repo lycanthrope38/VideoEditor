@@ -21,7 +21,6 @@ import com.freelancer.videoeditor.util.OnRecyclerClickListener;
 import com.freelancer.videoeditor.util.OnToolBoxListener;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,7 +116,7 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
             }
 
             int extractInt(String s) {
-                String num = s.replaceAll("\\D", BuildConfig.FLAVOR);
+                String num = s.replaceAll("\\D", "");
                 return num.isEmpty() ? 0 : Integer.parseInt(num);
             }
         });

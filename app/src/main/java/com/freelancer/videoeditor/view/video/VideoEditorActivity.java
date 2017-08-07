@@ -50,7 +50,6 @@ import com.freelancer.videoeditor.vo.ListVideoEffect;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
-import net.margaritov.preference.colorpicker.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -984,7 +983,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             return;
         }
         this.mCurrentAudioSelected = null;
-        this.mAudioPickedPath = BuildConfig.FLAVOR;
+        this.mAudioPickedPath = "";
         this.isVideoWithAudio = false;
         showVideo(this.isVideoWithEffect ? this.mFullVideoEffectPath : this.mFullVideoPath);
     }
@@ -1103,7 +1102,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             generateVideoWithAudio();
             return;
         }
-        this.mFullVideoEffectPath = BuildConfig.FLAVOR;
+        this.mFullVideoEffectPath = "";
         this.isVideoWithEffect = false;
         showVideo(this.isVideoWithAudio ? this.mFullVideoAudioPath : this.mFullVideoPath);
     }
@@ -1179,7 +1178,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
 
     private String writeLoopMedia(String inputFile, int loop, String outputDir, String fileName) {
         String line = "file '" + inputFile + "'";
-        String content = BuildConfig.FLAVOR;
+        String content = "";
         if (loop <= 1) {
             return null;
         }
