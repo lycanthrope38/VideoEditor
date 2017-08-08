@@ -1,7 +1,6 @@
 package com.freelancer.videoeditor.view.pick;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -12,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore.Images.Media;
-import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -60,7 +58,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     private final int LIMIT_IMAGE_MAX_DEFAULT = 9;
     private final int LIMIT_IMAGE_MIN_DEFAULT = ACTION_PICK_IMAGE;
     public String PATH_FILE_SAVE_TEMP = "Temp";
-    private final int REQUEST_CODE_CAMERA = R.styleable.AppCompatTheme_autoCompleteTextViewStyle;
+    private final int REQUEST_CODE_CAMERA = 1221;
     private final String TAG = "PickImageExtendsActivity";
     private int actionPick = ACTION_PIC_COLLAGE;
     private AlbumAdapterExtends adapterExtends;
@@ -612,33 +610,10 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         return isCheck;
     }
 
-    @TargetApi(23)
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        UtilLib.getInstance().getClass();
-//        if (requestCode == PhotoEditorActivity.REQUEST_CODE_CROP) {
-//            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.READ_EXTERNAL_STORAGE")) {
-//                new GetItemAlbum().execute();
-//            } else if (shouldShowRequestPermissionRationale("android.permission.READ_EXTERNAL_STORAGE")) {
-//                UtilLib.getInstance().getClass();
-//                UtilLib.getInstance().showDenyDialog(this, "android.permission.READ_EXTERNAL_STORAGE", PhotoEditorActivity.REQUEST_CODE_CROP, true);
-//            } else {
-//                UtilLib.getInstance().openAppSettings(this, true);
-//            }
-//        } else if (requestCode != R.styleable.AppCompatTheme_autoCompleteTextViewStyle) {
-//        } else {
-//            if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.CAMERA")) {
-//                pickCamera(R.styleable.AppCompatTheme_autoCompleteTextViewStyle);
-//            } else if (shouldShowRequestPermissionRationale("android.permission.CAMERA")) {
-//                UtilLib.getInstance().showDenyDialog(this, "android.permission.CAMERA", R.styleable.AppCompatTheme_autoCompleteTextViewStyle, false);
-//            } else {
-//                UtilLib.getInstance().openAppSettings(this, true);
-//            }
-//        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == -1 && requestCode == R.styleable.AppCompatTheme_autoCompleteTextViewStyle) {
+        if (resultCode == -1 && requestCode == REQUEST_CODE_CAMERA) {
             File path = new File(getFilesDir(), this.PATH_FILE_SAVE_TEMP);
             if (!path.exists()) {
                 path.mkdirs();
@@ -654,11 +629,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     }
 
     public void requestCameraPermission() {
-        if (UtilLib.getInstance().isPermissionAllow(this, "android.permission.CAMERA")) {
-            pickCamera(R.styleable.AppCompatTheme_autoCompleteTextViewStyle);
-        } else {
-            UtilLib.getInstance().requestPermission(this, "android.permission.CAMERA", R.styleable.AppCompatTheme_autoCompleteTextViewStyle);
-        }
+        pickCamera(RESULT_OK);
     }
 
     public void pickCamera(int requestCode) {
@@ -669,9 +640,6 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         Uri imageUri = FileProvider.getUriForFile(this, this.CAPTURE_IMAGE_FILE_PROVIDER, new File(path, "image.jpg"));
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra("output", imageUri);
-//        for (ResolveInfo resolveInfo : getPackageManager().queryIntentActivities(intent, NativeProtocol.MESSAGE_GET_ACCESS_TOKEN_REQUEST)) {
-//            grantUriPermission(resolveInfo.activityInfo.packageName, imageUri, 3);
-//        }
         startActivityForResult(intent, requestCode);
     }
 
