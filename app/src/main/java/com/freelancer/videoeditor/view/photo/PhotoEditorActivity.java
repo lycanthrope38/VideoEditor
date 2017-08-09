@@ -552,74 +552,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         Intent intent = new Intent(this, StickerActivityLibSticker.class);
         startActivityForResult(intent,REQUEST_CODE_STICKER);
     }
-@Override
-    public void onCrop() {
-        if (this.spriteTools == null) {
-            return;
-        }
-        if (UtilLib.getInstance().appInstalledOrNot(this.packageNameCrop, this)) {
-            checkPhotoCropVersion();
-            return;
-        }
-        installPhotoCrop(true);
-        Timber.e("PhotoEditorActivity", "Not install");
-    }
 
-    private void installPhotoCrop(boolean isShowAlert) {
-        if (isShowAlert) {
-            Builder builder = new Builder(this);
-            builder.setTitle(R.string.dialog_title_download_crop);
-            builder.setMessage(R.string.dialog_message_download_crop);
-            builder.setPositiveButton(R.string.dialog_confirm_text_btn_yes, new OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    UtilLib.getInstance().showDetailApp(PhotoEditorActivity.this, PhotoEditorActivity.this.packageNameCrop);
-                }
-            });
-            builder.setNegativeButton(R.string.dialog_confirm_text_btn_no, null);
-            builder.create().show();
-            return;
-        }
-        UtilLib.getInstance().showDetailApp((Activity) this, this.packageNameCrop);
-    }
-
-    private void checkPhotoCropVersion() {
-        try {
-            if (getPackageManager().getPackageInfo(this.packageNameCrop, 0).versionCode < this.photoEditorData.getCurrentCropVersion()) {
-                Toast.makeText(mContext, R.string.message_update_photo_crop, Toast.LENGTH_SHORT).show();
-                installPhotoCrop(false);
-                return;
-            }
-            nextCropActivity(this.managerRectanglePhoto.getmRectanglePhotoSeleted().getUriPathFile());
-            Timber.e("PhotoEditorActivity", "nextCropActivity");
-        } catch (NameNotFoundException e) {
-            installPhotoCrop(true);
-        }
-    }
-
-    void nextCropActivity(Uri mCropImageUri) {
-        if (this.myBroadcast == null) {
-            this.myBroadcast = new MyBroadcast() {
-                public void handleResult(Bitmap bitmap) {
-                    Timber.e("PhotoEditorActivity", "myBroadcast reload bitmap");
-                    if (bitmap != null) {
-                        PhotoEditorActivity.this.managerRectanglePhoto.getmRectanglePhotoSeleted().reLoad(bitmap);
-                        PhotoEditorActivity.this.isSave = false;
-                        PhotoEditorActivity.this.isSaveChange();
-                        return;
-                    }
-                    Timber.e("PhotoEditorActivity", "Get bitmap null");
-                }
-            };
-            IntentFilter intentFilter = new IntentFilter("libs.photoeditor.ui.activity.COMPLETED");
-            intentFilter.setPriority(999);
-            registerReceiver(this.myBroadcast, intentFilter);
-        }
-        Intent intent = new Intent(this.photoEditorData.getActionIntentFilterPhotoCrop());
-        intent.putExtra(AppConst.MEDIA_URI, mCropImageUri);
-        intent.putExtra("isOtherApp", true);
-        intent.setFlags(268435456);
-        sendBroadcast(intent);
-    }
 
     @Override
     protected void onDestroy() {

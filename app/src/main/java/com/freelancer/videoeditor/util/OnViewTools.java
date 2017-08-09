@@ -1,8 +1,6 @@
 package com.freelancer.videoeditor.util;
 
 public interface OnViewTools {
-    void onCrop();
-
     void onFlipH();
 
     void onFlipV();
