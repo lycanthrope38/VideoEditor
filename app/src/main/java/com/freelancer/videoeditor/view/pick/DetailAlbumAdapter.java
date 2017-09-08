@@ -20,7 +20,7 @@ public class DetailAlbumAdapter extends ArrayAdapter<Item> {
     private Context context;
     private ArrayList<Item> data = new ArrayList();
     private int layoutResourceId;
-    private OnListAlbum onListAlbum;
+    private OnPickListener.OnListAlbum onListAlbum;
     private int pHeightItem = 0;
 
     static class RecordHolder {
@@ -69,7 +69,7 @@ public class DetailAlbumAdapter extends ArrayAdapter<Item> {
         return row;
     }
 
-    public void setOnListAlbum(OnListAlbum onListAlbum) {
+    public void setOnListAlbum(OnPickListener.OnListAlbum onListAlbum) {
         this.onListAlbum = onListAlbum;
     }
 }

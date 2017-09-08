@@ -48,7 +48,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
-public class PickImageExtendsActivity extends AppCompatActivity implements OnClickListener, OnAlbum, OnListAlbum, com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener{
+public class PickImageExtendsActivity extends AppCompatActivity implements OnClickListener, OnPickListener.OnAlbum, OnPickListener.OnListAlbum, com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener{
     public static final int ACTION_PICK_IMAGE = 1;
     public static final int ACTION_PIC_COLLAGE = 0;
     public static final int ACTION_PIC_VIDEO = 2;
@@ -201,7 +201,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
         setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayHomeAsUpEnabled(true);
-        this.toolbar.setTitle(getResources().getString(R.string.text_title_activity_album_extends));
+        supportActionBar.setTitle(getResources().getString(R.string.text_title_activity_album_extends));
 
         this.CAPTURE_IMAGE_FILE_PROVIDER = getPackageName() + ".fileprovider";
         Bundle bundle = getIntent().getExtras();

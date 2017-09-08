@@ -102,4 +102,5 @@ dependencies {
     compile 'com.linsea:universalvideoview:1.1.0@aar'
     compile 'com.jaredrummler:colorpicker:1.0.0'
     compile 'com.github.yukuku:ambilwarna:2.0.1'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

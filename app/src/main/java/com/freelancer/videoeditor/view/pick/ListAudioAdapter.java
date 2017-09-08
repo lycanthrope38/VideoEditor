@@ -22,7 +22,7 @@ public class ListAudioAdapter  extends BaseAdapter {
     private Context mContext;
     private List<Audio> mData;
     private LayoutInflater mInflater;
-    private OnAudioClickListener mListener;
+    private OnPickListener.OnAudioClickListener mListener;
     private int oldPosSelected = -1;
 
     static class ViewHolder {
@@ -37,7 +37,7 @@ public class ListAudioAdapter  extends BaseAdapter {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = listAudio;
-        this.mListener = (OnAudioClickListener) context;
+        this.mListener = (OnPickListener.OnAudioClickListener) context;
     }
 
     public void removeAudioSelected() {

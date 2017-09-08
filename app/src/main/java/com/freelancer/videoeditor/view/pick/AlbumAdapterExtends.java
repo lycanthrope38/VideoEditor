@@ -21,7 +21,7 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
     private ArrayList<Item> data = new ArrayList();
     private int heightAdsNativePX = 0;
     private int layoutResourceId;
-    private OnAlbum onItem;
+    private OnPickListener.OnAlbum onItem;
     private int pHeightItem = 0;
     private int pWHIconNext = 0;
     private PickImageExtendsActivity pickImageExtendsActivity;
@@ -84,11 +84,11 @@ public class AlbumAdapterExtends extends ArrayAdapter<Item> {
         return convertView;
     }
 
-    public OnAlbum getOnItem() {
+    public OnPickListener.OnAlbum getOnItem() {
         return this.onItem;
     }
 
-    public void setOnItem(OnAlbum onItem) {
+    public void setOnItem(OnPickListener.OnAlbum onItem) {
         this.onItem = onItem;
     }
 }

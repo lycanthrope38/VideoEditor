@@ -16,8 +16,12 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.AnimationUtils;
@@ -85,8 +89,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
     ImageView btnMusic;
     @BindView(R.id.image_btn_theme)
     ImageView btnTheme;
-    @BindView(R.id.button_back)
-    ImageView buttonBack;
     @BindView(R.id.button_tool_duration)
     LinearLayout buttonDuration;
     @BindView(R.id.button_tool_editor)
@@ -111,16 +113,12 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
     View divideMusic;
     @BindView(R.id.view_divide_theme)
     View divideTheme;
-    @BindView(R.id.root_header_video_editor)
-    RelativeLayout rootHeader;
     @BindView(R.id.root_tool_bar)
     LinearLayout rootToolBar;
     @BindView(R.id.video_layout)
     FrameLayout rootVideo;
     @BindView(R.id.seekBarAlpha)
     SeekBar seekBarAlpha;
-    @BindView(R.id.image_button_save)
-    ImageView textButtonSave;
     @BindView(R.id.text_title_duration)
     TextView textDuration;
     @BindView(R.id.text_title_editor)
@@ -137,6 +135,8 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
     TextView txtAlpha;
     @BindView(R.id.video_view_editor)
     UniversalVideoView videoViewEditor;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private long durationExec = 0;
     @BindView(R.id.fragment_effect)
     LinearLayout effectFragment;
@@ -152,8 +152,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
     private boolean isSaveVideo = false;
     private boolean isVideoWithAudio = false;
     private boolean isVideoWithEffect = false;
-    @BindView(R.id.linear_button_save)
-    LinearLayout layoutButtonSave;
     @BindView(R.id.layoutSeekBar)
     RelativeLayout layoutSeekBar;
     private String mAudioPickedPath;
@@ -307,6 +305,12 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_editor);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setTitle("Video Editor");
+
         init();
         resizeLayout();
         deleteAllMediaTemp();
@@ -316,6 +320,29 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
         this.mListImage = getIntent().getStringArrayListExtra(AppConst.BUNDLE_KEY_LIST_IMG_PICK);
         generateVideoFromImagePicked();
         this.buttonTheme.performClick();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.video_editor, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.save:
+                if (isFilterSelected()) {
+                    saveVideoWithFilter();
+                } else {
+                    saveVideoWithBorder();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void scanAudio(String path) {
@@ -396,9 +423,6 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
         this.SCREEN_WIDTH = metrics.widthPixels;
         this.SCREEN_HEIGHT = metrics.heightPixels - AppUtils.getNavigateBarHeight(this);
         int heightTop = (this.SCREEN_HEIGHT * 80) / ORIGIN_HEIGHT_SCREEN;
-        this.rootHeader.getLayoutParams().height = heightTop;
-        setSquareSize(this.buttonBack, heightTop);
-        this.layoutButtonSave.getLayoutParams().height = heightTop;
         int width = (this.SCREEN_WIDTH * 2) / ORIGIN_WDITH_SCREEN;
         int height = (width * 24) /2;
 //        this.textButtonSave.getLayoutParams().width = (int) (((float) width) * 1.3f);
@@ -420,20 +444,9 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
         view.getLayoutParams().height = size;
     }
 
-    @OnClick({R.id.button_back, R.id.linear_button_save, R.id.button_tool_duration, R.id.button_tool_effect, R.id.button_tool_music, R.id.button_tool_theme, R.id.button_tool_editor})
+    @OnClick({ R.id.button_tool_duration, R.id.button_tool_effect, R.id.button_tool_music, R.id.button_tool_theme, R.id.button_tool_editor})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_back :
-                onBackPressed();
-                return;
-            case R.id.linear_button_save :
-                if (isFilterSelected()) {
-                    saveVideoWithFilter();
-                    return;
-                } else {
-                    saveVideoWithBorder();
-                    return;
-                }
             default:
                 clickToolBox(view);
                 return;
@@ -813,12 +826,10 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
             };
             generateVideoFromImagePicked();
         } else if (this.isVideoWithEffect) {
-            this.iHandler = new OnThreadListener.IHandler() {
-                public void doWork() {
-                    Timber.tag("passedVideoAfter").d("isVideoWithEffect");
-                    VideoEditorActivity.this.addEffectToVideo(VideoEditorActivity.this.mCurrentEffectSelected);
-                    VideoEditorActivity.this.iHandler = null;
-                }
+            this.iHandler = () -> {
+                Timber.tag("passedVideoAfter").d("isVideoWithEffect");
+                VideoEditorActivity.this.addEffectToVideo(VideoEditorActivity.this.mCurrentEffectSelected);
+                VideoEditorActivity.this.iHandler = null;
             };
             generateVideoFromImagePicked();
         } else {

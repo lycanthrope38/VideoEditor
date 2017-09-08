@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * Created by ThongLe on 7/29/2017.
  */
 
-public class PickAudioActivity extends AppCompatActivity implements View.OnClickListener, OnAudioClickListener{
+public class PickAudioActivity extends AppCompatActivity implements View.OnClickListener, OnPickListener.OnAudioClickListener {
     public static final String KEY_AUDIO_RESULT = "KEY_AUDIO_RESULT";
     private static final int REQUEST_AUDIO = 2323;
     private ListAudioAdapter mAdapter;

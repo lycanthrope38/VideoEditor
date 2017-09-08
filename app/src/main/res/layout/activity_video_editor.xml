@@ -6,10 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <include
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            layout="@layout/layout_header_editor"/>
+    <include layout="@layout/view_toolbar"/>
 
     <LinearLayout
             android:orientation="vertical"

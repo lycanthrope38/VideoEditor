@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <include layout="@layout/view_title_bar_sticker"/>
+
+    <include layout="@layout/view_toolbar"/>
 
     <GridView
             android:id="@+id/gridViewSticker"

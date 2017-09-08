@@ -10,12 +10,8 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.freelancer.videoeditor.R;
-import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.OnToolListener;
-import com.freelancer.videoeditor.view.pick.DetailAlbumAdapter;
-import com.freelancer.videoeditor.view.pick.OnListAlbum;
-import com.freelancer.videoeditor.vo.Item;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,8 +5,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -34,8 +37,6 @@ public class VideoSavedActivity extends BaseActivity {
     private static final int ORIGIN_HEIGHT_SCREEN = 1280;
     private static final int ORIGIN_WDITH_SCREEN = 720;
     private static final String TAG = "VideoSavedActivity";
-    @BindView(R.id.button_back_home)
-    ImageView buttonBackHome;
     @BindView(R.id.button_rate)
     ImageView buttonRate;
     @BindView(R.id.button_share_video)
@@ -43,38 +44,50 @@ public class VideoSavedActivity extends BaseActivity {
     @BindView(R.id.media_controller_saved)
     UniversalMediaController mMediaController;
     private String mVideoUrl;
-    @BindView(R.id.root_header_video_saved)
-    RelativeLayout rootHeader;
     @BindView(R.id.video_layout_saved)
     FrameLayout rootVideo;
-    @BindView(R.id.text_button_video_saved)
-    TextView textButtonSave;
     @BindView(R.id.text_view_path)
     TextView textFilePath;
     @BindView(R.id.video_view_saved)
     UniversalVideoView videoViewEditor;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_saved);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setTitle("Video Saved");
+
         init();
         showVideo();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void init() {
         this.mVideoUrl = getIntent().getStringExtra(AppConst.BUNDLE_KEY_VIDEO_URL);
         this.textFilePath.setText(getString(R.string.text_file_path, new Object[]{"" + this.mVideoUrl}));
         this.videoViewEditor.setMediaController(this.mMediaController);
-        if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_VIDEO_OPEN_FROM_MY_VIDEO, false)) {
-            String fileName = new File(this.mVideoUrl).getName();
-            this.textButtonSave.setText(fileName.substring(0, fileName.lastIndexOf(FileUtils.HIDDEN_PREFIX)));
-        }
-        if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_HOME, false)) {
-            this.buttonBackHome.setImageResource(R.drawable.btn_home_selector);
-        } else {
-            this.buttonBackHome.setImageResource(R.drawable.piclist_selector_button_back);
-        }
+//        if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_VIDEO_OPEN_FROM_MY_VIDEO, false)) {
+//            String fileName = new File(this.mVideoUrl).getName();
+//            this.textButtonSave.setText(fileName.substring(0, fileName.lastIndexOf(FileUtils.HIDDEN_PREFIX)));
+//        }
+//        if (getIntent().getBooleanExtra(AppConst.BUNDLE_KEY_HOME, false)) {
+//            this.buttonBackHome.setImageResource(R.drawable.btn_home_selector);
+//        } else {
+//            this.buttonBackHome.setImageResource(R.drawable.piclist_selector_button_back);
+//        }
         resizeLayout();
     }
 
@@ -82,9 +95,6 @@ public class VideoSavedActivity extends BaseActivity {
         DisplayMetrics metrics = ExtraUtils.getDisplayInfo(this);
         int SCREEN_WIDTH = metrics.widthPixels;
         int heightTop = ((metrics.heightPixels - AppUtils.getNavigateBarHeight(this)) * 80) / ORIGIN_HEIGHT_SCREEN;
-        this.rootHeader.getLayoutParams().height = heightTop;
-        setSquareSize(this.buttonBackHome, (heightTop / 10) * 8);
-        this.textButtonSave.getLayoutParams().height = heightTop;
         setSquareSize(this.rootVideo, SCREEN_WIDTH);
         setSquareSize(this.buttonShare, SCREEN_WIDTH / 5);
         setSquareSize(this.buttonRate, SCREEN_WIDTH / 5);
@@ -126,12 +136,9 @@ public class VideoSavedActivity extends BaseActivity {
         return this.mVideoUrl.substring(this.mVideoUrl.lastIndexOf(File.separator) + 1, this.mVideoUrl.length());
     }
 
-    @OnClick({R.id.button_share_video, R.id.button_rate, R.id.button_back_home})
+    @OnClick({R.id.button_share_video, R.id.button_rate})
     public void onClickShare(View view) {
         switch (view.getId()) {
-            case R.id.button_back_home :
-                finish();
-                return;
             case R.id.button_share_video :
                 ExtraUtils.shareVideoViaIntent(this, this.mVideoUrl, true);
                 return;

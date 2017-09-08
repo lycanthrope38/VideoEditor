@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,7 +28,6 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.util.AppUtils;
-import com.freelancer.videoeditor.util.DialogConfirm;
 import com.freelancer.videoeditor.util.DialogInputText;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
@@ -468,15 +468,19 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         final View view = item_photo;
         final int i = index;
         final String str2 = pathItemClick;
-        new DialogConfirm(this, new OnViewListener.OnDialogConfirm() {
-            public void OnYes() {
-                PhotoEditorActivity.this.savePhoto(str);
-            }
+        AlertDialog builder =new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.text_title_dialog_confirm))
+                .setMessage(getResources().getString(R.string.message_dialog_confirm))
+                .setPositiveButton(getResources().getString(R.string.dialog_confirm_text_btn_cancel),(dialogInterface, i1) -> {
+                    dialogInterface.dismiss();
+                })
+                .setNegativeButton(getResources().getString(R.string.dialog_confirm_text_btn_no),(dialogInterface, i1) -> {
+                    PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
 
-            public void OnNo() {
-                PhotoEditorActivity.this.loadPhotoForRectanglePhoto(view, i, str2);
-            }
-        }).show();
+                })
+                .setNeutralButton(getResources().getString(R.string.dialog_confirm_text_btn_yes),(dialogInterface, i1) -> {
+                    PhotoEditorActivity.this.savePhoto(str);
+                }).show();
     }
 
     void loadPhotoForRectanglePhoto(View item_photo, int index, String pathItemClick) {

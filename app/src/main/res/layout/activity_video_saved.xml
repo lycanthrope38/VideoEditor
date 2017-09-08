@@ -13,42 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
-        <RelativeLayout
-                android:gravity="center"
-                android:id="@+id/root_header_video_saved"
-                android:background="@color/piclist_bg_title"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-            <ImageView
-                    android:id="@+id/button_back_home"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/btn_home_selector"
-                    android:scaleType="fitCenter"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"/>
-
-            <TextView
-                    android:textSize="@dimen/text_size_normal"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_header_save_success"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:id="@+id/text_button_video_saved"
-                    android:paddingLeft="@dimen/normal_space"
-                    android:paddingRight="@dimen/normal_space"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/text_header_saved_video"
-                    android:maxLength="30"
-                    android:layout_toRightOf="@+id/button_back_home"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/button_back_home"
-                    android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
+        <include layout="@layout/view_toolbar"/>
 
         <FrameLayout
                 android:id="@+id/video_layout_saved"

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.freelancer.videoeditor.R;
-import com.freelancer.videoeditor.util.AsyncTaskLoader;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.util.HandlerTools;
 import com.freelancer.videoeditor.util.OnThreadListener;
@@ -39,7 +38,6 @@ import org.andengine.opengl.view.RenderSurfaceView;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 public abstract class BaseGame extends SimpleBaseGameActivity {
-    public AsyncTaskLoader asyncTaskLoader;
     public boolean isMultiTouch = false;
     public Camera mCamera;
     public Context mContext;
@@ -52,7 +50,6 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        this.asyncTaskLoader = new AsyncTaskLoader();
         this.mVertexBufferObjectManager = getVertexBufferObjectManager();
     }
 

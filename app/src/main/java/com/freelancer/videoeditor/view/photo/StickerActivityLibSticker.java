@@ -3,7 +3,10 @@ package com.freelancer.videoeditor.view.photo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -31,6 +34,8 @@ import butterknife.OnClick;
 public class StickerActivityLibSticker extends AppCompatActivity implements OnToolListener.OnStickerClick {
     @BindView(R.id.gridViewSticker)
     GridView mGridSticker;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private StickerAdapter stickerAdapter;
     private List<String> dataListPhoto = new ArrayList<>();
 
@@ -39,6 +44,12 @@ public class StickerActivityLibSticker extends AppCompatActivity implements OnTo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setTitle("Sticker");
+
         String[] listThumbs = ExtraUtils.listAssetFiles(this, AppConst.FOLDER_STICKER);
         int i = 0;
         if (listThumbs == null || listThumbs.length <= 0) {
@@ -73,9 +84,12 @@ public class StickerActivityLibSticker extends AppCompatActivity implements OnTo
         finishActivityAndReturn(item);
     }
 
-    @OnClick(R.id.image_back)
-    public void onBackClick(){
-        finish();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void finishActivityAndReturn(String url) {
