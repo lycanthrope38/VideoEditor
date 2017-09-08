@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelancer.videoeditor.R;
-import com.freelancer.videoeditor.util.OnToolBoxListener;
+import com.freelancer.videoeditor.util.OnToolListener;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 import com.freelancer.videoeditor.view.pick.PickAudioActivity;
 import com.freelancer.videoeditor.vo.Audio;
@@ -26,7 +26,7 @@ public class MusicFragment extends BaseFragment {
     @BindView(R.id.btnRemoveAudio)
     ImageView imageRemove;
     private String mCurrentPickPath;
-    private OnToolBoxListener mListener;
+    private OnToolListener.OnToolBoxListener mListener;
     private View mRootView;
     @BindView(R.id.text_audio_picked)
     TextView textAddAudio;
@@ -44,7 +44,7 @@ public class MusicFragment extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.mListener = (OnToolBoxListener) activity;
+            this.mListener = (OnToolListener.OnToolBoxListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.getClass().getSimpleName() + " must be implemented OnToolBoxListener");
         }

@@ -42,7 +42,7 @@ public class BaseList implements OnSeekBarChangeListener {
     LIST_ITEM list_item;
     ProgressBar loading;
     PhotoEditorActivity mainActivity;
-    OnClickItemBaseList onClickItemBaseList;
+    com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseList;
     String pathFolderIamge;
     String prefixImage;
     RectangleFilter rectangleFilter;
@@ -239,11 +239,11 @@ public class BaseList implements OnSeekBarChangeListener {
     public void onStopTrackingTouch(SeekBar seekBar) {
     }
 
-    public OnClickItemBaseList getOnClickItemBaseList() {
+    public com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList getOnClickItemBaseList() {
         return this.onClickItemBaseList;
     }
 
-    public void setOnClickItemBaseList(OnClickItemBaseList onClickItemBaseList) {
+    public void setOnClickItemBaseList(com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseList) {
         this.onClickItemBaseList = onClickItemBaseList;
     }
 

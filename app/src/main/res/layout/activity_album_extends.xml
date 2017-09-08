@@ -4,42 +4,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <RelativeLayout
-            android:id="@+id/relativeLayout"
-            android:background="@color/bg_bar_top_extends"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
-
-        <TextView
-                android:textSize="16sp"
-                android:textColor="@color/title_extends"
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:text="@string/text_title_activity_album_extends"
-                android:layout_toRightOf="@+id/btnBack"
-                android:layout_centerVertical="true"/>
-
-        <ImageView
-                android:id="@+id/btnSort"
-                android:background="@drawable/btn_sort_bar_top"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
-
-        <ImageView
-                android:id="@+id/btnBack"
-                android:background="@drawable/btn_back_bar_top"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_centerVertical="true"/>
-    </RelativeLayout>
+    <include android:id="@+id/relativeLayout"
+            layout="@layout/view_toolbar"/>
 
     <ImageView
             android:id="@+id/shadow_bg_bar_top"
@@ -47,22 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/relativeLayout"/>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/btnPicCamera"
-            android:background="@color/bg_bar_top_extends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_below="@+id/shadow_bg_bar_top">
-
-        <ImageView
-                android:id="@+id/icon_camera"
-                android:background="@drawable/btn_camera_extends"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <GridView
             android:id="@+id/gridViewAlbum"
@@ -86,7 +36,7 @@
             android:layout_below="@+id/shadow_bg_bar_top">
 
         <GridView
-                android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:gravity="center"
                 android:id="@+id/gridViewDetailAlbum"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
@@ -96,11 +46,6 @@
                 android:numColumns="3"/>
     </LinearLayout>
 
-    <ImageView
-            android:background="@drawable/shadow_bg_bar_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/layoutBottom"/>
 
     <RelativeLayout
             android:orientation="vertical"
@@ -163,7 +108,7 @@
                         android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_button_done_extends"/>
+                        android:text="@string/text_button_done"/>
             </LinearLayout>
 
             <TextView

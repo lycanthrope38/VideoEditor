@@ -17,8 +17,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
-import com.freelancer.videoeditor.util.OnRecyclerClickListener;
-import com.freelancer.videoeditor.util.OnToolBoxListener;
+import com.freelancer.videoeditor.util.OnClickListener;
+import com.freelancer.videoeditor.util.OnToolListener;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 
 
@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class ThemeFragment extends BaseFragment implements OnRecyclerClickListener {
+public class ThemeFragment extends BaseFragment implements OnClickListener.OnRecyclerClickListener {
     private static final int DIMEN_PADDING = 2131296461;
     private static final String TAG = "ThemeFragment";
     private int THUMB_SIZE_HEIGHT = 450;
@@ -42,7 +42,7 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
     private int mColumnWith = 0;
     private ArrayList<String> mDataFrame;
     private LinearLayoutManager mLayoutManager;
-    private OnToolBoxListener mListener;
+    private OnToolListener.OnToolBoxListener mListener;
     @BindView(R.id.recycler_list_border)
     RecyclerView mRecyclerView;
     private View mRootView;
@@ -60,7 +60,7 @@ public class ThemeFragment extends BaseFragment implements OnRecyclerClickListen
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.mListener = (OnToolBoxListener) activity;
+            this.mListener = (OnToolListener.OnToolBoxListener) activity;
             int screenWith = ExtraUtils.getDisplayInfo(getActivity()).widthPixels;
 //            this.mColumnWith = Math.round((((float) (screenWith / 6)) - (((float) getResources().getDimensionPixelSize(DIMEN_PADDING)) / 2.0f)) + ExtraUtils.convertDpToPixel(HandlerTools.ROTATE_R, getActivity()));
         } catch (ClassCastException e) {

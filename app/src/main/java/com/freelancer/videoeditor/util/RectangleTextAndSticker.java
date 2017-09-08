@@ -22,7 +22,7 @@ import org.andengine.util.color.Color;
 
 import timber.log.Timber;
 
-public class RectangleTextAndSticker extends RectangleBaseClipping implements IButtonSprite {
+public class RectangleTextAndSticker extends RectangleBaseClipping implements OnViewListener.IButtonSprite {
     private static final int DRAG = 1;
     private static final int NONE = 0;
     private static final int ZOOM = 2;
@@ -40,7 +40,7 @@ public class RectangleTextAndSticker extends RectangleBaseClipping implements IB
     private int mode = NONE;
     private float newRot = 0.0f;
     private float oldDist = HandlerTools.ROTATE_R;
-    OnSetSpriteForTools onSetSpriteForTools;
+    OnToolListener.OnSetSpriteForTools onSetSpriteForTools;
     float pTouchAreaLocalX1;
     float pTouchAreaLocalX2;
     float pTouchAreaLocalXOld = 0.0f;
@@ -322,11 +322,11 @@ public class RectangleTextAndSticker extends RectangleBaseClipping implements IB
         return null;
     }
 
-    public OnSetSpriteForTools getOnSetSpriteForTools() {
+    public OnToolListener.OnSetSpriteForTools getOnSetSpriteForTools() {
         return this.onSetSpriteForTools;
     }
 
-    public void setOnSetSpriteForTools(OnSetSpriteForTools onSetSpriteForTools) {
+    public void setOnSetSpriteForTools(OnToolListener.OnSetSpriteForTools onSetSpriteForTools) {
         this.onSetSpriteForTools = onSetSpriteForTools;
     }
 }

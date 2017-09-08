@@ -1,6 +1,6 @@
 package com.freelancer.videoeditor.util;
 
-public class AsyncCallBack implements IAsyncLoaderCallBack {
+public class AsyncCallBack implements OnThreadListener.IAsyncLoaderCallBack {
     Object object;
 
     public AsyncCallBack(Object object) {

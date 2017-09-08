@@ -23,7 +23,7 @@ public class ViewTop implements OnClickListener {
     boolean isSaveOld = true;
     RelativeLayout layoutTop;
     PhotoEditorActivity mainActivity;
-    OnViewTop onViewTop;
+    OnViewListener.OnViewTop onViewTop;
 
     public ViewTop(PhotoEditorActivity mainActivity, View mainView) {
         this.mainActivity = mainActivity;
@@ -80,11 +80,11 @@ public class ViewTop implements OnClickListener {
         }
     }
 
-    public OnViewTop getOnViewTop() {
+    public OnViewListener.OnViewTop getOnViewTop() {
         return this.onViewTop;
     }
 
-    public void setOnViewTop(OnViewTop onViewTop) {
+    public void setOnViewTop(OnViewListener.OnViewTop onViewTop) {
         this.onViewTop = onViewTop;
     }
 }

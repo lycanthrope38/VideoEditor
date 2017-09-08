@@ -10,10 +10,10 @@ import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 
 public class DialogConfirm extends Dialog implements OnClickListener {
     PhotoEditorActivity mainActivity;
-    OnDialogConfirm onDialogConfirm;
+    OnViewListener.OnDialogConfirm onDialogConfirm;
     String pathFile;
 
-    public DialogConfirm(PhotoEditorActivity mainActivity, OnDialogConfirm onDialogConfirm) {
+    public DialogConfirm(PhotoEditorActivity mainActivity, OnViewListener.OnDialogConfirm onDialogConfirm) {
         super(mainActivity);
         this.mainActivity = mainActivity;
         this.onDialogConfirm = onDialogConfirm;

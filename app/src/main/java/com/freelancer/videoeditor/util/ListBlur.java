@@ -34,7 +34,7 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
     ImageView btnColor;
     RelativeLayout layoutParentBlur;
     PhotoEditorActivity mainActivity;
-    OnToolsBlur onToolsBlur;
+    OnToolListener.OnToolsBlur onToolsBlur;
     SeekBar seekBarToolsPhoto;
 
     public ListBlur(PhotoEditorActivity mainActivity, RelativeLayout layoutCenter) {
@@ -131,11 +131,11 @@ public class ListBlur implements OnClickListener, OnSeekBarChangeListener {
         }
     }
 
-    public OnToolsBlur getOnToolsBlur() {
+    public OnToolListener.OnToolsBlur getOnToolsBlur() {
         return this.onToolsBlur;
     }
 
-    public void setOnToolsBlur(OnToolsBlur onToolsBlur) {
+    public void setOnToolsBlur(OnToolListener.OnToolsBlur onToolsBlur) {
         this.onToolsBlur = onToolsBlur;
     }
 }

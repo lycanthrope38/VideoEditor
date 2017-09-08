@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.freelancer.videoeditor.config.AppConst;
-import com.freelancer.videoeditor.util.OnCapture;
+import com.freelancer.videoeditor.util.OnClickListener;
 import com.freelancer.videoeditor.util.UtilLib;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class MyScreenCapture extends ScreenCapture {
     int pXstartCapture = 0;
     int pYstartCapture = 0;
 
-    public void capture(PhotoEditorActivity mainActivity, String name, int action, OnCapture mOnCapture) {
+    public void capture(PhotoEditorActivity mainActivity, String name, int action, OnClickListener.OnCapture mOnCapture) {
         Timber.e("start capture");
         this.mainActivity = mainActivity;
         UtilLib.getInstance().showLoading(mainActivity);
@@ -34,7 +34,7 @@ public class MyScreenCapture extends ScreenCapture {
         this.pHeightCapture = pHeightCapture;
     }
 
-    private void capture(String name, final int action, final OnCapture mOnCapture) {
+    private void capture(String name, final int action, final OnClickListener.OnCapture mOnCapture) {
         this.mainActivity.getMainScene().attachChild(this);
         final String pathNewFile = name;
         Timber.e("capture pathNewFile = " + pathNewFile);

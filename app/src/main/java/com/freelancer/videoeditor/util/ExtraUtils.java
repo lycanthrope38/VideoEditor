@@ -160,7 +160,7 @@ public class ExtraUtils {
         displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null);
     }
 
-    public static void displayImage(Context context, ImageView image, String url, IOnResourceReady iOnResourceReady) {
+    public static void displayImage(Context context, ImageView image, String url, OnViewListener.IOnResourceReady iOnResourceReady) {
         displayImage(context, image, url, R.drawable.mylibsutil_bg_null, R.drawable.mylibsutil_bg_null, iOnResourceReady);
     }
 
@@ -172,7 +172,7 @@ public class ExtraUtils {
         Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(image);
     }
 
-    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable, final IOnResourceReady iOnResourceReady) {
+    public static void displayImage(Context context, ImageView image, Object imageSource, int fallBackDrawable, int errorDrawable, final OnViewListener.IOnResourceReady iOnResourceReady) {
         Glide.with(context).load(imageSource).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().placeholder(errorDrawable).fallback(fallBackDrawable).error(errorDrawable).animate(R.anim.anim_fade_in).into(new BitmapImageViewTarget(image) {
             public void onLoadStarted(Drawable placeholder) {
                 super.onLoadStarted(placeholder);

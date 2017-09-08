@@ -67,53 +67,11 @@ public class UtilLib {
     private UtilLib() {
     }
 
-    public void doBackGround(final IDoBackGround mIDoBackGround) {
-        handlerDoWork(new IHandler() {
-            public void doWork() {
-                final AsyncTaskLoader asyncTaskLoader = new AsyncTaskLoader();
-                AsyncCallBack[] asyncCallBackArr = new AsyncCallBack[UtilLib.FLIP_VERTICAL];
-                asyncCallBackArr[0] = new AsyncCallBack(null) {
-                    public void workToDo() {
-                        super.workToDo();
-                        mIDoBackGround.onDoBackGround(asyncTaskLoader.isCancelled());
-                    }
 
-                    public void onComplete() {
-                        super.onComplete();
-                        mIDoBackGround.onCompleted();
-                    }
-
-                    public void onCancelled() {
-                        super.onCancelled();
-                    }
-
-                    public void onCancelled(boolean result) {
-                        super.onCancelled(result);
-                    }
-                };
-                asyncTaskLoader.execute(asyncCallBackArr);
-            }
-        });
-    }
-
-    public void handlerDoWork(IHandler mIHandler) {
+    public void handlerDoWork(OnThreadListener.IHandler mIHandler) {
         this.mHandler.sendMessage(this.mHandler.obtainMessage(0, mIHandler));
     }
 
-    public void handlerDelay(final IHandler mIHandler, int timeDelay) {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mIHandler.doWork();
-            }
-        }, (long) timeDelay);
-    }
-
-    public static String formatDuration(long totalMilis) {
-        int seconds = ((int) (totalMilis / 1000)) % 60;
-        int minutes = (int) ((totalMilis / 60000) % 60);
-        int hours = (int) ((totalMilis / 3600000) % 24);
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-    }
 
     public int getRandomIndex(int min, int max) {
         return ((int) (Math.random() * ((double) ((max - min) + FLIP_VERTICAL)))) + min;
@@ -128,38 +86,6 @@ public class UtilLib {
             return true;
         } catch (NameNotFoundException e) {
             return false;
-        }
-    }
-
-    public void showToast(final Context mContext, final String txt) {
-        new Handler().post(new Runnable() {
-            public void run() {
-                Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void showToastLengthLong(final Context mContext, final String txt) {
-        new Handler().post(new Runnable() {
-            public void run() {
-                Toast.makeText(mContext, txt, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void showDetailApp(Activity mActivity, String package_name) {
-        try {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("market://details?id=" + package_name)));
-        } catch (Exception e) {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(ExtraUtils.BASE_GOOGLE_PLAY + package_name)));
-        }
-    }
-
-    public void showDetailApp(Context mActivity, String package_name) {
-        try {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("market://details?id=" + package_name)));
-        } catch (Exception e) {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(ExtraUtils.BASE_GOOGLE_PLAY + package_name)));
         }
     }
 
@@ -185,20 +111,6 @@ public class UtilLib {
         } catch (Exception e) {
             System.err.println(e.toString());
             return false;
-        }
-    }
-
-    public void actionView(Activity mActivity, String url) {
-        try {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(url)));
-        } catch (Exception e) {
-        }
-    }
-
-    public void actionView(Context mActivity, String url) {
-        try {
-            mActivity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(url)));
-        } catch (Exception e) {
         }
     }
 
@@ -348,18 +260,11 @@ public class UtilLib {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
-    public void nextMyListAppOnGooglePlay(Context mContext, String nameDeveloper) {
-        try {
-            mContext.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/developer?id=" + nameDeveloper)));
-        } catch (Exception e) {
-        }
-    }
-
     public void showLoading(Activity mActivity) {
         showLoading(mActivity, null);
     }
 
-    public void showLoading(final Activity mActivity, final IOnBackLoading mOnBackLoading) {
+    public void showLoading(final Activity mActivity, final OnThreadListener.IOnBackLoading mOnBackLoading) {
         if (mActivity != null) {
             if (UtilLib.this.mProgressDialog == null) {
                 UtilLib.this.mProgressDialog = new ProgressDialog(mActivity) {
@@ -377,43 +282,12 @@ public class UtilLib {
         }
     }
 
-    public void showLoadingWithMessage(final Activity mActivity, final String message) {
-        if (mActivity != null) {
-            handlerDoWork(new IHandler() {
-                public void doWork() {
-                    if (UtilLib.this.mProgressDialog == null) {
-                        UtilLib.this.mProgressDialog = new ProgressDialog(mActivity);
-                        UtilLib.this.mProgressDialog.setMessage(message);
-                        UtilLib.this.mProgressDialog.setCancelable(false);
-                        UtilLib.this.mProgressDialog.show();
-                    }
-                }
-            });
-        }
-    }
-
     public void hideLoading() {
         if (UtilLib.this.mProgressDialog != null && UtilLib.this.mProgressDialog.isShowing()) {
             UtilLib.this.mProgressDialog.dismiss();
             UtilLib.this.mProgressDialog = null;
         }
     }
-
-//    public void showLoadingProgress(final Activity activity) {
-//        if (activity != null) {
-//            handlerDoWork(new IHandler() {
-//                public void doWork() {
-//                    if (UtilLib.this.mProgressDialogDownload == null) {
-//                        UtilLib.this.mProgressDialogDownload = new ProgressDialog(activity);
-//                        UtilLib.this.mProgressDialogDownload.setProgressStyle(UtilLib.FLIP_VERTICAL);
-//                        UtilLib.this.mProgressDialogDownload.setMessage(activity.getString(R.string.message_download));
-//                        UtilLib.this.mProgressDialogDownload.setCancelable(false);
-//                        UtilLib.this.mProgressDialogDownload.show();
-//                    }
-//                }
-//            });
-//        }
-//    }
 
     public void showLoadingProgress(final Activity activity, final String message) {
         if (activity != null) {
@@ -441,120 +315,9 @@ public class UtilLib {
         }
     }
 
-    @TargetApi(23)
-    public boolean requestAllPermission(Activity mActivity, List<String> permissionsNeeded) {
-        if (ExtraUtils.getCurrentSdkVersion() >= 23) {
-            List<String> permissionsList = new ArrayList();
-            for (int i = 0; i < permissionsNeeded.size(); i += FLIP_VERTICAL) {
-                if (!addPermission(mActivity, permissionsList, (String) permissionsNeeded.get(i))) {
-                    permissionsList.add(permissionsNeeded.get(i));
-                }
-            }
-            if (permissionsList.size() > 0) {
-                ActivityCompat.requestPermissions(mActivity, (String[]) permissionsList.toArray(new String[permissionsList.size()]), PhotoEditorActivity.REQUEST_CODE_CROP);
-                return false;
-            }
-        }
-        return true;
-    }
 
-    @TargetApi(23)
-    public boolean addPermission(Activity activity, List<String> permissionsList, String permission) {
-        if (ContextCompat.checkSelfPermission(activity, permission) != 0) {
-            permissionsList.add(permission);
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    @TargetApi(23)
-    public void requestPermission(Activity mActivity, String permission, int REQUEST_CODE) {
-        if (ExtraUtils.getCurrentSdkVersion() >= 23) {
-            List<String> permissionsNeeded = new ArrayList();
-            permissionsNeeded.add(permission);
-            ActivityCompat.requestPermissions(mActivity, (String[]) permissionsNeeded.toArray(new String[permissionsNeeded.size()]), REQUEST_CODE);
-        }
-    }
-
-    @TargetApi(23)
-    public boolean isPermissionAllow(Activity activity, String permission) {
-        if (ExtraUtils.getCurrentSdkVersion() >= 23 && ContextCompat.checkSelfPermission(activity, permission) != 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isPermissionAllow(Context context, int requestCode, String permission) {
-        if (isPermissionAllow((Activity) context, permission)) {
-            return true;
-        }
-        requestPermission((Activity) context, permission, requestCode);
-        return false;
-    }
-
-//    public void showDenyDialog(final Activity activity, OnClickListener onYes, final boolean isFinishActivity) {
-//        showDenyDialog(activity, onYes, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (isFinishActivity) {
-//                    activity.finish();
-//                }
-//            }
-//        });
-//    }
-//
-//    public void showRememberDialog(final Activity activity, final boolean isFinishActivity) {
-//        showRememberDialog(activity, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                ExtraUtils.openAppSettings(activity, activity.getPackageName());
-//            }
-//        }, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (isFinishActivity) {
-//                    activity.finish();
-//                }
-//            }
-//        });
-//    }
-
-//    public void showDenyDialog(Activity activity, OnClickListener onRetry, OnClickListener onCancel) {
-//        CommonDialog.showDialogConfirm(activity, R.string.message_permission_denied, "Retry", "Cancel", onRetry, onCancel);
-//    }
-//
-//    public void showRememberDialog(Activity activity, OnClickListener onSettings, OnClickListener onCancel) {
-//        CommonDialog.showDialogConfirm(activity, R.string.message_permission_denied_remember, "Settings", "Cancel", onSettings, onCancel);
-//    }
-
-//    public void openAppSettings(final Context context, final boolean isFinishActivity) {
-//        showRememberDialog((Activity) context, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                ExtraUtils.openAppSettings(context, context.getPackageName());
-//            }
-//        }, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (isFinishActivity) {
-//                    ((Activity) context).finish();
-//                }
-//            }
-//        });
-//    }
-
-//    public void showDenyDialog(final Context context, final String permission, final int requestCode, final boolean isFinishActivity) {
-//        showDenyDialog((Activity) context, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                UtilLib.this.requestPermission((Activity) context, permission, requestCode);
-//            }
-//        }, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (isFinishActivity) {
-//                    ((Activity) context).finish();
-//                }
-//            }
-//        });
-//    }
-
-    public void setOnCustomTouchView(View view, final OnCustomTouchListener onCustomTouchListener) {
+    public void setOnCustomTouchView(View view, final com.freelancer.videoeditor.util.OnClickListener.OnCustomTouchListener onCustomTouchListener) {
         view.setOnTouchListener(new OnTouchListener() {
             private Rect rect;
 
@@ -578,8 +341,8 @@ public class UtilLib {
         });
     }
 
-    public void setOnCustomTouchViewScale(final View view, final OnCustomClickListener customClickListener) {
-        setOnCustomTouchView(view, new OnCustomTouchListener() {
+    public void setOnCustomTouchViewScale(final View view, final com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener customClickListener) {
+        setOnCustomTouchView(view, new com.freelancer.videoeditor.util.OnClickListener.OnCustomTouchListener() {
             private void setScale(float scale) {
                 view.setScaleX(scale);
                 view.setScaleY(scale);
@@ -606,8 +369,9 @@ public class UtilLib {
         });
     }
 
-    public void setOnCustomTouchViewScaleNotOther(final View view, final OnCustomClickListener customClickListener) {
-        setOnCustomTouchView(view, new OnCustomTouchListener() {
+    // scale view
+    public void setOnCustomTouchViewScaleNotOther(final View view, final com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener customClickListener) {
+        setOnCustomTouchView(view, new com.freelancer.videoeditor.util.OnClickListener.OnCustomTouchListener() {
             private void setScale(float scale) {
                 view.setScaleX(scale);
                 view.setScaleY(scale);
@@ -633,8 +397,8 @@ public class UtilLib {
         });
     }
 
-    public void setOnCustomTouchViewAlphaNotOther(final View view, final OnCustomClickListener customClickListener) {
-        setOnCustomTouchView(view, new OnCustomTouchListener() {
+    public void setOnCustomTouchViewAlphaNotOther(final View view, final com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener customClickListener) {
+        setOnCustomTouchView(view, new com.freelancer.videoeditor.util.OnClickListener.OnCustomTouchListener() {
             private void setAlpha(float alpha) {
                 view.setAlpha(alpha);
             }

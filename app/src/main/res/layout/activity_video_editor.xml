@@ -24,7 +24,7 @@
                 android:layout_weight="2.0">
 
             <com.universalvideoview.UniversalVideoView
-                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:layout_gravity="center"
                     android:id="@+id/video_view_editor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -35,7 +35,7 @@ public class ViewTools {
     boolean isFistShowToolsBottom = false;
     LinearLayout layoutTools;
     PhotoEditorActivity mainActivity;
-    OnViewTools onViewTools;
+    OnViewListener.OnViewTools onViewTools;
 
     public ViewTools(PhotoEditorActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -114,11 +114,7 @@ public class ViewTools {
     }
 
     public void onClick(int id, int action) {
-        if (id == R.id.btnCrop) {
-            if (action == 1) {
-                this.onViewTools.onCrop();
-            }
-        } else if (id == R.id.btnFlipH) {
+       if (id == R.id.btnFlipH) {
             if (action == 1) {
                 this.onViewTools.onFlipH();
             }
@@ -179,11 +175,11 @@ public class ViewTools {
         mButton.getLayoutParams().width = pW;
     }
 
-    public OnViewTools getOnViewTools() {
+    public OnViewListener.OnViewTools getOnViewTools() {
         return this.onViewTools;
     }
 
-    public void setOnViewTools(OnViewTools onViewTools) {
+    public void setOnViewTools(OnViewListener.OnViewTools onViewTools) {
         this.onViewTools = onViewTools;
     }
 }

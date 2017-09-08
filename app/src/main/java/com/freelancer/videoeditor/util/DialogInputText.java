@@ -27,7 +27,7 @@ public class DialogInputText extends Dialog implements OnClickListener {
     int color = -1;
     EditText edtInput;
     GridView gridView;
-    IBitmap mIBitmap;
+    OnViewListener.IBitmap mIBitmap;
     PhotoEditorActivity mainActivity;
     int pH = (ConfigScreen.SCREENHEIGHT / 4);
     int pW = (ConfigScreen.SCREENWIDTH / 8);
@@ -36,7 +36,7 @@ public class DialogInputText extends Dialog implements OnClickListener {
     TextView txtSize;
     View viewColor;
 
-    public DialogInputText(PhotoEditorActivity mainActivity, IBitmap mIBitmap) {
+    public DialogInputText(PhotoEditorActivity mainActivity, OnViewListener.IBitmap mIBitmap) {
         super(mainActivity);
         this.mIBitmap = mIBitmap;
         this.mainActivity = mainActivity;
@@ -166,17 +166,5 @@ public class DialogInputText extends Dialog implements OnClickListener {
                     DialogInputText.this.viewColor.setBackgroundColor(color);
             }
         }).show();
-//        if (this.mColorPickerDialog == null) {
-//            this.mColorPickerDialog = new ColorPickerDialog(mContext, this.color);
-//            this.mColorPickerDialog.setAlphaSliderVisible(true);
-//            this.mColorPickerDialog.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
-//                public void onColorChanged(int color) {
-//                    DialogInputText.this.color = color;
-//                    DialogInputText.this.edtInput.setTextColor(color);
-//                    DialogInputText.this.viewColor.setBackgroundColor(color);
-//                }
-//            });
-//        }
-//        this.mColorPickerDialog.show();
     }
 }

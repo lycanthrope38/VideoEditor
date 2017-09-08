@@ -21,7 +21,7 @@ public class ManagerViewCenter implements OnClickListener {
     BaseList listFilter;
     LIST_ITEM list_item_selected = null;
     PhotoEditorActivity mainActivity;
-    OnManagerViewCenter onManagerViewCenter;
+    OnViewListener.OnManagerViewCenter onManagerViewCenter;
 
     public enum LIST_ITEM {
         BORDER,
@@ -94,7 +94,7 @@ public class ManagerViewCenter implements OnClickListener {
                 .subscribe();
     }
 
-    public void setOnClickItemBaseList(OnClickItemBaseList onClickItemBaseListBorder, OnClickItemBaseList onClickItemBaseListFilter, OnClickItemBaseList onClickItemBaseListBackground) {
+    public void setOnClickItemBaseList(com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListBorder, com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListFilter, com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListBackground) {
         this.listBorder.setOnClickItemBaseList(onClickItemBaseListBorder);
         this.listFilter.setOnClickItemBaseList(onClickItemBaseListFilter);
         this.listBackground.setOnClickItemBaseList(onClickItemBaseListBackground);
@@ -121,11 +121,11 @@ public class ManagerViewCenter implements OnClickListener {
         }
     }
 
-    public OnManagerViewCenter getOnManagerViewCenter() {
+    public OnViewListener.OnManagerViewCenter getOnManagerViewCenter() {
         return this.onManagerViewCenter;
     }
 
-    public void setOnManagerViewCenter(OnManagerViewCenter onManagerViewCenter) {
+    public void setOnManagerViewCenter(OnViewListener.OnManagerViewCenter onManagerViewCenter) {
         this.onManagerViewCenter = onManagerViewCenter;
     }
 

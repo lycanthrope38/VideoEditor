@@ -16,7 +16,6 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.util.AppUtils;
-import com.freelancer.videoeditor.util.IDoBackGround;
 import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.view.base.BaseGame;
 import com.freelancer.videoeditor.view.pick.PickImageExtendsActivity;
@@ -61,8 +60,6 @@ public class MenuActivity extends BaseGame {
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        UtilLib.getInstance().requestAllPermission(this, AppConst.LIST_PERMISSION_REQUEST);
-        Bundle bundle = getIntent().getExtras();
     }
 
     @OnClick(R.id.ln_create_video)

@@ -2,8 +2,8 @@ package com.freelancer.videoeditor.view.base;
 
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IButtonSprite;
-import com.freelancer.videoeditor.util.IClose;
+import com.freelancer.videoeditor.util.OnThreadListener;
+import com.freelancer.videoeditor.util.OnViewListener;
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.DelayModifier;
@@ -18,7 +18,7 @@ public class BaseSprite extends Sprite {
     boolean isMoveOut = true;
     boolean isScale;
     boolean isUp = true;
-    IButtonSprite mIButtonSprite;
+    OnViewListener.IButtonSprite mIButtonSprite;
 
     public BaseSprite(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
@@ -52,7 +52,7 @@ public class BaseSprite extends Sprite {
                     protected void onModifierFinished(IEntity pItem) {
                         super.onModifierFinished(pItem);
                         if (BaseSprite.this.isScale) {
-                            BaseSprite.this.animation(1.2f, HandlerTools.ROTATE_R, new IClose() {
+                            BaseSprite.this.animation(1.2f, HandlerTools.ROTATE_R, new OnThreadListener.IClose() {
                                 public void onClose() {
                                     BaseSprite.this.registerEntityModifier(new DelayModifier(AppConst.ZOOM_MIN) {
                                         protected void onModifierFinished(IEntity pItem) {
@@ -93,16 +93,16 @@ public class BaseSprite extends Sprite {
         return true;
     }
 
-    public IButtonSprite getmIButtonSprite() {
+    public OnViewListener.IButtonSprite getmIButtonSprite() {
         return this.mIButtonSprite;
     }
 
-    public void setmIButtonSprite(IButtonSprite mIButtonSprite) {
+    public void setmIButtonSprite(OnViewListener.IButtonSprite mIButtonSprite) {
         this.mIButtonSprite = mIButtonSprite;
     }
 
-    public void animation(float start, float end, IClose mIClose) {
-        final IClose iClose = mIClose;
+    public void animation(float start, float end, OnThreadListener.IClose mIClose) {
+        final OnThreadListener.IClose iClose = mIClose;
         registerEntityModifier(new ScaleModifier(0.05f, start, end) {
             protected void onModifierFinished(IEntity pItem) {
                 super.onModifierFinished(pItem);
@@ -118,7 +118,7 @@ public class BaseSprite extends Sprite {
         registerEntityModifier(new DelayModifier(AppConst.ZOOM_MIN) {
             protected void onModifierFinished(IEntity pItem) {
                 super.onModifierFinished(pItem);
-                BaseSprite.this.animation(1.2f, HandlerTools.ROTATE_R, new IClose() {
+                BaseSprite.this.animation(1.2f, HandlerTools.ROTATE_R, new OnThreadListener.IClose() {
                     public void onClose() {
                         if (BaseSprite.this.mIButtonSprite != null) {
                             BaseSprite.this.mIButtonSprite.onClick(BaseSprite.this);

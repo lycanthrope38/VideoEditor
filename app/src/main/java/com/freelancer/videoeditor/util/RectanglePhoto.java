@@ -71,7 +71,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
     private int mode = NONE;
     private float newRot = 0.0f;
     private float oldDist = HandlerTools.ROTATE_R;
-    OnSetSpriteForTools onSetSpriteForTools;
+    OnToolListener.OnSetSpriteForTools onSetSpriteForTools;
     float onePercent = 0.0f;
     float pTouchAreaLocalX1;
     float pTouchAreaLocalX2;
@@ -144,7 +144,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
             setColor(this.mColor);
             this.btnAdd.setScale(HandlerTools.ROTATE_R);
             this.isDown = false;
-            UtilLib.getInstance().handlerDoWork(new IHandler() {
+            UtilLib.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
                 public void doWork() {
                 }
             });
@@ -442,11 +442,11 @@ public class RectanglePhoto extends RectangleBaseClipping {
         }
     }
 
-    public OnSetSpriteForTools getOnSetSpriteForTools() {
+    public OnToolListener.OnSetSpriteForTools getOnSetSpriteForTools() {
         return this.onSetSpriteForTools;
     }
 
-    public void setOnSetSpriteForTools(OnSetSpriteForTools onSetSpriteForTools) {
+    public void setOnSetSpriteForTools(OnToolListener.OnSetSpriteForTools onSetSpriteForTools) {
         this.onSetSpriteForTools = onSetSpriteForTools;
     }
 
@@ -464,7 +464,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
         Timber.e("BLUR", "OnBorderClick type = " + type);
         if (type == 5) {
             if (this.listBorder.size() != 0) {
-                UtilLib.getInstance().handlerDoWork(new IHandler() {
+                UtilLib.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
                     public void doWork() {
 //                        RectanglePhoto.this.showDialogSelectColor(RectanglePhoto.this.mainActivity);
                     }

@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <RelativeLayout
-            android:id="@+id/header_pick_audio"
-            android:background="@color/piclist_bg_title"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true">
-
-        <TextView
-                android:textSize="@dimen/text_size_normal"
-                android:textColor="@color/piclist_txt_title"
-                android:id="@+id/txtTitleAudio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pick Audio"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
-
-        <ImageView
-                android:id="@+id/btnSortAudio"
-                android:background="@drawable/piclist_icon_sort"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
-
-        <ImageView
-                android:id="@+id/btnAudioBack"
-                android:background="@drawable/piclist_selector_button_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+    <include android:id="@+id/header_pick_audio"
+            layout="@layout/view_toolbar"/>
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -51,19 +21,21 @@
                 android:divider="@color/color_divide_list_audio"
                 android:dividerHeight="1dp"/>
 
-        <ImageView
-                android:layout_gravity="bottom|end"
+        <android.support.design.widget.FloatingActionButton
                 android:id="@+id/pick_audio_from_file"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="@dimen/xlarge_space"
-                android:src="@drawable/btn_pick_audio_selector"/>
+                android:layout_gravity="bottom|end"
+                app:backgroundTint="@color/primary"
+                android:src="@drawable/ic_pick_audio"
+                />
     </FrameLayout>
 
     <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/root_bottom_audio"
-            android:background="@color/color_bkg_audio_bottom"
+            android:background="@color/primary"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/tiny_space"
@@ -71,7 +43,7 @@
             android:layout_centerHorizontal="true">
 
         <ImageView
-                android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                android:layout_gravity="left"
                 android:id="@+id/image_play_audio"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -86,8 +58,8 @@
 
             <TextView
                     android:textSize="@dimen/text_size_normal"
-                    android:textColor="@color/color_audio_name"
-                    android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                    android:textColor="@color/white"
+                    android:gravity="left"
                     android:id="@+id/text_audio_name"
                     android:paddingBottom="@dimen/very_tiny_space"
                     android:layout_width="match_parent"
@@ -98,8 +70,8 @@
 
             <TextView
                     android:textSize="@dimen/text_size_tiny"
-                    android:textColor="@color/color_text_audio_duration"
-                    android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                    android:textColor="@color/white"
+                    android:gravity="left"
                     android:id="@+id/text_audio_duration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

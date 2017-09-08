@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
-import com.freelancer.videoeditor.util.OnStickerClick;
+import com.freelancer.videoeditor.util.OnToolListener;
 import com.freelancer.videoeditor.view.pick.DetailAlbumAdapter;
 import com.freelancer.videoeditor.view.pick.OnListAlbum;
 import com.freelancer.videoeditor.vo.Item;
@@ -29,7 +29,7 @@ public class StickerAdapter  extends ArrayAdapter<String> {
     Context context;
     List<String> data = new ArrayList();
     int layoutResourceId;
-    OnStickerClick onListAlbum;
+    OnToolListener.OnStickerClick onListAlbum;
     int pHeightItem = 0;
 
     static class RecordHolder {
@@ -70,11 +70,11 @@ public class StickerAdapter  extends ArrayAdapter<String> {
         return row;
     }
 
-    public OnStickerClick getOnListAlbum() {
+    public OnToolListener.OnStickerClick getOnListAlbum() {
         return this.onListAlbum;
     }
 
-    public void setOnListAlbum(OnStickerClick onListAlbum) {
+    public void setOnListAlbum(OnToolListener.OnStickerClick onListAlbum) {
         this.onListAlbum = onListAlbum;
     }
 }

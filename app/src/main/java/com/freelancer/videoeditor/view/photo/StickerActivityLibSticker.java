@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
-import com.freelancer.videoeditor.util.OnStickerClick;
+import com.freelancer.videoeditor.util.OnToolListener;
 
 
 import java.io.File;
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * Created by ThongLe on 8/5/2017.
  */
 
-public class StickerActivityLibSticker extends AppCompatActivity implements OnStickerClick {
+public class StickerActivityLibSticker extends AppCompatActivity implements OnToolListener.OnStickerClick {
     @BindView(R.id.gridViewSticker)
     GridView mGridSticker;
     private StickerAdapter stickerAdapter;

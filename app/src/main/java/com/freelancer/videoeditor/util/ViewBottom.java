@@ -35,7 +35,7 @@ public class ViewBottom {
     ArrayList<String> listPathPhoto;
     public ListPhoto listPhoto;
     PhotoEditorActivity mainActivity;
-    OnViewBottom onViewBottom;
+    OnViewListener.OnViewBottom onViewBottom;
     public ViewTools viewTools;
 
     public ViewBottom(PhotoEditorActivity mainActivity, ArrayList<String> listPathPhoto) {
@@ -171,11 +171,11 @@ public class ViewBottom {
         }
     }
 
-    public OnViewBottom getOnViewBottom() {
+    public OnViewListener.OnViewBottom getOnViewBottom() {
         return this.onViewBottom;
     }
 
-    public void setOnViewBottom(OnViewBottom onViewBottom) {
+    public void setOnViewBottom(OnViewListener.OnViewBottom onViewBottom) {
         this.onViewBottom = onViewBottom;
     }
 }

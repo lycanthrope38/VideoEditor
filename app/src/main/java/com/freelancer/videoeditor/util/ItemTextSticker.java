@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public class ItemTextSticker extends Sprite {
     RectangleBorderOfItemSelected mRectangleBorder;
     RectangleTextAndSticker mRectangleTextAndSticker;
-    OnSetSpriteForTools onSetSpriteForTools;
+    OnToolListener.OnSetSpriteForTools onSetSpriteForTools;
 
     public ItemTextSticker(RectangleTextAndSticker mRectangleTextAndSticker, RectangleBorderOfItemSelected mRectangleBorder, float pX, float pY, float pW, float pH, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pW, pH, pTextureRegion, pVertexBufferObjectManager);
@@ -27,11 +27,11 @@ public class ItemTextSticker extends Sprite {
         return false;
     }
 
-    public OnSetSpriteForTools getOnSetSpriteForTools() {
+    public OnToolListener.OnSetSpriteForTools getOnSetSpriteForTools() {
         return this.onSetSpriteForTools;
     }
 
-    public void setOnSetSpriteForTools(OnSetSpriteForTools onSetSpriteForTools) {
+    public void setOnSetSpriteForTools(OnToolListener.OnSetSpriteForTools onSetSpriteForTools) {
         this.onSetSpriteForTools = onSetSpriteForTools;
     }
 }

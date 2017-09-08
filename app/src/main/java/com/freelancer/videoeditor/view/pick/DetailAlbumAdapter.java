@@ -17,11 +17,11 @@ import com.freelancer.videoeditor.vo.Item;
 import java.util.ArrayList;
 
 public class DetailAlbumAdapter extends ArrayAdapter<Item> {
-    Context context;
-    ArrayList<Item> data = new ArrayList();
-    int layoutResourceId;
-    OnListAlbum onListAlbum;
-    int pHeightItem = 0;
+    private Context context;
+    private ArrayList<Item> data = new ArrayList();
+    private int layoutResourceId;
+    private OnListAlbum onListAlbum;
+    private int pHeightItem = 0;
 
     static class RecordHolder {
         ImageView click;
@@ -59,7 +59,7 @@ public class DetailAlbumAdapter extends ArrayAdapter<Item> {
         } else {
             holder = (RecordHolder) row.getTag();
         }
-        final Item item = (Item) this.data.get(position);
+        final Item item = this.data.get(position);
         Glide.with(this.context).load(item.getPathFile()).asBitmap().override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.piclist_icon_default).fallback(R.drawable.piclist_icon_default).placeholder(R.drawable.piclist_icon_default).into(holder.imageItem);
         row.setOnClickListener(v -> {
             if (DetailAlbumAdapter.this.onListAlbum != null) {
@@ -67,10 +67,6 @@ public class DetailAlbumAdapter extends ArrayAdapter<Item> {
             }
         });
         return row;
-    }
-
-    public OnListAlbum getOnListAlbum() {
-        return this.onListAlbum;
     }
 
     public void setOnListAlbum(OnListAlbum onListAlbum) {

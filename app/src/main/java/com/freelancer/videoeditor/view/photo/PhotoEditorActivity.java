@@ -31,19 +31,11 @@ import com.freelancer.videoeditor.util.DialogConfirm;
 import com.freelancer.videoeditor.util.DialogInputText;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IBitmap;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
 import com.freelancer.videoeditor.util.MyFile;
-import com.freelancer.videoeditor.util.OnCapture;
-import com.freelancer.videoeditor.util.OnClickItemBaseList;
-import com.freelancer.videoeditor.util.OnDialogConfirm;
-import com.freelancer.videoeditor.util.OnManagerViewCenter;
-import com.freelancer.videoeditor.util.OnSetSpriteForTools;
-import com.freelancer.videoeditor.util.OnToolsBlur;
-import com.freelancer.videoeditor.util.OnViewBottom;
-import com.freelancer.videoeditor.util.OnViewTools;
-import com.freelancer.videoeditor.util.OnViewTop;
+import com.freelancer.videoeditor.util.OnToolListener;
+import com.freelancer.videoeditor.util.OnViewListener;
 import com.freelancer.videoeditor.util.RectangleBaseClipping;
 import com.freelancer.videoeditor.util.RectangleBorder;
 import com.freelancer.videoeditor.util.RectangleFilter;
@@ -70,7 +62,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 
-public class PhotoEditorActivity extends BaseGame implements OnRequestPermissionsResultCallback, OnManagerViewCenter, OnSetSpriteForTools, OnToolsBlur, OnViewTools {
+public class PhotoEditorActivity extends BaseGame implements OnRequestPermissionsResultCallback, OnViewListener.OnManagerViewCenter, OnToolListener.OnSetSpriteForTools, OnToolListener.OnToolsBlur, OnViewListener.OnViewTools {
     public static final String KEY_LIST_PATH_PHOTO = "KEY_LIST_PATH_PHOTO";
     public static final String KEY_PHOTO_EDITOR_DATA = "KEY_PHOTO_EDITOR_DATA";
     public static final int REQUEST_CODE_CROP = 10001;
@@ -89,8 +81,23 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     public ManagerViewCenter managerViewCenter;
     MyBroadcast myBroadcast;
     MyScreenCapture myScreenCapture;
-    OnCapture onCaptureChangePhoto;
-    private OnClickItemBaseList onClickItemBaseListBackground = new OnClickItemBaseList() {
+    com.freelancer.videoeditor.util.OnClickListener.OnCapture onCaptureChangePhoto;
+    private String packageNameCrop;
+    String pathFileSave = "";
+    public String pathItemPhotoCurrent = "";
+    private PhotoEditorData photoEditorData;
+    private String prefixOutImage;
+    RectangleBorder rectangleBackground;
+    RectangleBorder rectangleBorder;
+    public RectangleFilter rectangleFilter;
+    public RectangleTextAndSticker rectangleTextAndSticker;
+    private String rootPathSavePhoto;
+    Sprite spriteTools;
+    int typeObject = -1;
+    ViewBottom viewBottom;
+    ViewTop viewTop;
+
+    private com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListBackground = new com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
 //            PhotoEditorActivity.this.rectangleBackground.load(PhotoEditorActivity.this,AppConst);
         }
@@ -100,7 +107,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             PhotoEditorActivity.this.managerRectanglePhoto.getmRectanglePhotoSeleted().resetPhoto();
         }
     };
-    private OnClickItemBaseList onClickItemBaseListBorder = new OnClickItemBaseList() {
+    private com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListBorder = new com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
             PhotoEditorActivity.this.rectangleBorder.load(PhotoEditorActivity.this, AppConst.FOLDER_BORDER, "file:///android_asset/border/border" + index + ".png");
         }
@@ -109,7 +116,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             PhotoEditorActivity.this.rectangleBorder.removePhoto();
         }
     };
-    private OnClickItemBaseList onClickItemBaseListFilter = new OnClickItemBaseList() {
+    private com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList onClickItemBaseListFilter = new com.freelancer.videoeditor.util.OnClickListener.OnClickItemBaseList() {
         public void OnItemClick(View view, int index) {
             rectangleFilter.load(PhotoEditorActivity.this, AppConst.FOLDER_FILTER_IMAGE, "file:///android_asset/border/filter" + index + ".jpg");
             PhotoEditorActivity.this.managerViewCenter.getListFilter().showLayoutSeekbar();
@@ -120,7 +127,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             PhotoEditorActivity.this.rectangleFilter.removePhoto();
         }
     };
-    private OnViewBottom onViewBottom = new OnViewBottom() {
+    private OnViewListener.OnViewBottom onViewBottom = new OnViewListener.OnViewBottom() {
         public void OnBorder() {
             PhotoEditorActivity.this.managerViewCenter.showList(ManagerViewCenter.LIST_ITEM.BORDER);
             Timber.e("OnViewBottom", "BORDER");
@@ -145,7 +152,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             Timber.e("OnViewBottom", "OnText");
             PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
             if (PhotoEditorActivity.this.dialogInputText == null) {
-                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new IBitmap() {
+                PhotoEditorActivity.this.dialogInputText = new DialogInputText(PhotoEditorActivity.this, new OnViewListener.IBitmap() {
                     public void onCompleted(Bitmap mBitmap) {
                         if (mBitmap != null) {
                             PhotoEditorActivity.this.rectangleTextAndSticker.addItem(mBitmap, 3);
@@ -168,14 +175,14 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             Timber.e("OnViewBottom", "UnCheck");
         }
     };
-    private OnViewTop onViewTop = new OnViewTop() {
+    private OnViewListener.OnViewTop onViewTop = new OnViewListener.OnViewTop() {
         public void OnBack() {
             PhotoEditorActivity.this.done();
         }
 
         public void OnSave() {
             PhotoEditorActivity.this.onCaptureChangePhoto = null;
-            PhotoEditorActivity.this.onCaptureChangePhoto = new OnCapture() {
+            PhotoEditorActivity.this.onCaptureChangePhoto = new com.freelancer.videoeditor.util.OnClickListener.OnCapture() {
                 public void onSuccess(String pathItemSave) {
                     Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.libphotoeditor_icon_default).fallback(R.drawable.libphotoeditor_icon_default).placeholder(R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.photo));
                     PhotoEditorActivity.this.loadPhotoForRectanglePhoto(PhotoEditorActivity.this.item_photo_ItemPhotoCurrent, PhotoEditorActivity.this.indexItemPhotoCurrent, pathItemSave);
@@ -191,20 +198,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             PhotoEditorActivity.this.done();
         }
     };
-    private String packageNameCrop;
-    String pathFileSave = "";
-    public String pathItemPhotoCurrent = "";
-    private PhotoEditorData photoEditorData;
-    private String prefixOutImage;
-    RectangleBorder rectangleBackground;
-    RectangleBorder rectangleBorder;
-    public RectangleFilter rectangleFilter;
-    public RectangleTextAndSticker rectangleTextAndSticker;
-    private String rootPathSavePhoto;
-    Sprite spriteTools;
-    int typeObject = -1;
-    ViewBottom viewBottom;
-    ViewTop viewTop;
+
 
     public abstract class MyBroadcast extends BroadcastReceiver {
         public abstract void handleResult(Bitmap bitmap);
@@ -406,7 +400,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
 //        myScreenCapture.SC_FORMAT_IMAGE_SAVE = FORMAT_IMAGE_SAVE.JPEG;
 //        MyScreenCapture.WIDTH_IMAGE = this.photoEditorData.getWidthImage();
 //        MyScreenCapture.HEIGHT_IMAGE = this.photoEditorData.getHeightImage();
-        this.myScreenCapture.capture(this, this.pathFileSave, 0, new OnCapture() {
+        this.myScreenCapture.capture(this, this.pathFileSave, 0, new com.freelancer.videoeditor.util.OnClickListener.OnCapture() {
             public void onSuccess(final String pathFile) {
                 PhotoEditorActivity.this.isSave = true;
                 PhotoEditorActivity.this.isFinishResult = true;
@@ -457,7 +451,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
             loadPhotoForRectanglePhoto(item_photo, index, this.pathItemPhotoCurrent);
             return;
         }
-        this.onCaptureChangePhoto = new OnCapture() {
+        this.onCaptureChangePhoto = new com.freelancer.videoeditor.util.OnClickListener.OnCapture() {
             public void onSuccess(String pathItemSave) {
                 Glide.with(PhotoEditorActivity.this).load(pathItemSave).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).override(200, 200).animate(R.anim.anim_fade_in).thumbnail(AppConst.ZOOM_MIN).error(R.drawable.libphotoeditor_icon_default).fallback(R.drawable.libphotoeditor_icon_default).placeholder(R.drawable.libphotoeditor_icon_default).into((ImageView) PhotoEditorActivity.this.viewBottom.listPhoto.item_photo_old.findViewById(R.id.photo));
                 PhotoEditorActivity.this.loadPhotoForRectanglePhoto(item_photo, index, PhotoEditorActivity.this.pathItemPhotoCurrent);
@@ -474,7 +468,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
         final View view = item_photo;
         final int i = index;
         final String str2 = pathItemClick;
-        new DialogConfirm(this, new OnDialogConfirm() {
+        new DialogConfirm(this, new OnViewListener.OnDialogConfirm() {
             public void OnYes() {
                 PhotoEditorActivity.this.savePhoto(str);
             }

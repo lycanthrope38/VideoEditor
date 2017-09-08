@@ -40,8 +40,8 @@ import com.freelancer.videoeditor.util.FFmpegCommands;
 import com.freelancer.videoeditor.util.FFmpegUtils;
 import com.freelancer.videoeditor.util.FileUtils;
 import com.freelancer.videoeditor.util.FilenameUtils;
-import com.freelancer.videoeditor.util.IHandler;
-import com.freelancer.videoeditor.util.OnToolBoxListener;
+import com.freelancer.videoeditor.util.OnThreadListener;
+import com.freelancer.videoeditor.util.OnToolListener;
 import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
 import com.freelancer.videoeditor.view.photo.PhotoEditorData;
@@ -65,7 +65,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-public class VideoEditorActivity extends BaseActivity implements OnToolBoxListener {
+public class VideoEditorActivity extends BaseActivity implements OnToolListener.OnToolBoxListener {
     private static final int ORIGIN_HEIGHT_SCREEN = 1280;
     private static final int ORIGIN_WDITH_SCREEN = 720;
     public static final int REQUEST_EDITOR_PHOTO = 2003;
@@ -141,7 +141,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     @BindView(R.id.fragment_effect)
     LinearLayout effectFragment;
     private FFmpegUtils fmpegUtils;
-    private IHandler iHandler;
+    private OnThreadListener.IHandler iHandler;
     @BindView(R.id.image_filter)
     ImageView imageFilter;
     @BindView(R.id.image_overlay_border)
@@ -284,7 +284,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
     LinearLayout musicFragment;
     private OnSeekBarChangeListener onSeekBarChange = new OnSeekBarChangeListener() {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-            VideoEditorActivity.this.updateProgress(progress);
+           updateProgress(progress);
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -804,7 +804,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
         Timber.d(TAG, "INTERVAL PHOTO: " + value + " seconds");
         this.mIntervalImage = value;
         if (this.isVideoWithAudio) {
-            this.iHandler = new IHandler() {
+            this.iHandler = new OnThreadListener.IHandler() {
                 public void doWork() {
                     Timber.tag("passedVideoAfter").d("isVideoWithAudio");
                     VideoEditorActivity.this.addMusicToVideo(VideoEditorActivity.this.mCurrentAudioSelected);
@@ -813,7 +813,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolBoxListen
             };
             generateVideoFromImagePicked();
         } else if (this.isVideoWithEffect) {
-            this.iHandler = new IHandler() {
+            this.iHandler = new OnThreadListener.IHandler() {
                 public void doWork() {
                     Timber.tag("passedVideoAfter").d("isVideoWithEffect");
                     VideoEditorActivity.this.addEffectToVideo(VideoEditorActivity.this.mCurrentEffectSelected);

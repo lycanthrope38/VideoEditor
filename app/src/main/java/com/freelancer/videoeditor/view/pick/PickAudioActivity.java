@@ -9,10 +9,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore.Audio.Media;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,36 +29,49 @@ import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
 import com.freelancer.videoeditor.util.Util;
-import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.freelancer.videoeditor.vo.Audio;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ThongLe on 7/29/2017.
  */
 
-public class PickAudioActivity extends Activity implements View.OnClickListener, OnAudioClickListener{
+public class PickAudioActivity extends AppCompatActivity implements View.OnClickListener, OnAudioClickListener{
     public static final String KEY_AUDIO_RESULT = "KEY_AUDIO_RESULT";
-    private static final int REQUEST_AUDIO = 2323;;
+    private static final int REQUEST_AUDIO = 2323;
     private ListAudioAdapter mAdapter;
-    private ImageView mBtnPickAudio;
-    private Button mButtonApply;
-    private Audio mCurrentAudio;
-    private String mCurrentAudioPath;
-    private ImageView mImageBack;
-    private ImageView mImageSort;
-    private ListView mListAudio;
+    @BindView(R.id.pick_audio_from_file)
+    ImageView mBtnPickAudio;
+    @BindView(R.id.button_apply_audio)
+    Button mButtonApply;
+    @BindView(R.id.text_audio_duration)
+    TextView mTextAudioDuration;
+    @BindView(R.id.text_audio_name)
+    TextView mTextAudioName;
+    @BindView(R.id.image_play_audio)
+    ImageView mPlayPauseAudio;
+    @BindView(R.id.list_view_audio)
+    ListView mListAudio;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+
+    Audio mCurrentAudio;
+    String mCurrentAudioPath;
+
     private ArrayList<Audio> mListDataAudio;
     private MediaPlayer mMediaPlayer;
-    private ImageView mPlayPauseAudio;
+
     private AlertDialog mSortDialog;
-    private TextView mTextAudioDuration;
-    private TextView mTextAudioName;
-    private TextView mTextAudioTitle;
+
+
     private ArrayList<String> pathList = new ArrayList();
 
     private class GetListAudio extends AsyncTask<Void, Void, String> {
@@ -119,13 +136,38 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
         requestWindowFeature(1);
         getWindow().setFlags(1024, 1024);
         setContentView(R.layout.activity_pick_audio);
-        init();
-//        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
-            showListAudio();
-//        }
 
-        this.mBtnPickAudio.setVisibility(View.GONE);
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("Pick Audio");
+
+        showListAudio();
+
+        mBtnPickAudio.setVisibility(View.GONE);
         setSquareSize(this.mBtnPickAudio, ExtraUtils.getDisplayInfo(this).widthPixels / 6);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.pick_image, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(0);
+                finish();
+                break;
+            case R.id.sort:
+                showSortAudio();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setSquareSize(View view, int size) {
@@ -133,37 +175,16 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
         view.getLayoutParams().height = size;
     }
 
-    private void init() {
-        this.mImageBack = (ImageView) findViewById(R.id.btnAudioBack);
-        this.mTextAudioTitle = (TextView) findViewById(R.id.txtTitleAudio);
-        this.mImageSort = (ImageView) findViewById(R.id.btnSortAudio);
-        this.mListAudio = (ListView) findViewById(R.id.list_view_audio);
-        this.mButtonApply = (Button) findViewById(R.id.button_apply_audio);
-        this.mPlayPauseAudio = (ImageView) findViewById(R.id.image_play_audio);
-        this.mTextAudioName = (TextView) findViewById(R.id.text_audio_name);
-        this.mTextAudioDuration = (TextView) findViewById(R.id.text_audio_duration);
-        this.mBtnPickAudio = (ImageView) findViewById(R.id.pick_audio_from_file);
-        this.mImageBack.setOnClickListener(this);
-        this.mImageSort.setOnClickListener(this);
-        this.mButtonApply.setOnClickListener(this);
-        this.mPlayPauseAudio.setOnClickListener(this);
-        this.mBtnPickAudio.setOnClickListener(this);
-    }
-
+    @OnClick({R.id.button_apply_audio,R.id.image_play_audio,R.id.pick_audio_from_file})
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.btnAudioBack) {
-            setResult(0);
-            finish();
-        } else if (i == R.id.btnSortAudio) {
-            showSortAudio();
-        } else if (i == R.id.button_apply_audio) {
+       if (i == R.id.button_apply_audio) {
             applyAudio();
         } else if (i == R.id.image_play_audio) {
             if (TextUtils.isEmpty(this.mCurrentAudioPath)) {
                 Toast.makeText(this, "Please select an audio", Toast.LENGTH_SHORT).show();
             } else {
-                togglePlayAudioSelected(BuildConfig.FLAVOR, true);
+                togglePlayAudioSelected("", true);
             }
         } else if (i == R.id.pick_audio_from_file) {
             pickAudioFromIntent();
@@ -282,7 +303,7 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
     }
 
     private void showListAudio() {
-        new GetListAudio().execute(new Void[0]);
+        new GetListAudio().execute();
     }
 
     protected void onDestroy() {
@@ -297,10 +318,7 @@ public class PickAudioActivity extends Activity implements View.OnClickListener,
     }
 
     private boolean CheckDuplicatedFolder(String path, ArrayList<String> list) {
-        if (!list.isEmpty() && list.contains(path)) {
-            return true;
-        }
-        return false;
+        return !list.isEmpty() && list.contains(path);
     }
 
     public void onPlayAudio(Audio audio) {

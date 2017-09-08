@@ -9,7 +9,7 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.util.AsyncTaskLoader;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.IClose;
+import com.freelancer.videoeditor.util.OnThreadListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
         return null;
     }
 
-    public Entity removeEntity(final Entity mEntity, final IClose mIClose) {
+    public Entity removeEntity(final Entity mEntity, final OnThreadListener.IClose mIClose) {
         this.mEngine.runOnUpdateThread(new Runnable() {
             public void run() {
                 BaseGame.this.remove(mEntity);
@@ -125,7 +125,7 @@ public abstract class BaseGame extends SimpleBaseGameActivity {
         return null;
     }
 
-    public void clearEntity(final Sprite mSprite, final IClose mClose) {
+    public void clearEntity(final Sprite mSprite, final OnThreadListener.IClose mClose) {
         this.mEngine.runOnUpdateThread(new Runnable() {
             public void run() {
                 if (mSprite != null) {

@@ -1,7 +1,6 @@
 package com.freelancer.videoeditor.view.pick;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
@@ -11,8 +10,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore.Images.Media;
-import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,13 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.freelancer.videoeditor.BuildConfig;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
-import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.OnCustomTouchListener;
 import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.vo.Item;
 
@@ -41,11 +42,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
-public class PickImageExtendsActivity extends Activity implements OnClickListener, OnAlbum, OnListAlbum, com.freelancer.videoeditor.util.OnCustomClickListener {
+public class PickImageExtendsActivity extends AppCompatActivity implements OnClickListener, OnAlbum, OnListAlbum, com.freelancer.videoeditor.util.OnClickListener.OnCustomClickListener{
     public static final int ACTION_PICK_IMAGE = 1;
     public static final int ACTION_PIC_COLLAGE = 0;
     public static final int ACTION_PIC_VIDEO = 2;
@@ -55,35 +58,43 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     public static final String KEY_LIMIT_MIN_IMAGE = "KEY_LIMIT_MIN_IMAGE";
     public static final String KEY_PATH_IMAGE_RESULT = "KEY_PATH_IMAGE_RESULT";
     private String CAPTURE_IMAGE_FILE_PROVIDER;
-    private final int LIMIT_IMAGE_MAX_DEFAULT = 9;
-    private final int LIMIT_IMAGE_MIN_DEFAULT = ACTION_PICK_IMAGE;
     public String PATH_FILE_SAVE_TEMP = "Temp";
     private final int REQUEST_CODE_CAMERA = 1221;
-    private final String TAG = "PickImageExtendsActivity";
+
+    @BindView(R.id.gridViewDetailAlbum)
+    GridView gridViewListAlbum;
+    @BindView(R.id.txtMessageSelectImage)
+    TextView txtMessageSelectImage;
+    @BindView(R.id.txtTotalImage)
+    TextView txtTotalImage;
+    @BindView(R.id.layoutBottom)
+    RelativeLayout layoutBottom;
+    @BindView(R.id.gridViewAlbum)
+    GridView gridViewAlbum;
+    @BindView(R.id.horizontalScrollView)
+    HorizontalScrollView horizontalScrollView;
+    @BindView(R.id.layoutDetailAlbum)
+    LinearLayout layoutDetailAlbum;
+    @BindView(R.id.layoutListImage)
+    LinearLayout layoutListImage;
+    @BindView(R.id.layoutListItemSelect)
+    LinearLayout layoutListItemSelect;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     private int actionPick = ACTION_PIC_COLLAGE;
     private AlbumAdapterExtends adapterExtends;
-    private ImageView btnBack;
-    private LinearLayout btnPicCamera;
     private ArrayList<Item> dataAlbum = new ArrayList();
     private ArrayList<Item> dataListPhoto = new ArrayList();
-    private GridView gridViewAlbum;
-    private GridView gridViewListAlbum;
-    private HorizontalScrollView horizontalScrollView;
-    private RelativeLayout layoutBottom;
-    private LinearLayout layoutDetailAlbum;
-    private LinearLayout layoutListImage;
-    private LinearLayout layoutListItemSelect;
+    private ArrayList<String> pathList = new ArrayList();
+    ArrayList<Item> listItemSelect = new ArrayList();
     private int limitImageMax = 9;
     private int limitImageMin = ACTION_PICK_IMAGE;
     private DetailAlbumAdapter listAlbumAdapter;
-    ArrayList<Item> listItemSelect = new ArrayList();
     private int pWHBtnDelete;
     private int pWHItemSelected;
-    private ArrayList<String> pathList = new ArrayList();
     private AlertDialog sortDialog;
-    private TextView txtMessageSelectImage;
-    private TextView txtTitle;
-    private TextView txtTotalImage;
+
 
     private class GetItemAlbum extends AsyncTask<Void, Void, String> {
         private GetItemAlbum() {
@@ -101,10 +112,10 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                     String pathFile = cursor.getString(column_index_data);
                     File file = new File(pathFile);
                     if (file.exists()) {
-                        boolean check = PickImageExtendsActivity.this.checkFile(file);
-                        if (!PickImageExtendsActivity.this.Check(file.getParent(), PickImageExtendsActivity.this.pathList) && check) {
-                            PickImageExtendsActivity.this.pathList.add(file.getParent());
-                            PickImageExtendsActivity.this.dataAlbum.add(new Item(file.getParentFile().getName(), pathFile, file.getParent()));
+                        boolean check = checkFile(file);
+                        if (!Check(file.getParent(), pathList) && check) {
+                            pathList.add(file.getParent());
+                            dataAlbum.add(new Item(file.getParentFile().getName(), pathFile, file.getParent()));
                         }
                     }
                 }
@@ -136,22 +147,23 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             if (file.isDirectory()) {
                 File[] listFile = file.listFiles();
                 int length = listFile.length;
-                for (int i = PickImageExtendsActivity.ACTION_PIC_COLLAGE; i < length; i += PickImageExtendsActivity.ACTION_PICK_IMAGE) {
+                for (int i = 0; i < length; i += 1) {
                     File fileTmp = listFile[i];
                     if (fileTmp.exists()) {
-                        boolean check = PickImageExtendsActivity.this.checkFile(fileTmp);
+                        boolean check = checkFile(fileTmp);
                         if (!fileTmp.isDirectory() && check) {
-                            PickImageExtendsActivity.this.dataListPhoto.add(new Item(fileTmp.getName(), fileTmp.getAbsolutePath(), fileTmp.getAbsolutePath()));
+                            dataListPhoto.add(new Item(fileTmp.getName(), fileTmp.getAbsolutePath(), fileTmp.getAbsolutePath()));
                             publishProgress();
                         }
                     }
                 }
             }
-            return BuildConfig.FLAVOR;
+            return "";
         }
 
         protected void onPostExecute(String result) {
             try {
+                //sort by time modify
                 Collections.sort(PickImageExtendsActivity.this.dataListPhoto, new Comparator<Item>() {
                     public int compare(Item lhs, Item rhs) {
                         File fileI = new File(lhs.getPathFolder());
@@ -160,12 +172,12 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                             return -1;
                         }
                         if (fileI.lastModified() < fileJ.lastModified()) {
-                            return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                            return 1;
                         }
-                        return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                        return 0;
                     }
                 });
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             PickImageExtendsActivity.this.listAlbumAdapter.notifyDataSetChanged();
         }
@@ -183,6 +195,14 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         requestWindowFeature(ACTION_PICK_IMAGE);
         getWindow().setFlags(1024, 1024);
         setContentView(R.layout.activity_album_extends);
+
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        this.toolbar.setTitle(getResources().getString(R.string.text_title_activity_album_extends));
+
         this.CAPTURE_IMAGE_FILE_PROVIDER = getPackageName() + ".fileprovider";
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -198,56 +218,20 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             Log.e("PickImageExtendsActivity", "limitImageMin = " + this.limitImageMin);
             Log.e("PickImageExtendsActivity", "limitImageMax = " + this.limitImageMax);
         }
-        this.pWHItemSelected = (int) ((((float) ((int) ((((float) ExtraUtils.getDisplayInfo(this).heightPixels) / 100.0f) * 14.0f))) / 100.0f) * 98.0f);
-        this.pWHBtnDelete = (int) ((((float) this.pWHItemSelected) / 100.0f) * 25.0f);
-        this.txtTitle = findViewById(R.id.txtTitle);
-        this.txtMessageSelectImage = findViewById(R.id.txtMessageSelectImage);
-        this.txtMessageSelectImage.setOnClickListener(this);
+        pWHItemSelected = (int) ((((float) ((int) ((((float) ExtraUtils.getDisplayInfo(this).heightPixels) / 100.0f) * 14.0f))) / 100.0f) * 98.0f);
+        pWHBtnDelete = (int) ((((float) this.pWHItemSelected) / 100.0f) * 25.0f);
+        txtMessageSelectImage.setOnClickListener(this);
         if (this.actionPick == 0) {
             String string = "Select image";
-            Object[] objArr = new Object[ACTION_PIC_VIDEO];
-            objArr[ACTION_PIC_COLLAGE] = this.limitImageMin;
-            objArr[ACTION_PICK_IMAGE] = this.limitImageMax;
+            Object[] objArr = new Object[2];
+            objArr[0] = this.limitImageMin;
+            objArr[1] = this.limitImageMax;
             this.txtMessageSelectImage.setText(String.format(string, objArr));
         } else if (this.actionPick == ACTION_PIC_VIDEO) {
             this.txtMessageSelectImage.setText(getResources().getString(R.string.text_message_select_image_for_video));
         }
-        this.gridViewListAlbum = findViewById(R.id.gridViewDetailAlbum);
-        this.txtTotalImage = findViewById(R.id.txtTotalImage);
-        this.btnBack = findViewById(R.id.btnBack);
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(btnBack, this);
-        this.layoutListImage = findViewById(R.id.layoutListImage);
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(findViewById(R.id.btnSort), this);
         UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(findViewById(R.id.btnDone), this);
-        final ImageView icon_camera = findViewById(R.id.icon_camera);
-        this.btnPicCamera = findViewById(R.id.btnPicCamera);
-        UtilLib.getInstance().setOnCustomTouchView(this.btnPicCamera, new OnCustomTouchListener() {
-            private void setScale(float scale) {
-                icon_camera.setScaleX(scale);
-                icon_camera.setScaleY(scale);
-            }
 
-            public void OnCustomTouchDown(View v, MotionEvent event) {
-                setScale(0.9f);
-            }
-
-            public void OnCustomTouchMoveOut(View v, MotionEvent event) {
-                setScale(HandlerTools.ROTATE_R);
-            }
-
-            public void OnCustomTouchUp(View v, MotionEvent event) {
-                setScale(HandlerTools.ROTATE_R);
-                PickImageExtendsActivity.this.requestCameraPermission();
-            }
-
-            public void OnCustomTouchOther(View v, MotionEvent event) {
-                setScale(HandlerTools.ROTATE_R);
-            }
-        });
-        this.layoutListItemSelect = findViewById(R.id.layoutListItemSelect);
-        this.layoutDetailAlbum = findViewById(R.id.layoutDetailAlbum);
-        this.horizontalScrollView = findViewById(R.id.horizontalScrollView);
-        this.gridViewAlbum = findViewById(R.id.gridViewAlbum);
         try {
             Collections.sort(this.dataAlbum, (lhs, rhs) -> {
                 File fileI = new File(lhs.getPathFolder());
@@ -264,16 +248,11 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         }
         this.adapterExtends = new AlbumAdapterExtends(this, R.layout.item_album_extends, this.dataAlbum);
         this.adapterExtends.setOnItem(this);
-//        if (instance.isPermissionAllow(this, PhotoEditorActivity.REQUEST_CODE_CROP, "android.permission.READ_EXTERNAL_STORAGE")) {
-            new GetItemAlbum().execute();
-//        }
+        new GetItemAlbum().execute();
         updateTxtTotalImage();
-        this.layoutBottom = findViewById(R.id.layoutBottom);
         this.layoutBottom.getLayoutParams().height = this.pWHItemSelected;
-        if (this.actionPick == 0 || this.actionPick == ACTION_PIC_VIDEO) {
-            this.btnPicCamera.getLayoutParams().height = ACTION_PIC_COLLAGE;
-        } else if (this.actionPick == ACTION_PICK_IMAGE) {
-            this.layoutBottom.getLayoutParams().height = ACTION_PIC_COLLAGE;
+        if (this.actionPick == ACTION_PICK_IMAGE) {
+            this.layoutBottom.getLayoutParams().height = 0;
         }
     }
 
@@ -289,25 +268,25 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         builder.setSingleChoiceItems(items, -1, (dialog, item) -> {
             switch (item) {
                 case 0:
-                    Collections.sort(PickImageExtendsActivity.this.dataAlbum, (lhs, rhs) -> lhs.getName().compareToIgnoreCase(rhs.getName()));
-                    PickImageExtendsActivity.this.refreshGridViewAlbum();
+                    Collections.sort(dataAlbum, (lhs, rhs) -> lhs.getName().compareToIgnoreCase(rhs.getName()));
+                    refreshGridViewAlbum();
                     Log.e("TAG", "showDialogSortAlbum by NAME");
                     break;
                 case 1:
                     UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
                     Observable.fromCallable(() -> {
-                        Collections.sort(PickImageExtendsActivity.this.dataAlbum, (lhs, rhs) -> {
+                        Collections.sort(dataAlbum, (lhs, rhs) -> {
                             File fileI = new File(lhs.getPathFolder());
                             File fileJ = new File(rhs.getPathFolder());
-                            long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
-                            long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
+                            long totalSizeFileI = getFolderSize(fileI);
+                            long totalSizeFileJ = getFolderSize(fileJ);
                             if (totalSizeFileI > totalSizeFileJ) {
                                 return -1;
                             }
                             if (totalSizeFileI < totalSizeFileJ) {
-                                return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                                return 1;
                             }
-                            return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                            return 0;
                         });
                         return "";
                     }).subscribeOn(AndroidSchedulers.mainThread())
@@ -327,9 +306,9 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                                 return -1;
                             }
                             if (fileI.lastModified() < fileJ.lastModified()) {
-                                return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                                return 1;
                             }
-                            return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                            return 0;
                         }
                     });
                     PickImageExtendsActivity.this.refreshGridViewAlbum();
@@ -368,18 +347,18 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                     try {
                         UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
                         Observable.fromCallable(() -> {
-                            Collections.sort(PickImageExtendsActivity.this.dataListPhoto, (lhs, rhs) -> {
+                            Collections.sort(dataListPhoto, (lhs, rhs) -> {
                                 File fileI = new File(lhs.getPathFolder());
                                 File fileJ = new File(rhs.getPathFolder());
-                                long totalSizeFileI = PickImageExtendsActivity.getFolderSize(fileI);
-                                long totalSizeFileJ = PickImageExtendsActivity.getFolderSize(fileJ);
+                                long totalSizeFileI = getFolderSize(fileI);
+                                long totalSizeFileJ = getFolderSize(fileJ);
                                 if (totalSizeFileI > totalSizeFileJ) {
                                     return -1;
                                 }
                                 if (totalSizeFileI < totalSizeFileJ) {
-                                    return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                                    return 1;
                                 }
-                                return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                                return 0;
                             });
                             return "";
                         }).subscribeOn(AndroidSchedulers.mainThread())
@@ -394,24 +373,24 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
                     }
                 case 2:
                     try {
-                        Collections.sort(PickImageExtendsActivity.this.dataListPhoto, (lhs, rhs) -> {
+                        Collections.sort(dataListPhoto, (lhs, rhs) -> {
                             File fileI = new File(lhs.getPathFolder());
                             File fileJ = new File(rhs.getPathFolder());
                             if (fileI.lastModified() > fileJ.lastModified()) {
                                 return -1;
                             }
                             if (fileI.lastModified() < fileJ.lastModified()) {
-                                return PickImageExtendsActivity.ACTION_PICK_IMAGE;
+                                return 1;
                             }
-                            return PickImageExtendsActivity.ACTION_PIC_COLLAGE;
+                            return 0;
                         });
-                        PickImageExtendsActivity.this.refreshGridViewListAlbum();
+                        refreshGridViewListAlbum();
                         break;
                     } catch (Exception e3) {
                         break;
                     }
             }
-            PickImageExtendsActivity.this.sortDialog.dismiss();
+            sortDialog.dismiss();
         });
         this.sortDialog = builder.create();
         this.sortDialog.show();
@@ -436,11 +415,11 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         File[] files = directory.listFiles();
         if (files != null && files.length > 0) {
             int length2 = files.length;
-            for (int i = ACTION_PIC_COLLAGE; i < length2; i += ACTION_PICK_IMAGE) {
+            for (int i = 0; i < length2; i += 1) {
                 File file = files[i];
                 if (file.isFile()) {
                     boolean isCheck = false;
-                    for (int k = ACTION_PIC_COLLAGE; k < AppConst.FORMAT_IMAGE.size(); k += ACTION_PICK_IMAGE) {
+                    for (int k = 0; k < AppConst.FORMAT_IMAGE.size(); k += 1) {
                         if (file.getName().endsWith(AppConst.FORMAT_IMAGE.get(k))) {
                             isCheck = true;
                             break;
@@ -454,6 +433,8 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         }
         return length;
     }
+
+
 
     @Override
     public void OnItemAlbumClick(int position) {
@@ -472,8 +453,8 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             addItemSelect(item);
         } else {
             String string = getResources().getString(R.string.text_message_limit_pick_image);
-            Object[] objArr = new Object[ACTION_PICK_IMAGE];
-            objArr[ACTION_PIC_COLLAGE] = this.limitImageMax;
+            Object[] objArr = new Object[1];
+            objArr[0] = this.limitImageMax;
             Toast.makeText(this, String.format(string, objArr), Toast.LENGTH_SHORT).show();
         }
     }
@@ -481,7 +462,6 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     void addItemSelect(final Item item) {
         if (this.txtMessageSelectImage.getVisibility() == View.VISIBLE) {
             this.txtMessageSelectImage.setVisibility(View.GONE);
-//            this.layoutListImage.setVisibility(View.VISIBLE);
         }
         item.setId(this.listItemSelect.size());
         this.listItemSelect.add(item);
@@ -504,19 +484,13 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         PickImageExtendsActivity.this.layoutListItemSelect.addView(viewItemSelected);
         viewItemSelected.startAnimation(AnimationUtils.loadAnimation(PickImageExtendsActivity.this,R.anim.abc_fade_in));
         PickImageExtendsActivity.this.sendScroll();
-//        UtilLib.getInstance().handlerDoWork(() -> {
-//            Timber.tag("passedAddView").d("add");
-//            PickImageExtendsActivity.this.layoutListItemSelect.addView(viewItemSelected);
-//            viewItemSelected.startAnimation(AnimationUtils.loadAnimation(PickImageExtendsActivity.this,R.anim.abc_fade_in));
-//            PickImageExtendsActivity.this.sendScroll();
-//        });
     }
 
     void updateTxtTotalImage() {
         String string = getResources().getString(R.string.text_images_extends);
-        Object[] objArr = new Object[ACTION_PIC_VIDEO];
-        objArr[ACTION_PIC_COLLAGE] = this.listItemSelect.size();
-        objArr[ACTION_PICK_IMAGE] = this.limitImageMax;
+        Object[] objArr = new Object[2];
+        objArr[0] = this.listItemSelect.size();
+        objArr[1] = this.limitImageMax;
         this.txtTotalImage.setText(String.format(string, objArr));
         if (this.txtMessageSelectImage.getVisibility() == View.GONE && this.listItemSelect.size() == 0) {
             this.txtMessageSelectImage.setVisibility(View.VISIBLE);
@@ -530,7 +504,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        PickImageExtendsActivity.this.horizontalScrollView.fullScroll(66);
+                        horizontalScrollView.fullScroll(66);
                     }
                 });
             }
@@ -540,7 +514,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
     void showListAlbum(String pathAlbum) {
         File file = new File(pathAlbum);
         if (file != null && file.exists()) {
-            this.txtTitle.setText(file.getName());
+            toolbar.setTitle(file.getName());
             this.listAlbumAdapter = new DetailAlbumAdapter(this, R.layout.item_pick_album, this.dataListPhoto);
             this.listAlbumAdapter.setOnListAlbum(this);
             this.gridViewListAlbum.setAdapter(this.listAlbumAdapter);
@@ -566,15 +540,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
 
     @Override
     public void OnCustomClick(View v, MotionEvent event) {
-        if (v.getId() ==R.id.btnSort) {
-            if (this.layoutDetailAlbum.getVisibility() == View.GONE) {
-                showDialogSortAlbum();
-            } else {
-                showDialogSortListAlbum();
-            }
-        } else if (v.getId() == R.id.btnBack) {
-            onBackPressed();
-        } else if (v.getId() == R.id.btnDone) {
+        if (v.getId() == R.id.btnDone) {
             ArrayList<String> listString = getListString(this.listItemSelect);
             if (listString.size() >= this.limitImageMin) {
                 done(listString);
@@ -601,7 +567,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             return false;
         }
         boolean isCheck = false;
-        for (int k = ACTION_PIC_COLLAGE; k < AppConst.FORMAT_IMAGE.size(); k += ACTION_PICK_IMAGE) {
+        for (int k = 0; k < AppConst.FORMAT_IMAGE.size(); k += 1) {
             if (name.endsWith((String) AppConst.FORMAT_IMAGE.get(k))) {
                 isCheck = true;
                 break;
@@ -610,6 +576,28 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         return isCheck;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.pick_image, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.sort:
+                if (this.layoutDetailAlbum.getVisibility() == View.GONE) {
+                    showDialogSortAlbum();
+                } else {
+                    showDialogSortListAlbum();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -628,20 +616,6 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void requestCameraPermission() {
-        pickCamera(RESULT_OK);
-    }
-
-    public void pickCamera(int requestCode) {
-        File path = new File(getFilesDir(), this.PATH_FILE_SAVE_TEMP);
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        Uri imageUri = FileProvider.getUriForFile(this, this.CAPTURE_IMAGE_FILE_PROVIDER, new File(path, "image.jpg"));
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra("output", imageUri);
-        startActivityForResult(intent, requestCode);
-    }
 
     @Override
     public void onBackPressed() {
@@ -649,7 +623,7 @@ public class PickImageExtendsActivity extends Activity implements OnClickListene
             this.dataListPhoto.clear();
             this.listAlbumAdapter.notifyDataSetChanged();
             this.layoutDetailAlbum.setVisibility(View.GONE);
-            this.txtTitle.setText(getResources().getString(R.string.text_title_activity_album_extends));
+            this.toolbar.setTitle(getResources().getString(R.string.text_title_activity_album_extends));
             return;
         }
         super.onBackPressed();

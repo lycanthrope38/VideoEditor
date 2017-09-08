@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
-import com.freelancer.videoeditor.util.OnRecyclerClickListener;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
     private int mColumnWith = 0;
     private Context mContext;
     private LayoutInflater mInflater;
-    private OnRecyclerClickListener mListener;
+    private com.freelancer.videoeditor.util.OnClickListener.OnRecyclerClickListener mListener;
 
     static class ViewHolder extends android.support.v7.widget.RecyclerView.ViewHolder {
         private ImageView bkg;
@@ -61,7 +60,7 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
         this.mColumnSpace = space;
     }
 
-    public void setOnItemClickListener(OnRecyclerClickListener listener) {
+    public void setOnItemClickListener(com.freelancer.videoeditor.util.OnClickListener.OnRecyclerClickListener listener) {
         this.mListener = listener;
     }
 
