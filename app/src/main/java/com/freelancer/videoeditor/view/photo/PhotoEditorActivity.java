@@ -1,35 +1,25 @@
 package com.freelancer.videoeditor.view.photo;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
-import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.DialogInputText;
-import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.HandlerTools;
 import com.freelancer.videoeditor.util.ManagerRectanglePhoto;
 import com.freelancer.videoeditor.util.ManagerViewCenter;
@@ -40,7 +30,7 @@ import com.freelancer.videoeditor.util.RectangleBaseClipping;
 import com.freelancer.videoeditor.util.RectangleBorder;
 import com.freelancer.videoeditor.util.RectangleFilter;
 import com.freelancer.videoeditor.util.RectangleTextAndSticker;
-import com.freelancer.videoeditor.util.UtilLib;
+import com.freelancer.videoeditor.util.AppUtil;
 import com.freelancer.videoeditor.util.ViewBottom;
 import com.freelancer.videoeditor.util.ViewTop;
 import com.freelancer.videoeditor.view.base.BaseGame;
@@ -322,14 +312,14 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
 
     public void showStart() {
         Observable.fromCallable(() -> {
-            UtilLib.getInstance().showLoading(PhotoEditorActivity.this);
+            AppUtil.getInstance().showLoading(PhotoEditorActivity.this);
             PhotoEditorActivity.this.iniUI();
             PhotoEditorActivity.this.managerViewCenter.setVisibleLayoutCenter(8, false);
             return "";
         }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
-                    UtilLib.getInstance().hideLoading();
+                    AppUtil.getInstance().hideLoading();
                     PhotoEditorActivity.this.managerRectanglePhoto.loadPhotoFromURI(Uri.fromFile(new File(PhotoEditorActivity.this.listPathPhoto.get(0))));
                 });
     }
@@ -526,7 +516,7 @@ public class PhotoEditorActivity extends BaseGame implements OnRequestPermission
     }
 
     private void done() {
-        if (UtilLib.getInstance().getRandomIndex(0, 2) == 0 && this.isFinishResult) {
+        if (AppUtil.getInstance().getRandomIndex(0, 2) == 0 && this.isFinishResult) {
             PhotoEditorActivity.this.resultData();
         } else if (this.isFinishResult) {
             resultData();

@@ -208,7 +208,7 @@ public class VideoEditorActivity extends BaseActivity implements OnToolListener.
         }
 
         public void onProgress(String s) {
-            VideoEditorActivity.this.mProgressDialog.setMessage("Processing\n" + s);
+//            VideoEditorActivity.this.mProgressDialog.setMessage("Processing\n" + s);
             VideoEditorActivity.this.isGenSuccess = false;
         }
 

@@ -1,6 +1,5 @@
 package com.freelancer.videoeditor.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
@@ -144,7 +143,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
             setColor(this.mColor);
             this.btnAdd.setScale(HandlerTools.ROTATE_R);
             this.isDown = false;
-            UtilLib.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
+            AppUtil.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
                 public void doWork() {
                 }
             });
@@ -277,7 +276,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
     }
 
     public void reLoad(final Uri mImageCaptureUri) {
-        UtilLib.getInstance().showLoading(this.mainActivity);
+        AppUtil.getInstance().showLoading(this.mainActivity);
         Observable.fromCallable(() -> {
             Bitmap bitmap = RectanglePhoto.this.getBimapFromUri(mImageCaptureUri);
             if (bitmap != null) {
@@ -290,7 +289,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(t -> {
-                    UtilLib.getInstance().hideLoading();
+                    AppUtil.getInstance().hideLoading();
                 });
 
     }
@@ -321,13 +320,13 @@ public class RectanglePhoto extends RectangleBaseClipping {
         try {
             int rotation = new ExifInterface(pathFile).getAttributeInt("Orientation", DRAG);
             if (rotation == 6) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 90.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 90.0f);
             }
             if (rotation == 3) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 180.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 180.0f);
             }
             if (rotation == 8) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 270.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 270.0f);
             }
             return mBitmap;
         } catch (IOException e) {
@@ -369,7 +368,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
 
     public void addPhotoBlur() {
         if (this.photoBlur == null) {
-            UtilLib.getInstance().showLoading(this.mainActivity);
+            AppUtil.getInstance().showLoading(this.mainActivity);
             Observable.fromCallable(() -> {
                 RectanglePhoto.this.bitmapPhoto = BlurBitmap.blurBitmap(RectanglePhoto.this.bitmapPhoto, HandlerTools.ROTATE_R, 10);
                 RectanglePhoto.this.photoBlurITR = RectanglePhoto.this.loadITextureRegion(RectanglePhoto.this.bitmapPhoto);
@@ -397,7 +396,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
             }).subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(s -> {
-                        UtilLib.getInstance().hideLoading();
+                        AppUtil.getInstance().hideLoading();
                         RectanglePhoto.this.mainActivity.isSave = false;
                         RectanglePhoto.this.mainActivity.isSaveChange();
                     });
@@ -464,7 +463,7 @@ public class RectanglePhoto extends RectangleBaseClipping {
         Timber.e("BLUR", "OnBorderClick type = " + type);
         if (type == 5) {
             if (this.listBorder.size() != 0) {
-                UtilLib.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
+                AppUtil.getInstance().handlerDoWork(new OnThreadListener.IHandler() {
                     public void doWork() {
 //                        RectanglePhoto.this.showDialogSelectColor(RectanglePhoto.this.mainActivity);
                     }

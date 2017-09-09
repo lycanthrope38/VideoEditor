@@ -1,9 +1,7 @@
 package com.freelancer.videoeditor.view.video;
 
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +23,6 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.AppUtils;
 import com.freelancer.videoeditor.util.ExtraUtils;
-import com.freelancer.videoeditor.util.FileUtils;
-import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.view.base.BaseActivity;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;

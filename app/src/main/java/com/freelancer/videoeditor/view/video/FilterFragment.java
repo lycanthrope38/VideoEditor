@@ -16,10 +16,8 @@ import android.widget.Toast;
 import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
-import com.freelancer.videoeditor.util.HandlerTools;
 import com.freelancer.videoeditor.util.OnClickListener;
 import com.freelancer.videoeditor.util.OnToolListener;
-import com.freelancer.videoeditor.util.UtilLib;
 import com.freelancer.videoeditor.view.base.BaseFragment;
 
 import butterknife.BindView;

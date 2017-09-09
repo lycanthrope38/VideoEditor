@@ -16,7 +16,7 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.config.ConfigScreen;
 import com.freelancer.videoeditor.util.AppUtils;
-import com.freelancer.videoeditor.util.UtilLib;
+import com.freelancer.videoeditor.util.AppUtil;
 import com.freelancer.videoeditor.view.base.BaseGame;
 import com.freelancer.videoeditor.view.pick.PickImageExtendsActivity;
 import com.freelancer.videoeditor.view.video.MyVideoActivity;
@@ -45,7 +45,6 @@ public class MenuActivity extends BaseGame {
     private static final String TAG = "MenuActivity";
     private final int REQUEST_PICK_IMG = 1001;
     private LinearLayout layoutTop;
-
 
     private ArrayList<String> pathList;
 
@@ -140,7 +139,7 @@ public class MenuActivity extends BaseGame {
     }
 
     private void startScaleBitmap(final ArrayList<String> pathList) {
-        UtilLib.getInstance().showLoadingProgress(this, getResources().getString(R.string.message_create_photo_for_video));
+        AppUtil.getInstance().showLoadingProgress(this, getResources().getString(R.string.message_create_photo_for_video));
 
         Observable.fromCallable(() -> {
             try {
@@ -153,7 +152,7 @@ public class MenuActivity extends BaseGame {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(t -> {
-                    UtilLib.getInstance().hideLoadingDownload();
+                    AppUtil.getInstance().hideLoadingDownload();
                     if (pathList == null || pathList.isEmpty()) {
                         Timber.e(MenuActivity.TAG, "pathList is NULL");
                     } else {
@@ -178,14 +177,14 @@ public class MenuActivity extends BaseGame {
             Options options = new Options();
             options.inScaled = false;
             try {
-                mBitmap = UtilLib.getInstance().getResizedBitmap(cropCenterBitmap(autoRotateBitmap(BitmapFactory.decodeFile(pathFile, options), pathFile)), pHScale, pWScale);
+                mBitmap = AppUtil.getInstance().getResizedBitmap(cropCenterBitmap(autoRotateBitmap(BitmapFactory.decodeFile(pathFile, options), pathFile)), pHScale, pWScale);
             } catch (OutOfMemoryError e) {
                 mBitmap = null;
             }
             if (mBitmap != null) {
                 AppUtils.saveBitmap(mBitmap, pathFolder + "/" + perFixName + (i + 1) + AppConst.FORMAT_FILLTER);
             }
-            UtilLib.getInstance().updateDialogProgress((int) ((((float) i) / TOTAL_PHOTO) * 100.0f));
+            AppUtil.getInstance().updateDialogProgress((int) ((((float) i) / TOTAL_PHOTO) * 100.0f));
         }
     }
 
@@ -193,13 +192,13 @@ public class MenuActivity extends BaseGame {
         try {
             int rotation = new ExifInterface(pathFile).getAttributeInt("Orientation", 1);
             if (rotation == 6) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 90.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 90.0f);
             }
             if (rotation == 3) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 180.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 180.0f);
             }
             if (rotation == 8) {
-                return UtilLib.getInstance().rotateBitmap(mBitmap, 270.0f);
+                return AppUtil.getInstance().rotateBitmap(mBitmap, 270.0f);
             }
             return mBitmap;
         } catch (IOException e) {

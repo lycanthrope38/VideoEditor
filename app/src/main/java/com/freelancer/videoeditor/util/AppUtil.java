@@ -1,12 +1,9 @@
 package com.freelancer.videoeditor.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -21,32 +18,21 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.provider.Settings.Secure;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.webkit.MimeTypeMap;
-import android.widget.Toast;
 
-import com.freelancer.videoeditor.BuildConfig;
-import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.view.photo.PhotoEditorActivity;
-import com.freelancer.videoeditor.view.pick.PickImageExtendsActivity;
 import com.wang.avi.indicators.BallSpinFadeLoaderIndicator;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class UtilLib {
+public class AppUtil {
     public static final int FLIP_HORIZONTAL = 2;
     public static final int FLIP_VERTICAL = 1;
-    private static UtilLib utilLib;
+    private static AppUtil utilLib;
     public final int REQUEST_CODE_ASK_ALL_PERMISSIONS = PhotoEditorActivity.REQUEST_CODE_CROP;
     final Handler mHandler = new Handler(new Callback() {
         public boolean handleMessage(Message msg) {
@@ -57,14 +43,14 @@ public class UtilLib {
     public ProgressDialog mProgressDialog;
     public ProgressDialog mProgressDialogDownload;
 
-    public static UtilLib getInstance() {
+    public static AppUtil getInstance() {
         if (utilLib == null) {
-            utilLib = new UtilLib();
+            utilLib = new AppUtil();
         }
         return utilLib;
     }
 
-    private UtilLib() {
+    private AppUtil() {
     }
 
 
@@ -266,8 +252,8 @@ public class UtilLib {
 
     public void showLoading(final Activity mActivity, final OnThreadListener.IOnBackLoading mOnBackLoading) {
         if (mActivity != null) {
-            if (UtilLib.this.mProgressDialog == null) {
-                UtilLib.this.mProgressDialog = new ProgressDialog(mActivity) {
+            if (AppUtil.this.mProgressDialog == null) {
+                AppUtil.this.mProgressDialog = new ProgressDialog(mActivity) {
                     public void onBackPressed() {
                         super.onBackPressed();
                         if (mOnBackLoading != null) {
@@ -275,43 +261,43 @@ public class UtilLib {
                         }
                     }
                 };
-                UtilLib.this.mProgressDialog.setMessage("Loading");
-                UtilLib.this.mProgressDialog.setCancelable(false);
-                UtilLib.this.mProgressDialog.show();
+                AppUtil.this.mProgressDialog.setMessage("Loading");
+                AppUtil.this.mProgressDialog.setCancelable(false);
+                AppUtil.this.mProgressDialog.show();
             }
         }
     }
 
     public void hideLoading() {
-        if (UtilLib.this.mProgressDialog != null && UtilLib.this.mProgressDialog.isShowing()) {
-            UtilLib.this.mProgressDialog.dismiss();
-            UtilLib.this.mProgressDialog = null;
+        if (AppUtil.this.mProgressDialog != null && AppUtil.this.mProgressDialog.isShowing()) {
+            AppUtil.this.mProgressDialog.dismiss();
+            AppUtil.this.mProgressDialog = null;
         }
     }
 
     public void showLoadingProgress(final Activity activity, final String message) {
         if (activity != null) {
-            if (UtilLib.this.mProgressDialogDownload == null) {
-                UtilLib.this.mProgressDialogDownload = new ProgressDialog(activity);
-                UtilLib.this.mProgressDialogDownload.setProgressStyle(UtilLib.FLIP_VERTICAL);
-                UtilLib.this.mProgressDialogDownload.setMessage(message);
-                UtilLib.this.mProgressDialogDownload.setCancelable(false);
-                UtilLib.this.mProgressDialogDownload.show();
+            if (AppUtil.this.mProgressDialogDownload == null) {
+                AppUtil.this.mProgressDialogDownload = new ProgressDialog(activity);
+                AppUtil.this.mProgressDialogDownload.setProgressStyle(AppUtil.FLIP_VERTICAL);
+                AppUtil.this.mProgressDialogDownload.setMessage(message);
+                AppUtil.this.mProgressDialogDownload.setCancelable(false);
+                AppUtil.this.mProgressDialogDownload.show();
             }
         }
     }
 
     public void updateDialogProgress(final int progress) {
-        if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
-            UtilLib.this.mProgressDialogDownload.setIndeterminate(false);
-            UtilLib.this.mProgressDialogDownload.setProgress(progress);
+        if (AppUtil.this.mProgressDialogDownload != null && AppUtil.this.mProgressDialogDownload.isShowing()) {
+            AppUtil.this.mProgressDialogDownload.setIndeterminate(false);
+            AppUtil.this.mProgressDialogDownload.setProgress(progress);
         }
     }
 
     public void hideLoadingDownload() {
-        if (UtilLib.this.mProgressDialogDownload != null && UtilLib.this.mProgressDialogDownload.isShowing()) {
-            UtilLib.this.mProgressDialogDownload.dismiss();
-            UtilLib.this.mProgressDialogDownload = null;
+        if (AppUtil.this.mProgressDialogDownload != null && AppUtil.this.mProgressDialogDownload.isShowing()) {
+            AppUtil.this.mProgressDialogDownload.dismiss();
+            AppUtil.this.mProgressDialogDownload = null;
         }
     }
 
@@ -331,7 +317,7 @@ public class UtilLib {
                 } else if (this.rect != null && !this.rect.contains(v.getLeft() + ((int) event.getX()), v.getTop() + ((int) event.getY()))) {
                     onCustomTouchListener.OnCustomTouchMoveOut(v, event);
                     return false;
-                } else if (event.getAction() == UtilLib.FLIP_VERTICAL) {
+                } else if (event.getAction() == AppUtil.FLIP_VERTICAL) {
                     onCustomTouchListener.OnCustomTouchUp(v, event);
                 } else {
                     onCustomTouchListener.OnCustomTouchOther(v, event);

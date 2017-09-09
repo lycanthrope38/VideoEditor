@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +33,7 @@ import com.freelancer.videoeditor.R;
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.ExtraUtils;
 import com.freelancer.videoeditor.util.FileUtils;
-import com.freelancer.videoeditor.util.UtilLib;
+import com.freelancer.videoeditor.util.AppUtil;
 import com.freelancer.videoeditor.vo.Item;
 
 import java.io.File;
@@ -65,8 +64,6 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
     GridView gridViewListAlbum;
     @BindView(R.id.txtMessageSelectImage)
     TextView txtMessageSelectImage;
-    @BindView(R.id.txtTotalImage)
-    TextView txtTotalImage;
     @BindView(R.id.layoutBottom)
     RelativeLayout layoutBottom;
     @BindView(R.id.gridViewAlbum)
@@ -230,7 +227,6 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
         } else if (this.actionPick == ACTION_PIC_VIDEO) {
             this.txtMessageSelectImage.setText(getResources().getString(R.string.text_message_select_image_for_video));
         }
-        UtilLib.getInstance().setOnCustomTouchViewScaleNotOther(findViewById(R.id.btnDone), this);
 
         try {
             Collections.sort(this.dataAlbum, (lhs, rhs) -> {
@@ -273,7 +269,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
                     Log.e("TAG", "showDialogSortAlbum by NAME");
                     break;
                 case 1:
-                    UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
+                    AppUtil.getInstance().showLoading(PickImageExtendsActivity.this);
                     Observable.fromCallable(() -> {
                         Collections.sort(dataAlbum, (lhs, rhs) -> {
                             File fileI = new File(lhs.getPathFolder());
@@ -293,7 +289,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(t -> {
                                 PickImageExtendsActivity.this.refreshGridViewAlbum();
-                                UtilLib.getInstance().hideLoading();
+                                AppUtil.getInstance().hideLoading();
                             });
                     Log.e("TAG", "showDialogSortAlbum by Size");
                     break;
@@ -345,7 +341,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
                     }
                 case 1:
                     try {
-                        UtilLib.getInstance().showLoading(PickImageExtendsActivity.this);
+                        AppUtil.getInstance().showLoading(PickImageExtendsActivity.this);
                         Observable.fromCallable(() -> {
                             Collections.sort(dataListPhoto, (lhs, rhs) -> {
                                 File fileI = new File(lhs.getPathFolder());
@@ -365,7 +361,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(s -> {
                                     PickImageExtendsActivity.this.refreshGridViewListAlbum();
-                                    UtilLib.getInstance().hideLoading();
+                                    AppUtil.getInstance().hideLoading();
                                 });
                         break;
                     } catch (Exception e2) {
@@ -491,7 +487,7 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
         Object[] objArr = new Object[2];
         objArr[0] = this.listItemSelect.size();
         objArr[1] = this.limitImageMax;
-        this.txtTotalImage.setText(String.format(string, objArr));
+//        this.txtTotalImage.setText(String.format(string, objArr));
         if (this.txtMessageSelectImage.getVisibility() == View.GONE && this.listItemSelect.size() == 0) {
             this.txtMessageSelectImage.setVisibility(View.VISIBLE);
             this.layoutListImage.setVisibility(View.GONE);
@@ -540,14 +536,6 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
 
     @Override
     public void OnCustomClick(View v, MotionEvent event) {
-        if (v.getId() == R.id.btnDone) {
-            ArrayList<String> listString = getListString(this.listItemSelect);
-            if (listString.size() >= this.limitImageMin) {
-                done(listString);
-            } else {
-                Toast.makeText(this, getResources().getString(R.string.message_click_button_done_not_image), Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override
@@ -593,6 +581,14 @@ public class PickImageExtendsActivity extends AppCompatActivity implements OnCli
                     showDialogSortAlbum();
                 } else {
                     showDialogSortListAlbum();
+                }
+                break;
+            case R.id.done:
+                ArrayList<String> listString = getListString(this.listItemSelect);
+                if (listString.size() >= this.limitImageMin) {
+                    done(listString);
+                } else {
+                    Toast.makeText(this, getResources().getString(R.string.message_click_button_done_not_image), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

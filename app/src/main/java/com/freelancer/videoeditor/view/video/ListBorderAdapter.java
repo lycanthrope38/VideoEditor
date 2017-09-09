@@ -21,13 +21,12 @@ import java.util.List;
 public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.ViewHolder> {
     private List<String> mAppInfo;
     private Bitmap mBitmapGirl;
-    private int mColumnSpace = 0;
-    private int mColumnWith = 0;
     private Context mContext;
     private LayoutInflater mInflater;
     private com.freelancer.videoeditor.util.OnClickListener.OnRecyclerClickListener mListener;
 
     static class ViewHolder extends android.support.v7.widget.RecyclerView.ViewHolder {
+
         private ImageView bkg;
         private RelativeLayout container;
         private ImageView girl;
@@ -35,10 +34,10 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
 
         public ViewHolder(View view) {
             super(view);
-            this.container = (RelativeLayout) view.findViewById(R.id.container);
-            this.girl = (ImageView) view.findViewById(R.id.thumb_girl);
-            this.icon = (ImageView) view.findViewById(R.id.thumb_border);
-            this.bkg = (ImageView) view.findViewById(R.id.thumb_bkg);
+            this.container = view.findViewById(R.id.container);
+            this.girl = view.findViewById(R.id.thumb_girl);
+            this.icon = view.findViewById(R.id.thumb_border);
+            this.bkg = view.findViewById(R.id.thumb_bkg);
         }
     }
 
@@ -50,14 +49,6 @@ public class ListBorderAdapter extends RecyclerView.Adapter<ListBorderAdapter.Vi
 
     public void setBitmapGirl(Bitmap bitmap) {
         this.mBitmapGirl = bitmap;
-    }
-
-    public void setColumnWith(int columnWith) {
-        this.mColumnWith = columnWith;
-    }
-
-    public void setColumnSpace(int space) {
-        this.mColumnSpace = space;
     }
 
     public void setOnItemClickListener(com.freelancer.videoeditor.util.OnClickListener.OnRecyclerClickListener listener) {

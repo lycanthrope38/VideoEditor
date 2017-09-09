@@ -5,7 +5,7 @@ import android.net.Uri;
 
 import com.freelancer.videoeditor.config.AppConst;
 import com.freelancer.videoeditor.util.OnClickListener;
-import com.freelancer.videoeditor.util.UtilLib;
+import com.freelancer.videoeditor.util.AppUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class MyScreenCapture extends ScreenCapture {
     public void capture(PhotoEditorActivity mainActivity, String name, int action, OnClickListener.OnCapture mOnCapture) {
         Timber.e("start capture");
         this.mainActivity = mainActivity;
-        UtilLib.getInstance().showLoading(mainActivity);
+        AppUtil.getInstance().showLoading(mainActivity);
         capture(name, action, mOnCapture);
     }
 
@@ -47,7 +47,7 @@ public class MyScreenCapture extends ScreenCapture {
                 if (mOnCapture != null) {
                     mOnCapture.onSuccess(pathNewFile);
                 }
-                UtilLib.getInstance().hideLoading();
+                AppUtil.getInstance().hideLoading();
             }
 
             public void onScreenCaptureFailed(String pFilePath, Exception pException) {
@@ -55,7 +55,7 @@ public class MyScreenCapture extends ScreenCapture {
                 if (mOnCapture != null) {
                     mOnCapture.onFail();
                 }
-                UtilLib.getInstance().hideLoading();
+                AppUtil.getInstance().hideLoading();
             }
         });
     }

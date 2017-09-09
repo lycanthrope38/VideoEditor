@@ -6,4 +6,9 @@
             app:showAsAction="always"
             android:icon="@drawable/ic_sort_black_24dp"
             android:id="@+id/sort"/>
+    <item
+            android:title=""
+            app:showAsAction="always"
+            android:icon="@drawable/ic_done_all_black_24dp"
+            android:id="@+id/done"/>
 </menu>

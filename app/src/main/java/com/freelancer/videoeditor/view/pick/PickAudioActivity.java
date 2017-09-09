@@ -49,8 +49,6 @@ public class PickAudioActivity extends AppCompatActivity implements View.OnClick
     private ListAudioAdapter mAdapter;
     @BindView(R.id.pick_audio_from_file)
     ImageView mBtnPickAudio;
-    @BindView(R.id.button_apply_audio)
-    Button mButtonApply;
     @BindView(R.id.text_audio_duration)
     TextView mTextAudioDuration;
     @BindView(R.id.text_audio_name)
@@ -166,6 +164,9 @@ public class PickAudioActivity extends AppCompatActivity implements View.OnClick
             case R.id.sort:
                 showSortAudio();
                 break;
+            case R.id.done:
+                applyAudio();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,12 +176,10 @@ public class PickAudioActivity extends AppCompatActivity implements View.OnClick
         view.getLayoutParams().height = size;
     }
 
-    @OnClick({R.id.button_apply_audio,R.id.image_play_audio,R.id.pick_audio_from_file})
+    @OnClick({R.id.image_play_audio,R.id.pick_audio_from_file})
     public void onClick(View v) {
         int i = v.getId();
-       if (i == R.id.button_apply_audio) {
-            applyAudio();
-        } else if (i == R.id.image_play_audio) {
+     if (i == R.id.image_play_audio) {
             if (TextUtils.isEmpty(this.mCurrentAudioPath)) {
                 Toast.makeText(this, "Please select an audio", Toast.LENGTH_SHORT).show();
             } else {
